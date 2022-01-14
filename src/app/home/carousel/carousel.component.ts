@@ -7,10 +7,17 @@ import { CarouselService } from 'src/app/services/home/carousel.service';
 })
 export class CarouselComponent implements OnInit {
 
+  images: Array<string> = [ "https://picsum.photos/id/1011/900/500", "https://picsum.photos/id/944/900/500", "https://picsum.photos/id/984/900/500" ];
+
   constructor(private carouselService : CarouselService) { }
 
   ngOnInit(): void {
-    this.carouselService.getCarousel().subscribe(x => console.log(x));
+    this.carouselService.getCarousel()
+    .subscribe(
+      x =>{
+        console.log(x)
+      }, 
+      err => console.log(err.status));
   }
 
   getCarousel()

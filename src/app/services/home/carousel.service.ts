@@ -15,7 +15,7 @@ export class CarouselService {
 
   getCarousel()
   {
-    return this.http.get<BaseResponse<MenuDto[]>>(environment.apiUrl + "Menu/" + this.carouselTypeId);
+    return this.http.get<BaseResponse<MenuDto[]>>(environment.apiUrl + "Course/");
   }
 
 }
