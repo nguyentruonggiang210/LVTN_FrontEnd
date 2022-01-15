@@ -1,3 +1,4 @@
+// modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
@@ -21,12 +22,40 @@ import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule } from 'ngx-toastr';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CarouselModule } from 'primeng/carousel';
+import { ButtonModule } from 'primeng/button';
 
-
+// components
 import { AppComponent } from './app.component';
 import { CarouselComponent } from './home/carousel/carousel.component';
 import { HomeComponent } from './home/home/home.component';
 import { NavbarComponent } from './home/navbar/navbar.component';
+import { ProductAdvComponent } from './home/product-adv/product-adv.component';
+import { CourseAdvComponent } from './home/course-adv/course-adv.component';
+import { IntroComponent } from './home/intro/intro.component';
+
+// services
+import { CommonService } from './services/common/common.service';
+import { ToastrService } from 'ngx-toastr';
+
+// Intercept
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './commons/AuthInterceptor';
+import { ErrorInterceptor } from './commons/ErrorInterceptor';
+import { FooterComponent } from './home/footer/footer.component';
+
+// export const httpInterceptorProviders = [
+//   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+// ];
+
+const errorInterceptor = {
+  provide: HTTP_INTERCEPTORS,
+  useClass: ErrorInterceptor,
+  multi: true,
+  deps: [ToastrService, CommonService],
+};
 
 
 const route: Routes = [
@@ -42,7 +71,11 @@ const route: Routes = [
     AppComponent,
     CarouselComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProductAdvComponent,
+    CourseAdvComponent,
+    IntroComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -67,9 +100,15 @@ const route: Routes = [
     BrowserAnimationsModule,
     NgbModule,
     NgbCarouselModule,
-    CommonModule
+    CarouselModule,
+    ButtonModule,
+    CommonModule,
+    ToastrModule.forRoot(),
+    MatProgressSpinnerModule
   ],
-  providers: [],
+  providers: [
+    errorInterceptor
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

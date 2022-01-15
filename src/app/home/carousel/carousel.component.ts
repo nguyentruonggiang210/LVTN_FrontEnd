@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CarouselService } from 'src/app/services/home/carousel.service';
+import { CommonService } from 'src/app/services/common/common.service';
+import { MenuDto } from '../../models/MenuDto';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
@@ -7,21 +11,25 @@ import { CarouselService } from 'src/app/services/home/carousel.service';
 })
 export class CarouselComponent implements OnInit {
 
-  images: Array<string> = [ "https://picsum.photos/id/1011/900/500", "https://picsum.photos/id/944/900/500", "https://picsum.photos/id/984/900/500" ];
+  // variables
+  default: string = "-";
+  carouselType: number = 1;
+  carouselImages: MenuDto[] = [];
 
-  constructor(private carouselService : CarouselService) { }
+  constructor(private toastrService: ToastrService, private commonService: CommonService, private carouselService : CarouselService) { }
 
   ngOnInit(): void {
-    this.carouselService.getCarousel()
-    .subscribe(
-      x =>{
-        console.log(x)
-      }, 
-      err => console.log(err.status));
+    this.toastrService.success("123");
+    this.getCarousel();
   }
 
   getCarousel()
   {
-    return this.carouselService.getCarousel();
+    this.carouselService.getCarousel(this.carouselType)
+    .subscribe(x => 
+      {
+        this.carouselImages = x.body;
+        this.commonService.distroySpinner();
+      });
   }
 }

@@ -1,0 +1,11 @@
+<div class="text-center">
+    <div class="row">
+        <div class="text-left col-sm-5 m-auto pl-5">
+            <h1 class="font-weight-bold m-2">{{ introObj?.content || default }}</h1>
+            <p class="intro-text m-2">{{ introObj?.description || default }}</p>
+        </div>
+        <div class="col-sm-7 m-auto">
+            <img [src]="introObj?.url" [alt]="introObj?.toolTip" />
+        </div>
+    </div>
+</div>

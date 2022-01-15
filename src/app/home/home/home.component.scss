@@ -1,3 +1,13 @@
 .home-area{
     margin: 5px;
 }
+
+.my-spinner{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}

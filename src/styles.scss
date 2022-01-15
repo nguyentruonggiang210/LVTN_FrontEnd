@@ -2,12 +2,26 @@
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 
+/* Importing fontawesome */
 @import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
 @import '~@fortawesome/fontawesome-free/scss/solid.scss';
 @import '~@fortawesome/fontawesome-free/scss/regular.scss';
 @import '~@fortawesome/fontawesome-free/scss/brands.scss';
- 
+
+/* Importing mdb ui */
+
 @import '~mdb-angular-ui-kit/assets/scss/mdb.scss';
+
+/* Importing toast */
+
+@import '~ngx-toastr/toastr-bs4-alert';
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '~ngx-toastr/toastr-bs4-alert';
+@import '~ngx-toastr/toastr.css';
+
+/* Importing google font */
 
 @import 'https://fonts.googleapis.com/css2?family=Nunito:wght@200;400&display=swap';
 //font-family: 'Nunito', sans-serif;
@@ -18,14 +32,33 @@
 *{
     margin: 0;
     padding: 0;
+    font-family: 'Nunito', sans-serif;
 }
 
 body{
     margin: 0;
     padding: 0;
+    background-image: url(./assets/background1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-h1{
-    font-family: 'Nunito', sans-serif;
+p{
+    font-size: 15px;
 }
 
+.screen-component{
+    width: 100%;
+    height: 100vh;
+    background-color: whitesmoke;
+    margin-top: 5px;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.small-component{
+    border-radius: 7px;
+    width: 100%;
+    background-color: whitesmoke;
+    padding-top: 10px;
+}

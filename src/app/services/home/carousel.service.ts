@@ -9,13 +9,10 @@ import { BaseResponse } from 'src/app/models/BaseResponse';
 })
 export class CarouselService {
 
-  carouselTypeId = 1;
-
   constructor(private http: HttpClient) { }
 
-  getCarousel()
+  getCarousel(type: number)
   {
-    return this.http.get<BaseResponse<MenuDto[]>>(environment.apiUrl + "Course/");
+    return this.http.get<BaseResponse<MenuDto[]>>(environment.apiUrl + "Menu/" + type);
   }
-
 }
