@@ -45,6 +45,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './commons/AuthInterceptor';
 import { ErrorInterceptor } from './commons/ErrorInterceptor';
 import { FooterComponent } from './home/footer/footer.component';
+import { TeacherAdvComponent } from './home/teacher-adv/teacher-adv.component';
+import { AboutComponent } from './home/about/about.component';
 
 // export const httpInterceptorProviders = [
 //   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
@@ -57,6 +59,11 @@ const errorInterceptor = {
   deps: [ToastrService, CommonService],
 };
 
+const authInterceptor = {
+  provide: HTTP_INTERCEPTORS,
+  useClass: AuthInterceptor,
+  multi: true,
+};
 
 const route: Routes = [
   { path: '', component: HomeComponent },
@@ -75,7 +82,9 @@ const route: Routes = [
     ProductAdvComponent,
     CourseAdvComponent,
     IntroComponent,
-    FooterComponent
+    FooterComponent,
+    TeacherAdvComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
@@ -107,7 +116,8 @@ const route: Routes = [
     MatProgressSpinnerModule
   ],
   providers: [
-    errorInterceptor
+    errorInterceptor,
+    authInterceptor
   ],
   bootstrap: [AppComponent]
 })

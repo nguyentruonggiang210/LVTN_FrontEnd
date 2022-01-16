@@ -19,7 +19,6 @@ export class CarouselComponent implements OnInit {
   constructor(private toastrService: ToastrService, private commonService: CommonService, private carouselService : CarouselService) { }
 
   ngOnInit(): void {
-    this.toastrService.success("123");
     this.getCarousel();
   }
 

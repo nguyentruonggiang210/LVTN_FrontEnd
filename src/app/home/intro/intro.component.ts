@@ -25,7 +25,6 @@ export class IntroComponent implements OnInit {
     .subscribe(x => 
       {
         this.introObj = x.body[0];
-        console.log(this.introObj);
       });
   }
 }
