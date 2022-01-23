@@ -3,5 +3,6 @@ export interface SearchDto{
     image: string,
     name: string,
     price: number,
-    description: string
+    description: string,
+    type: string,
 }

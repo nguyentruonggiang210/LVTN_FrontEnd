@@ -27,6 +27,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { MatSelectModule  } from '@angular/material/select';
+import { MatListModule  } from '@angular/material/list';
 import { MatFormFieldModule  } from '@angular/material/form-field';
 import { MatInputModule  } from '@angular/material/input';
 import { MatIconModule  } from '@angular/material/icon';
@@ -34,15 +35,10 @@ import { MatButtonModule  } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-
-// components
-import { AppComponent } from './app.component';
-import { CarouselComponent } from './home/carousel/carousel.component';
-import { HomeComponent } from './home/home/home.component';
-import { NavbarComponent } from './home/navbar/navbar.component';
-import { ProductAdvComponent } from './home/product-adv/product-adv.component';
-import { CourseAdvComponent } from './home/course-adv/course-adv.component';
-import { IntroComponent } from './home/intro/intro.component';
+import { MatExpansionModule  } from '@angular/material/expansion';
+import { MatTreeModule  } from '@angular/material/tree';
+import { MatSliderModule  } from '@angular/material/slider';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 // services
 import { CommonService } from './services/common/common.service';
@@ -52,6 +48,15 @@ import { ToastrService } from 'ngx-toastr';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './commons/AuthInterceptor';
 import { ErrorInterceptor } from './commons/ErrorInterceptor';
+
+// components
+import { AppComponent } from './app.component';
+import { CarouselComponent } from './home/carousel/carousel.component';
+import { HomeComponent } from './home/home/home.component';
+import { NavbarComponent } from './home/navbar/navbar.component';
+import { ProductAdvComponent } from './home/product-adv/product-adv.component';
+import { CourseAdvComponent } from './home/course-adv/course-adv.component';
+import { IntroComponent } from './home/intro/intro.component';
 import { FooterComponent } from './home/footer/footer.component';
 import { TeacherAdvComponent } from './home/teacher-adv/teacher-adv.component';
 import { AboutComponent } from './home/about/about.component';
@@ -59,6 +64,8 @@ import { SearchBoxComponent } from './home/search-box/search-box.component';
 import { ProductComponent } from './category/product/product.component';
 import { CourseComponent } from './category/course/course.component';
 import { TrainerComponent } from './category/trainer/trainer.component';
+import { CategoryComponent } from './category/category/category.component';
+import { FilterComponent } from './category/filter/filter.component';
 
 // export const httpInterceptorProviders = [
 //   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
@@ -80,7 +87,7 @@ const authInterceptor = {
 const route: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
-
+  { path: 'category/:type/:id', component: CategoryComponent },
   // others
   { path: '**', component: HomeComponent }
 ];
@@ -100,7 +107,9 @@ const route: Routes = [
     SearchBoxComponent,
     ProductComponent,
     CourseComponent,
-    TrainerComponent
+    TrainerComponent,
+    CategoryComponent,
+    FilterComponent
   ],
   imports: [
     BrowserModule,
@@ -138,7 +147,12 @@ const route: Routes = [
     MatDialogModule,
     MatTableModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatExpansionModule,
+    MatTreeModule,
+    MatSliderModule,
+    MatCheckboxModule,
+    MatListModule
   ],
   providers: [
     errorInterceptor,

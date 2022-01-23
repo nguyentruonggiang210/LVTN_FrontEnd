@@ -10,8 +10,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class NavbarComponent implements OnInit {
 
+  defaultSelect: number = 1;
   searchForm: FormGroup;
-
   dataSource: SearchDto[];
   selectedType: number = 1;
   keyword: string = "";
@@ -34,6 +34,7 @@ export class NavbarComponent implements OnInit {
     this.foucusOutEvent();
     this.searchForm = this.formBuilder.group({
       searchResult: '',
+      searchType: ''
     });
    }
 

@@ -1,0 +1,16 @@
+<div class="screen-component">
+    <h1 class="text-center">Category</h1>
+    <app-filter></app-filter>
+    <div class="form-group col col-md-3">
+        <label class="my-form-label">Sort By</label>
+        <select class="custom-select" id="inlineFormCustomSelect">
+            <option value="1" selected>Newest</option>
+            <option value="2">Price</option>
+            <option value="3">Rate</option>
+            <option value="4">Difficulty</option>
+        </select>
+    </div>
+    <app-course *ngIf="type == 'course'"></app-course>
+    <app-trainer *ngIf="type == 'trainer'"></app-trainer>
+    <app-product *ngIf="type == 'product'"></app-product>
+</div>
