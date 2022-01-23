@@ -8,21 +8,10 @@ import { CarouselService } from '../../services/home/carousel.service';
 })
 export class TeacherAdvComponent implements OnInit {
 
-  constructor(private carouselService: CarouselService) { }
+  constructor() { }
 
   teacherObj: TeacherDto;
 
   ngOnInit(): void {
-    this.getHotTeach();
   }
-
-  getHotTeach()
-  {
-      this.carouselService.getHotTeacher()
-      .subscribe(teacher => {
-        console.log(teacher);
-        this.teacherObj = teacher.body;
-      });
-  }
-
 }

@@ -26,6 +26,14 @@ import { ToastrModule } from 'ngx-toastr';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
+import { MatSelectModule  } from '@angular/material/select';
+import { MatFormFieldModule  } from '@angular/material/form-field';
+import { MatInputModule  } from '@angular/material/input';
+import { MatIconModule  } from '@angular/material/icon';
+import { MatButtonModule  } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
 // components
 import { AppComponent } from './app.component';
@@ -47,6 +55,10 @@ import { ErrorInterceptor } from './commons/ErrorInterceptor';
 import { FooterComponent } from './home/footer/footer.component';
 import { TeacherAdvComponent } from './home/teacher-adv/teacher-adv.component';
 import { AboutComponent } from './home/about/about.component';
+import { SearchBoxComponent } from './home/search-box/search-box.component';
+import { ProductComponent } from './category/product/product.component';
+import { CourseComponent } from './category/course/course.component';
+import { TrainerComponent } from './category/trainer/trainer.component';
 
 // export const httpInterceptorProviders = [
 //   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
@@ -84,7 +96,11 @@ const route: Routes = [
     IntroComponent,
     FooterComponent,
     TeacherAdvComponent,
-    AboutComponent
+    AboutComponent,
+    SearchBoxComponent,
+    ProductComponent,
+    CourseComponent,
+    TrainerComponent
   ],
   imports: [
     BrowserModule,
@@ -113,7 +129,16 @@ const route: Routes = [
     ButtonModule,
     CommonModule,
     ToastrModule.forRoot(),
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatTableModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     errorInterceptor,

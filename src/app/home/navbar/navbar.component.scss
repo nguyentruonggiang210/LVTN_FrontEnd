@@ -1,3 +1,21 @@
-.my-nav{
-    
+#search-result{
+    position: fixed;
+    display: none;
+    min-height: 20vh !important;
+    z-index: 100;
+    top: 80px;
+    left: 5%;
+    width: 90%;
+    border-radius: 9px;
+}
+
+.my-search-icon{
+    position: absolute;
+    top: -30%;
+    right: 0;
+}
+
+#input-container{
+    padding-right: 0px !important;
+    margin: 0 !important;
 }

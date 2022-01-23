@@ -2,12 +2,11 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <!-- Container wrapper -->
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="../../../assets/logo.png" height="80" alt=""
-                loading="lazy" />
+        <a class="navbar-brand" href="/">
+            <img src="../../../assets/logo.png" height="80" alt="" loading="lazy" />
         </a>
         <!-- Navbar brand -->
-        <a class="navbar-brand" href="#">Brand</a>
+        <a class="navbar-brand" href="/">Home</a>
 
         <!-- Toggle button -->
         <button class="navbar-toggler" type="button" (click)="basicNavbar.toggle()" aria-expanded="false"
@@ -19,25 +18,103 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent" mdbCollapse #basicNavbar="mdbCollapse">
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                <li mdbDropdown class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                        mdbDropdownToggle aria-expanded="false">
+                        Category
+                    </a>
+                    <ul mdbDropdownMenu class="dropdown-menu my-nav-item-list" aria-labelledby="navbarDropdownMenuLink">
+                        <li>
+                            <a class="dropdown-item" href="#">Product</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Course</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Trainer</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="#">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    <a class="nav-link" href="#">Community</a>
                 </li>
             </ul>
             <!-- Left links -->
 
             <!-- Search form -->
-            <form class="d-flex input-group w-auto">
-                <input type="search" class="form-control" placeholder="Type query" aria-label="Search" />
-                <button class="btn btn-outline-primary" type="button">
-                    Search
-                </button>
+            <form class="ml-0 container w-75" (ngSubmit)="onSubmit()" [formGroup]="searchForm">
+                <div class="input-group row">
+                    <mat-form-field class="col-md-2 m-0">
+                        <mat-label>Type</mat-label>
+                        <mat-select required (selectionChange)="changeSelectOption($event)">
+                            <mat-option *ngFor="let seach of searchType" [value]="seach.id">{{ seach.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-8 m-0 position-relative">
+                        <mat-label>Search</mat-label>
+                        <input id="input-container" autocomplete="off" matInput placeholder="Enter."
+                            formControlName="searchResult" (keyup)="keyUpEvent($event)">
+                        <button type="submit" class="my-search-icon" mat-icon-button color="primary"
+                            aria-label="Example icon button with a menu icon">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                        <!-- Search box -->
+                        <app-search-box id="search-result" (mouseenter)="foucusOnEvent()" [dataSource]="dataSource">
+                        </app-search-box>
+                        <!-- end search box -->
+                    </mat-form-field>
+                </div>
             </form>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 my-nav-item">
+                <li class="nav-item me-3 me-lg-1 active">
+                    <a class="nav-link" href="#">
+                        <span><i class="fas fa-shopping-cart"></i></span>
+                        <span class="badge rounded-pill badge-notification bg-danger">1</span>
+                    </a>
+                </li>
+
+                <li class="nav-item me-3 me-lg-1">
+                    <a class="nav-link" href="#">
+                        <span><i class="fas fa-comments"></i></span>
+                    </a>
+                </li>
+
+                <li class="nav-item me-3 me-lg-1">
+                    <a class="nav-link" href="#">
+                        <span><i class="fas fa-calendar-alt"></i></span>
+                    </a>
+                </li>
+
+                <li class="nav-item me-3 me-lg-1">
+                    <a class="nav-link" href="#">
+                        <span><i class="fas fa-bell"></i></span>
+                    </a>
+                </li>
+
+                <li class="nav-item me-3 me-lg-1 dropdown" mdbDropdown>
+                    <a class="nav-link dropdown-toggle" href="#" id="userMenuDropDownLink" role="button"
+                        mdbDropdownToggle aria-expanded="false">
+                        <span><i class="fas fa-users fa-lg"></i></span>
+                        <span class="badge rounded-pill badge-notification bg-danger">0</span>
+                    </a>
+                    <ul mdbDropdownMenu class="dropdown-menu my-nav-item-list" aria-labelledby="userMenuDropDownLink">
+                        <li>
+                            <a class="dropdown-item" href="#">User Information</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Invitation</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Logout</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
         </div>
         <!-- Collapsible wrapper -->
     </div>
