@@ -26,19 +26,22 @@ import { ToastrModule } from 'ngx-toastr';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
-import { MatSelectModule  } from '@angular/material/select';
-import { MatListModule  } from '@angular/material/list';
-import { MatFormFieldModule  } from '@angular/material/form-field';
-import { MatInputModule  } from '@angular/material/input';
-import { MatIconModule  } from '@angular/material/icon';
-import { MatButtonModule  } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
-import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
-import { MatExpansionModule  } from '@angular/material/expansion';
-import { MatTreeModule  } from '@angular/material/tree';
-import { MatSliderModule  } from '@angular/material/slider';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 // services
 import { CommonService } from './services/common/common.service';
@@ -48,6 +51,10 @@ import { ToastrService } from 'ngx-toastr';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './commons/AuthInterceptor';
 import { ErrorInterceptor } from './commons/ErrorInterceptor';
+
+// Odata
+import { ODataConfiguration, ODataServiceFactory, ODataService } from "angular-odata-es5";
+import { ODataConfig } from './commons/ODataConfig';
 
 // components
 import { AppComponent } from './app.component';
@@ -61,15 +68,9 @@ import { FooterComponent } from './home/footer/footer.component';
 import { TeacherAdvComponent } from './home/teacher-adv/teacher-adv.component';
 import { AboutComponent } from './home/about/about.component';
 import { SearchBoxComponent } from './home/search-box/search-box.component';
-import { ProductComponent } from './category/product/product.component';
-import { CourseComponent } from './category/course/course.component';
-import { TrainerComponent } from './category/trainer/trainer.component';
 import { CategoryComponent } from './category/category/category.component';
 import { FilterComponent } from './category/filter/filter.component';
-
-// export const httpInterceptorProviders = [
-//   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-// ];
+import { ContentComponent } from './category/content/content.component';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -81,6 +82,12 @@ const errorInterceptor = {
 const authInterceptor = {
   provide: HTTP_INTERCEPTORS,
   useClass: AuthInterceptor,
+  multi: true,
+};
+
+const oDataConfig = {
+  provide: ODataConfiguration,
+  useClass: ODataConfig,
   multi: true,
 };
 
@@ -105,11 +112,9 @@ const route: Routes = [
     TeacherAdvComponent,
     AboutComponent,
     SearchBoxComponent,
-    ProductComponent,
-    CourseComponent,
-    TrainerComponent,
     CategoryComponent,
-    FilterComponent
+    FilterComponent,
+    ContentComponent
   ],
   imports: [
     BrowserModule,
@@ -152,11 +157,15 @@ const route: Routes = [
     MatTreeModule,
     MatSliderModule,
     MatCheckboxModule,
-    MatListModule
+    MatListModule,
+    MatGridListModule,
+    MatCardModule,
+    MatPaginatorModule
   ],
   providers: [
     errorInterceptor,
-    authInterceptor
+    authInterceptor,
+    oDataConfig
   ],
   bootstrap: [AppComponent]
 })
