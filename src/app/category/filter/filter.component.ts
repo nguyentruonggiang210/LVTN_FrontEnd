@@ -9,8 +9,6 @@ import { SearchDto } from 'src/app/models/SearchDto';
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss']
 })
-
-
 export class FilterComponent implements OnInit {
 
   memberships: string[] = ['Free', 'Plush'];
@@ -25,7 +23,7 @@ export class FilterComponent implements OnInit {
     private router: Router,
     private odataFactory: ODataServiceFactory) 
   { 
-    
+    this.odata = this.odataFactory.CreateService<SearchDto>("notification");
   }
 
   ngOnInit(): void {

@@ -52,6 +52,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './commons/AuthInterceptor';
 import { ErrorInterceptor } from './commons/ErrorInterceptor';
 
+// Odata
+import { ODataConfiguration, ODataServiceFactory, ODataService } from "angular-odata-es5";
+import { ODataConfig } from './commons/ODataConfig';
 
 // components
 import { AppComponent } from './app.component';
@@ -82,6 +85,12 @@ const authInterceptor = {
   multi: true,
 };
 
+const oDataConfig = {
+  provide: ODataConfiguration,
+  useClass: ODataConfig,
+  multi: true,
+};
+
 const route: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
@@ -105,7 +114,7 @@ const route: Routes = [
     SearchBoxComponent,
     CategoryComponent,
     FilterComponent,
-    ContentComponent,
+    ContentComponent
   ],
   imports: [
     BrowserModule,
@@ -151,11 +160,12 @@ const route: Routes = [
     MatListModule,
     MatGridListModule,
     MatCardModule,
-    MatPaginatorModule,
+    MatPaginatorModule
   ],
   providers: [
     errorInterceptor,
-    authInterceptor
+    authInterceptor,
+    oDataConfig
   ],
   bootstrap: [AppComponent]
 })
