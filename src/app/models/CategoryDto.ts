@@ -1,4 +1,4 @@
-export interface SearchDto{
+export interface CategoryDto{
     id: string,
     image: string,
     name: string,

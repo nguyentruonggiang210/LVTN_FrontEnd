@@ -42,7 +42,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { ODataModule } from 'angular-odata';
 
+// env
+
+import { environment } from '../environments/environment';
+ 
 // services
 import { CommonService } from './services/common/common.service';
 import { ToastrService } from 'ngx-toastr';
@@ -51,10 +56,6 @@ import { ToastrService } from 'ngx-toastr';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './commons/AuthInterceptor';
 import { ErrorInterceptor } from './commons/ErrorInterceptor';
-
-// Odata
-import { ODataConfiguration, ODataServiceFactory, ODataService } from "angular-odata-es5";
-import { ODataConfig } from './commons/ODataConfig';
 
 // components
 import { AppComponent } from './app.component';
@@ -85,11 +86,6 @@ const authInterceptor = {
   multi: true,
 };
 
-const oDataConfig = {
-  provide: ODataConfiguration,
-  useClass: ODataConfig,
-  multi: true,
-};
 
 const route: Routes = [
   { path: '', component: HomeComponent },
@@ -160,12 +156,14 @@ const route: Routes = [
     MatListModule,
     MatGridListModule,
     MatCardModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    ODataModule.forRoot({
+      serviceRootUrl: environment.apiUrl
+    })
   ],
   providers: [
     errorInterceptor,
-    authInterceptor,
-    oDataConfig
+    authInterceptor
   ],
   bootstrap: [AppComponent]
 })
