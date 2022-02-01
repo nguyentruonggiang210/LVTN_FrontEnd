@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-category',
@@ -9,7 +9,7 @@ export class CategoryComponent implements OnInit {
 
   id: string;
   type: string;
-
+  sortBy: number = 1;
   constructor(private activatedroute: ActivatedRoute) {
     this.activatedroute.params.subscribe(x => {
       this.id = x.id;
@@ -18,5 +18,9 @@ export class CategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  sortListChange(event): void{
+    this.sortBy = event.target.value;
   }
 }

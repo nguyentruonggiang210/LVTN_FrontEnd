@@ -7,7 +7,7 @@ export interface CategoryDto{
     type: string,
     typeId: number,
     published: Date,
-    difficulty: number,
+    difficulty: string,
     rate: number,
     minCalorieBurn: number,
     maxCalorieBurn: number,

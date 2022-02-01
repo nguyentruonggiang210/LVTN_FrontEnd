@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams  } from '@angular/common/http';
+import { HttpClient  } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -13,19 +13,12 @@ export class OdataService<T> {
     return `and ${key} eq ${value}`;
   }
 
-  addFilterIn(key: string, value: any, isString: boolean = true): string{
+  addFilterIn(key: string, value: any): string{
     let tempVal = '';
     for (const v of value) {
-      if(isString){
-        tempVal += `'${v}',`;
-      }
-      else{
-        tempVal += `${v},`;
-      }
-      
+      tempVal += `and contains(${key}, '${v}') `;
     }
-    tempVal = tempVal.substring(0, tempVal.length - 1);
-    return `and ${key} in (${tempVal})`; 
+    return tempVal; 
   }
 
   addFilterBetween(key: string, fromVal: string, toVal: string){
@@ -42,5 +35,9 @@ export class OdataService<T> {
 
   addFilterGreaterThanEqual(key: string, value: string): string{
     return `and ${key} ge ${value}`;
+  }
+
+  sortBy(key: string, isDesc: boolean){
+    return `&$orderby=${key} ${isDesc ? "desc" : "asc"}`;
   }
 }

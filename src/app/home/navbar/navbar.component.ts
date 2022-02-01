@@ -1,7 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { SearchDto } from 'src/app/models/SearchDto';
 import { CarouselService } from 'src/app/services/home/carousel.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CommonService } from 'src/app/services/common/common.service';
+import { SearchType } from 'src/app/enums/SearchType';
 
 @Component({
   selector: 'app-navbar',
@@ -30,16 +32,18 @@ export class NavbarComponent implements OnInit {
     }
   ];
 
-  constructor(private carouselService: CarouselService, private formBuilder: FormBuilder,) {
+  constructor(private carouselService: CarouselService,
+    private formBuilder: FormBuilder,
+    private commonService: CommonService) {
     this.foucusOutEvent();
     this.searchForm = this.formBuilder.group({
       searchResult: '',
       searchType: ''
     });
-   }
+  }
 
   ngOnInit(): void {
-    
+
   }
 
   keyUpEvent(event): void {
@@ -57,18 +61,19 @@ export class NavbarComponent implements OnInit {
   }
 
   changeSelectOption(event): void {
-    this.selectedType = event.value;
+    let val = event.value;
+    this.selectedType = val;
+    this.commonService.setLocalStorage("searchType", this.searchTypeClassify(val));
   }
 
   foucusOutEvent(): void {
-    document.body.addEventListener("mouseup", (e) => { 
+    document.body.addEventListener("mouseup", (e) => {
       let inputContainer = document.getElementById("input-container");
       let searchContainer = document.getElementById("search-result");
 
-    if (inputContainer != e.target && searchContainer != e.target) 
-    {
-      document.getElementById("search-result").style.display = "none";
-    }
+      if (inputContainer != e.target && searchContainer != e.target) {
+        document.getElementById("search-result").style.display = "none";
+      }
     });
   }
 
@@ -91,7 +96,17 @@ export class NavbarComponent implements OnInit {
       });
   }
 
-  onSubmit(): void{
+  onSubmit(): void {
     console.log(this.searchForm.value);
+  }
+
+  private searchTypeClassify(value): string {
+    if (value == SearchType.Product) {
+      return "product";
+    }
+    else if (value == SearchType.Course) {
+      return "course";
+    }
+    return "trainer";
   }
 }

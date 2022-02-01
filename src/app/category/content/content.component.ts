@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./content.component.scss']
 })
 export class ContentComponent implements OnInit {
+
   dogs: string[] = [
     "Shiba Inu", 
     "Shiba Inu", 
