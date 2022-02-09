@@ -1,7 +1,6 @@
 // modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -43,11 +42,15 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ODataModule } from 'angular-odata';
+import { VgCoreModule } from '@videogular/ngx-videogular/core';
+import { VgControlsModule } from '@videogular/ngx-videogular/controls';
+import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
+import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 
 // env
 
 import { environment } from '../environments/environment';
- 
+
 // services
 import { CommonService } from './services/common/common.service';
 import { ToastrService } from 'ngx-toastr';
@@ -72,6 +75,10 @@ import { SearchBoxComponent } from './home/search-box/search-box.component';
 import { CategoryComponent } from './category/category/category.component';
 import { FilterComponent } from './category/filter/filter.component';
 import { ContentComponent } from './category/content/content.component';
+import { CourseDetailComponent } from './detail/course-detail/course-detail.component';
+import { ProductDetailComponent } from './detail/product-detail/product-detail.component';
+import { TrainerDetailComponent } from './detail/trainer-detail/trainer-detail.component';
+import { DetailMainComponent } from './detail/detail-main/detail-main.component';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -87,13 +94,6 @@ const authInterceptor = {
 };
 
 
-const route: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'category/:type/:id', component: CategoryComponent },
-  // others
-  { path: '**', component: HomeComponent }
-];
 
 @NgModule({
   declarations: [
@@ -110,13 +110,16 @@ const route: Routes = [
     SearchBoxComponent,
     CategoryComponent,
     FilterComponent,
-    ContentComponent
+    ContentComponent,
+    CourseDetailComponent,
+    ProductDetailComponent,
+    TrainerDetailComponent,
+    DetailMainComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    RouterModule.forRoot(route),
     MdbAccordionModule,
     MdbCarouselModule,
     MdbCheckboxModule,
@@ -159,7 +162,11 @@ const route: Routes = [
     MatPaginatorModule,
     ODataModule.forRoot({
       serviceRootUrl: environment.apiUrl
-    })
+    }),
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule
   ],
   providers: [
     errorInterceptor,

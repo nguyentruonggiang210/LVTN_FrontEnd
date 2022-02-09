@@ -41,10 +41,12 @@ body {
     background-image: url(./assets/background1.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+    min-width: 300px;
 }
 
 p {
-    font-size: 15px;
+    font-size: 17px; 
+    line-height: 30px;
 }
 
 .screen-component {
@@ -77,6 +79,16 @@ p {
     background-color: #292b2c;
     height: 100%;
     color: #f7f7f7;
+}
+
+h1{
+    font-size: 30px !important;
+    font-weight: bold !important;
+}
+
+h2{
+    font-size: 24px !important;
+    font-weight: bold !important;
 }
 
 
