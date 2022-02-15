@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
@@ -46,6 +46,8 @@ import { VgCoreModule } from '@videogular/ngx-videogular/core';
 import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
+import { MbscModule, MbscEventcalendarModule, MbscButtonModule } from '@mobiscroll/angular';
+
 
 // env
 
@@ -79,6 +81,7 @@ import { CourseDetailComponent } from './detail/course-detail/course-detail.comp
 import { ProductDetailComponent } from './detail/product-detail/product-detail.component';
 import { TrainerDetailComponent } from './detail/trainer-detail/trainer-detail.component';
 import { DetailMainComponent } from './detail/detail-main/detail-main.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -114,7 +117,8 @@ const authInterceptor = {
     CourseDetailComponent,
     ProductDetailComponent,
     TrainerDetailComponent,
-    DetailMainComponent
+    DetailMainComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -166,7 +170,11 @@ const authInterceptor = {
     VgCoreModule,
     VgControlsModule,
     VgOverlayPlayModule,
-    VgBufferingModule
+    VgBufferingModule,
+    MbscModule,
+    HttpClientJsonpModule,
+    MbscEventcalendarModule,
+    MbscButtonModule
   ],
   providers: [
     errorInterceptor,

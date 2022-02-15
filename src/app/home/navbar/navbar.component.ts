@@ -4,6 +4,8 @@ import { CarouselService } from 'src/app/services/home/carousel.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonService } from 'src/app/services/common/common.service';
 import { SearchType } from 'src/app/enums/SearchType';
+import { MatDialog } from '@angular/material/dialog';
+import { CalendarComponent } from 'src/app/components/calendar/calendar.component';
 
 @Component({
   selector: 'app-navbar',
@@ -34,7 +36,8 @@ export class NavbarComponent implements OnInit {
 
   constructor(private carouselService: CarouselService,
     private formBuilder: FormBuilder,
-    private commonService: CommonService) {
+    private commonService: CommonService,
+    public dialog: MatDialog) {
     this.foucusOutEvent();
     this.searchForm = this.formBuilder.group({
       searchResult: '',
@@ -108,5 +111,13 @@ export class NavbarComponent implements OnInit {
       return "course";
     }
     return "trainer";
+  }
+
+  calendarEvent(): void {
+    const dialogRef = this.dialog.open(CalendarComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }
