@@ -56,7 +56,7 @@ body {
 }
 
 p {
-    font-size: 17px; 
+    font-size: 17px;
     line-height: 30px;
 }
 
@@ -92,28 +92,53 @@ p {
     color: #f7f7f7;
 }
 
-h1{
+h1 {
     font-size: 30px !important;
     font-weight: bold !important;
 }
 
-h2{
+h2 {
     font-size: 24px !important;
     font-weight: bold !important;
 }
 
+.myform-input {
+    height: 40px;
+}
+
+.myform-label {
+    font-size: 19px;
+}
+
+.myform-button {
+    font-size: 19px;
+    width: 120x !important;
+    min-width: unset !important;
+}
+
+.myform-tooltip {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 100;
+}
+
+.my-tooltip {
+    white-space: pre-line !important;
+}
 
 // navbar search responsive
 @media only screen and (max-width: 991px) {
-    #search-result{
+    #search-result {
         top: 40vh !important;
     }
-    .my-nav-itemd li{
+
+    .my-nav-itemd li {
         width: 10% !important;
         display: inline;
     }
-    .my-nav-item-list{
+
+    .my-nav-item-list {
         width: 100vw !important;
     }
 }
-

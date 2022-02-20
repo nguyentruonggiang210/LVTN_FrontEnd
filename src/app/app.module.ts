@@ -26,12 +26,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -40,6 +41,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
+import { MatTooltipModule  } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ODataModule } from 'angular-odata';
 import { VgCoreModule } from '@videogular/ngx-videogular/core';
@@ -82,6 +84,9 @@ import { ProductDetailComponent } from './detail/product-detail/product-detail.c
 import { TrainerDetailComponent } from './detail/trainer-detail/trainer-detail.component';
 import { DetailMainComponent } from './detail/detail-main/detail-main.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
+import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
+import { UserDetailComponent } from './detail/user-detail/user-detail.component';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -118,7 +123,10 @@ const authInterceptor = {
     ProductDetailComponent,
     TrainerDetailComponent,
     DetailMainComponent,
-    CalendarComponent
+    CalendarComponent,
+    LoginDialogComponent,
+    RegisterDialogComponent,
+    UserDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -174,7 +182,9 @@ const authInterceptor = {
     MbscModule,
     HttpClientJsonpModule,
     MbscEventcalendarModule,
-    MbscButtonModule
+    MbscButtonModule,
+    MatDatepickerModule,
+    MatTooltipModule
   ],
   providers: [
     errorInterceptor,

@@ -49,7 +49,8 @@
                 <div class="input-group row">
                     <mat-form-field class="col-md-2 m-0">
                         <mat-label>Type</mat-label>
-                        <mat-select required (selectionChange)="changeSelectOption($event)" [(ngModel)]="defaultSelect" formControlName="searchType">
+                        <mat-select required (selectionChange)="changeSelectOption($event)" [(ngModel)]="defaultSelect"
+                            formControlName="searchType">
                             <mat-option *ngFor="let seach of searchType" [value]="seach.id">{{ seach.name }}
                             </mat-option>
                         </mat-select>
@@ -69,52 +70,72 @@
                     </mat-form-field>
                 </div>
             </form>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 my-nav-item">
-                <li class="nav-item me-3 me-lg-1 active">
-                    <a class="nav-link" href="#">
-                        <span><i class="fas fa-shopping-cart fa-lg"></i></span>
-                        <span class="badge rounded-pill badge-notification bg-danger">1</span>
-                    </a>
-                </li>
+            <div *ngIf="tokenString != null && tokenString != undefined; else elseBlock">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 my-nav-item">
+                    <li class="nav-item me-3 me-lg-1 active">
+                        <a class="nav-link" href="#">
+                            <span><i class="fas fa-shopping-cart fa-lg"></i></span>
+                            <span class="badge rounded-pill badge-notification bg-danger">1</span>
+                        </a>
+                    </li>
 
-                <li class="nav-item me-3 me-lg-1">
-                    <a class="nav-link" href="#">
-                        <span><i class="fas fa-comments fa-lg"></i></span>
-                    </a>
-                </li>
+                    <li class="nav-item me-3 me-lg-1">
+                        <a class="nav-link" href="#">
+                            <span><i class="fas fa-comments fa-lg"></i></span>
+                        </a>
+                    </li>
 
-                <li class="nav-item me-3 me-lg-1">
-                    <a class="nav-link" (click)="calendarEvent()">
-                        <span><i class="fas fa-calendar-alt fa-lg"></i></span>
-                    </a>
-                </li>
+                    <li class="nav-item me-3 me-lg-1">
+                        <a class="nav-link" (click)="calendarEvent()">
+                            <span><i class="fas fa-calendar-alt fa-lg"></i></span>
+                        </a>
+                    </li>
 
-                <li class="nav-item me-3 me-lg-1">
-                    <a class="nav-link" href="#">
-                        <span><i class="fas fa-bell fa-lg"></i></span>
-                    </a>
-                </li>
+                    <li class="nav-item me-3 me-lg-1">
+                        <a class="nav-link" href="#">
+                            <span><i class="fas fa-bell fa-lg"></i></span>
+                        </a>
+                    </li>
 
-                <li class="nav-item me-3 me-lg-1 dropdown" mdbDropdown>
-                    <a class="nav-link dropdown-toggle" href="#" id="userMenuDropDownLink" role="button"
-                        mdbDropdownToggle aria-expanded="false">
-                        <span><i class="fas fa-users fa-lg"></i></span>
-                        <span class="badge rounded-pill badge-notification bg-danger">0</span>
-                    </a>
-                    <ul mdbDropdownMenu class="dropdown-menu my-nav-item-list" aria-labelledby="userMenuDropDownLink">
-                        <li>
-                            <a class="dropdown-item" href="#">User Information</a>
+                    <li class="nav-item me-3 me-lg-1 dropdown" mdbDropdown>
+                        <a class="nav-link dropdown-toggle" href="#" id="userMenuDropDownLink" role="button"
+                            mdbDropdownToggle aria-expanded="false">
+                            <span><i class="fas fa-users fa-lg"></i></span>
+                            <span class="badge rounded-pill badge-notification bg-danger">0</span>
+                        </a>
+                        <ul mdbDropdownMenu class="dropdown-menu my-nav-item-list"
+                            aria-labelledby="userMenuDropDownLink">
+                            <li>
+                                <a class="dropdown-item" (click)="openLoginDialog()">User Information</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Invitation</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" (click)="logOutEvent()">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <ng-template #elseBlock>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 my-nav-item">
+                        <li class="nav-item me-3 me-lg-1 active pl-1 pr-1">
+                            <a class="nav-link" href="#">
+                                <span><i class="fas fa-shopping-cart fa-lg"></i></span>
+                                <span class="badge rounded-pill badge-notification bg-danger">1</span>
+                            </a>
                         </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Invitation</a>
+                        <li class="nav-item me-3 me-lg-1 active pl-1 pr-1">
+                            <button style="font-size: 17px;" mat-button color="primary" (click)="openLoginDialog()">Login</button>
                         </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Logout</a>
+                        <li class="nav-item me-3 me-lg-1 active pl-1 pr-1">
+                            <button style="font-size: 17px;" mat-button color="primary" (click)="openRegisterDialog()">Register</button>
                         </li>
                     </ul>
-                </li>
-            </ul>
-
+                </ng-template>
+            </div>
         </div>
         <!-- Collapsible wrapper -->
     </div>

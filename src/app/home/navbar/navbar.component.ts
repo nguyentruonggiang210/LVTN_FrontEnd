@@ -4,8 +4,12 @@ import { CarouselService } from 'src/app/services/home/carousel.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonService } from 'src/app/services/common/common.service';
 import { SearchType } from 'src/app/enums/SearchType';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CalendarComponent } from 'src/app/components/calendar/calendar.component';
+import { LoginDialogComponent } from 'src/app/components/login-dialog/login-dialog.component';
+import { RegisterDialogComponent } from 'src/app/components/register-dialog/register-dialog.component';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +17,7 @@ import { CalendarComponent } from 'src/app/components/calendar/calendar.componen
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
+  tokenString: string = this.commonService.getLocalStorage(this.commonService.tokenName);
   defaultSelect: number = 1;
   searchForm: FormGroup;
   dataSource: SearchDto[];
@@ -33,11 +37,12 @@ export class NavbarComponent implements OnInit {
       name: 'Trainer'
     }
   ];
-
+  data
   constructor(private carouselService: CarouselService,
     private formBuilder: FormBuilder,
     private commonService: CommonService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    private router: Router) {
     this.foucusOutEvent();
     this.searchForm = this.formBuilder.group({
       searchResult: '',
@@ -120,4 +125,34 @@ export class NavbarComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
+
+  openLoginDialog(): void {
+    const dialogRef = this.dialog.open(LoginDialogComponent, {
+      width: '50%',
+      maxWidth: '800px',
+      minWidth: '350px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result);
+    });
+  }
+
+  openRegisterDialog(): void {
+    const dialogRef = this.dialog.open(RegisterDialogComponent, {
+      width: '50%',
+      maxWidth: '800px',
+      minWidth: '350px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result);
+    });
+  }
+
+  logOutEvent(): void{
+    this.commonService.setLocalStorage(this.commonService.tokenName, null);
+    window.location.href = '/';
+  }
 }
+

@@ -1,0 +1,43 @@
+<h1 mat-dialog-title class="text-center">REGISTER</h1>
+<div class="text-center">
+  <img src="../../../assets/logo.png" style="margin: 10px auto;" height="120" alt="" loading="lazy" />
+</div>
+<div mat-dialog-content class="mb-2">
+  <form [formGroup]="registerFormGroup" (ngSubmit)="registerEvent()" class="text-center">
+    <mat-form-field appearance="fill" class="w-100">
+      <mat-label class="myform-label">User Name</mat-label>
+      <input class="myform-input" matInput formControlName="userName">
+      <mat-hint align="start">Required</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="w-100 mt-4">
+      <mat-label class="myform-label">Name</mat-label>
+      <input class="myform-input" matInput formControlName="name">
+      <mat-hint align="start">Required</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="w-100 mt-4">
+      <mat-label class="myform-label">Password</mat-label>
+      <input class="myform-input" matInput type="password" formControlName="password">
+      <mat-hint align="start">Required</mat-hint>
+      <i class="fa-solid fa-circle-question fa-2x myform-tooltip" matTooltipClass="my-tooltip" matTooltip="Password must:
+      Has at least 1 digit.
+      Has at least 1 upper.
+      Has at least 1 lower.
+      Length must be more than 8."></i>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="w-100 mt-4">
+      <mat-label class="myform-label">Confirm Password</mat-label>
+      <input class="myform-input" matInput type="password" formControlName="confirmPassword">
+      <mat-hint align="start">Required</mat-hint>
+      <i class="fa-solid fa-circle-question fa-2x myform-tooltip" matTooltipClass="my-tooltip" matTooltip="Confirm Password must:
+      Has at least 1 digit.
+      Has at least 1 upper.
+      Has at least 1 lower.
+      Length must be more than 8.
+      Confirm passsword must equal password."></i>
+    </mat-form-field>
+    <button mat-stroked-button style="width: 120px;" color="primary" class="mt-4 mr-2 myform-button p-2" type="submit"
+      [disabled]="!registerFormGroup.valid">Register</button>
+    <button mat-stroked-button style="width: 120px;" color="accent" class="mt-4 ml-2 myform-button p-2" type="button"
+      (click)="closeDialogEvent()">Close</button>
+  </form>
+</div>
