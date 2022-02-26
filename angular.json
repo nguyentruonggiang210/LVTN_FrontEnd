@@ -40,7 +40,8 @@
               "node_modules/@videogular/ngx-videogular/fonts/videogular.css",
               "src/styles.scss",
               "./node_modules/jqwidgets-ng/jqwidgets/styles/jqx.base.css",
-              "./node_modules/@mobiscroll/angular/dist/css/mobiscroll.min.css"
+              "./node_modules/@mobiscroll/angular/dist/css/mobiscroll.min.css",
+              "./src/assets/external-css/bootstrap.min.css"
             ],
             "scripts": [
               "node_modules/chart.js/dist/chart.js"

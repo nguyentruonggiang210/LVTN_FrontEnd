@@ -80,9 +80,82 @@
                     </li>
 
                     <li class="nav-item me-3 me-lg-1">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" [mdePopoverTriggerFor]="chatPopOver" mdePopoverTriggerOn="click"
+                            #popoverTrigger="mdePopoverTrigger">
                             <span><i class="fas fa-comments fa-lg"></i></span>
                         </a>
+                        <mde-popover #chatPopOver="mdePopover" [mdePopoverOverlapTrigger]="false">
+                            <div class="scrollbar scrollbar-primary"
+                                style="width: 400px; max-width: 400px; min-width: 300px; min-height: 100px; max-height: 400px;">
+                                <div class="force-overflow">
+                                    <mat-list role="list">
+                                        <mat-list-item role="listitem" class="pt-3 pb-3">
+                                            <img src="../../../assets/logo.png" height="60" alt="" loading="lazy"
+                                                style="float: left;" />
+                                            <p style="
+                                            overflow: hidden;
+                                            white-space: nowrap;
+                                            text-overflow: ellipsis;">
+                                                sdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsddddddddddddddddd</p>
+                                        </mat-list-item>
+                                        <mat-list-item role="listitem" class="pt-3 pb-3">
+                                            <img src="../../../assets/logo.png" height="60" alt="" loading="lazy"
+                                                style="float: left;" />
+                                            <p style="
+                                            overflow: hidden;
+                                            white-space: nowrap;
+                                            text-overflow: ellipsis;">
+                                                sdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsddddddddddddddddd</p>
+                                        </mat-list-item>
+                                        <mat-list-item role="listitem" class="pt-3 pb-3">
+                                            <img src="../../../assets/logo.png" height="60" alt="" loading="lazy"
+                                                style="float: left;" />
+                                            <p style="
+                                            overflow: hidden;
+                                            white-space: nowrap;
+                                            text-overflow: ellipsis;">
+                                                sdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsddddddddddddddddd</p>
+                                        </mat-list-item>
+                                        <mat-list-item role="listitem" class="pt-3 pb-3">
+                                            <img src="../../../assets/logo.png" height="60" alt="" loading="lazy"
+                                                style="float: left;" />
+                                            <p style="
+                                            overflow: hidden;
+                                            white-space: nowrap;
+                                            text-overflow: ellipsis;">
+                                                sdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsddddddddddddddddd</p>
+                                        </mat-list-item>
+                                        <mat-list-item role="listitem" class="pt-3 pb-3">
+                                            <img src="../../../assets/logo.png" height="60" alt="" loading="lazy"
+                                                style="float: left;" />
+                                            <p style="
+                                            overflow: hidden;
+                                            white-space: nowrap;
+                                            text-overflow: ellipsis;">
+                                                sdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsddddddddddddddddd</p>
+                                        </mat-list-item>
+                                        <mat-list-item role="listitem" class="pt-3 pb-3">
+                                            <img src="../../../assets/logo.png" height="60" alt="" loading="lazy"
+                                                style="float: left;" />
+                                            <p style="
+                                            overflow: hidden;
+                                            white-space: nowrap;
+                                            text-overflow: ellipsis;">
+                                                sdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsddddddddddddddddd</p>
+                                        </mat-list-item>
+                                        <mat-list-item role="listitem" class="pt-3 pb-3">
+                                            <img src="../../../assets/logo.png" height="60" alt="" loading="lazy"
+                                                style="float: left;" />
+                                            <p style="
+                                            overflow: hidden;
+                                            white-space: nowrap;
+                                            text-overflow: ellipsis;">
+                                                sdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsddddddddddddddddd</p>
+                                        </mat-list-item>
+                                    </mat-list>
+                                </div>
+                            </div>
+                        </mde-popover>
                     </li>
 
                     <li class="nav-item me-3 me-lg-1">
@@ -92,9 +165,26 @@
                     </li>
 
                     <li class="nav-item me-3 me-lg-1">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" [mdePopoverTriggerFor]="notifyPopover" mdePopoverTriggerOn="click"
+                            #popoverTrigger="mdePopoverTrigger">
                             <span><i class="fas fa-bell fa-lg"></i></span>
                         </a>
+                        <mde-popover #notifyPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+                            <div class="scrollbar scrollbar-primary"
+                                style="width: 400px; max-width: 400px; min-width: 300px; min-height: 100px; max-height: 400px;">
+                                <div class="force-overflow">
+                                    <mat-list role="list">
+                                        <mat-list-item role="listitem">Item 1</mat-list-item>
+                                        <mat-list-item role="listitem">Item 2</mat-list-item>
+                                        <mat-list-item role="listitem">Item 3</mat-list-item>
+                                        <mat-list-item role="listitem">Item 1</mat-list-item>
+                                        <mat-list-item role="listitem">Item 2</mat-list-item>
+                                        <mat-list-item role="listitem">Item 3</mat-list-item>
+                                        
+                                    </mat-list>
+                                </div>
+                            </div>
+                        </mde-popover>
                     </li>
 
                     <li class="nav-item me-3 me-lg-1 dropdown" mdbDropdown>
@@ -128,10 +218,12 @@
                             </a>
                         </li>
                         <li class="nav-item me-3 me-lg-1 active pl-1 pr-1">
-                            <button style="font-size: 17px;" mat-button color="primary" (click)="openLoginDialog()">Login</button>
+                            <button style="font-size: 17px;" mat-button color="primary"
+                                (click)="openLoginDialog()">Login</button>
                         </li>
                         <li class="nav-item me-3 me-lg-1 active pl-1 pr-1">
-                            <button style="font-size: 17px;" mat-button color="primary" (click)="openRegisterDialog()">Register</button>
+                            <button style="font-size: 17px;" mat-button color="primary"
+                                (click)="openRegisterDialog()">Register</button>
                         </li>
                     </ul>
                 </ng-template>

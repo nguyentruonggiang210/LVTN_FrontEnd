@@ -41,7 +41,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
-import { MatTooltipModule  } from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ODataModule } from 'angular-odata';
 import { VgCoreModule } from '@videogular/ngx-videogular/core';
@@ -49,8 +49,9 @@ import { VgControlsModule } from '@videogular/ngx-videogular/controls';
 import { VgOverlayPlayModule } from '@videogular/ngx-videogular/overlay-play';
 import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { MbscModule, MbscEventcalendarModule, MbscButtonModule } from '@mobiscroll/angular';
-
-
+import { MdePopoverModule } from '@material-extended/mde';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+// import { AgmCoreModule } from '@agm/core';
 // env
 
 import { environment } from '../environments/environment';
@@ -87,6 +88,10 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { RegisterDialogComponent } from './components/register-dialog/register-dialog.component';
 import { UserDetailComponent } from './detail/user-detail/user-detail.component';
+import { AdminComponent } from './management/admin/admin.component';
+import { TrainerComponent } from './management/trainer/trainer.component';
+import { ProductComponent } from './management/product/product.component';
+import { UserComponent } from './management/user/user.component';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -126,7 +131,11 @@ const authInterceptor = {
     CalendarComponent,
     LoginDialogComponent,
     RegisterDialogComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    AdminComponent,
+    TrainerComponent,
+    ProductComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
@@ -184,7 +193,12 @@ const authInterceptor = {
     MbscEventcalendarModule,
     MbscButtonModule,
     MatDatepickerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MdePopoverModule,
+    ScrollingModule,
+    // AgmCoreModule.forRoot({
+    //   apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
+    // })
   ],
   providers: [
     errorInterceptor,

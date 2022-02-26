@@ -20,7 +20,8 @@ export class CalendarComponent implements OnInit {
     dragToCreate: true,
     dragToMove: true,
     dragToResize: true,
-    width: '100vw',
+    width: '70vw',
+    height: '80vh',
     responsive: {
       large: {
         view: {
