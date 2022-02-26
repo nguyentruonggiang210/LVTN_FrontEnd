@@ -49,7 +49,6 @@
                     <p>Difficulty: 2/5</p>
                     <p>Equipment: Exercise Band, Mat, Other</p>
                     <p>Training Type: Low Impact, Strength Training</p>
-                    <p>Calorie Burn: 76-144</p>
                 </div>
                 <div class="col col-md-5">
                     <i class="icon -focus-core_lower_body" aria-hidden="true"></i>
@@ -58,7 +57,7 @@
             <div class="text-center left-0 mt-5">
                 <button type="button" class="btn btn-outline-primary mt-2 w-100">Add to card</button>
                 <button type="button" class="btn btn-outline-primary mt-2 w-100">Buy now</button>
-                <button type="button" class="btn btn-outline-primary mt-2 w-100">Buy now</button>
+                <button type="button" class="btn btn-outline-primary mt-2 w-100">Buy installment</button>
             </div>
         </div>
     </div>
@@ -87,6 +86,9 @@
                 </a>
             </div>
         </div>
+        <qr-code value="http://localhost:4200/detail/product/1" size="150" errorCorrectionLevel="M"
+            centerImageSrc="undefined" centerImageSize="undefined" [margin]="4">
+        </qr-code>
         <p>
             Attention: for those who are pregnant, looking to become pregnant, or just out of a pregnancy, the ideas,
             workouts, and strategies presented in this workout video and write-up reflect the research and experience of
@@ -117,15 +119,19 @@
         <h1 class="mt-2">46 Comments</h1>
         <hr>
         <div class="p-4 text-center">
-            <button class="btn btn-primary w-75 m-auto" style="height: 50px; font-size: 22px; font-weight: 450;">SIGN IN
+            <button *ngIf="token != null; else elseBlock" class="btn btn-primary w-75 m-auto"
+                style="height: 50px; font-size: 22px; font-weight: 450;">SIGN IN
                 TO REPLY</button>
-            <div class="comment-input mt-2 text-right">
-                <div class="input-group">
-                    <textarea class="form-control" rows="5" style="height: 100px;" aria-label="With textarea"
-                        placeholder="Enter something ...."></textarea>
+            <ng-template #elseBlock>
+                <div class="comment-input mt-2 text-right">
+                    <div class="input-group">
+                        <textarea class="form-control" rows="5" style="height: 100px;" aria-label="With textarea"
+                            placeholder="Enter something ...."></textarea>
+                    </div>
+                    <button class="btn btn-primary mt-2">Send Comment</button>
                 </div>
-                <button class="btn btn-primary mt-2">Send Comment</button>
-            </div>
+            </ng-template>
+
         </div>
         <hr>
         <div class="comment-list">

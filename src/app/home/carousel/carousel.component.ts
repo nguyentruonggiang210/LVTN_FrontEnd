@@ -17,10 +17,22 @@ export class CarouselComponent implements OnInit {
   carouselType: number = 1;
   carouselImages: MenuDto[] = [];
 
-  constructor(private toastrService: ToastrService, private commonService: CommonService, private carouselService : CarouselService) { }
+  carouselImage: MenuDto = {
+    image: 'https://mdbootstrap.com/img/Photos/Slides/img%20(6).webp',
+    content: 'Free course',
+    toolTip: '',
+    url: 'https://mdbootstrap.com/img/Photos/Slides/img%20(6).webp',
+    description: '',
+  };
+
+  constructor(private toastrService: ToastrService, private commonService: CommonService, private carouselService : CarouselService) { 
+    for(var i = 0; i < 2; i++){
+      this.carouselImages.push(this.carouselImage);
+    }
+  }
 
   ngOnInit(): void {
-    this.getCarousel();
+    //this.getCarousel();
   }
 
   getCarousel()

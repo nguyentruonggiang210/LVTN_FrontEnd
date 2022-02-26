@@ -51,7 +51,12 @@ import { VgBufferingModule } from '@videogular/ngx-videogular/buffering';
 import { MbscModule, MbscEventcalendarModule, MbscButtonModule } from '@mobiscroll/angular';
 import { MdePopoverModule } from '@material-extended/mde';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { ChartsModule } from 'ng2-charts';
+import { NgxPrintModule } from 'ngx-print';
+import { QrCodeModule } from 'ng-qrcode';
+
 // import { AgmCoreModule } from '@agm/core';
+
 // env
 
 import { environment } from '../environments/environment';
@@ -92,6 +97,8 @@ import { AdminComponent } from './management/admin/admin.component';
 import { TrainerComponent } from './management/trainer/trainer.component';
 import { ProductComponent } from './management/product/product.component';
 import { UserComponent } from './management/user/user.component';
+import { UserCreationComponent } from './management/user-creation/user-creation.component';
+import { DeleteNotifyComponent } from './components/delete-notify/delete-notify.component';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -135,7 +142,9 @@ const authInterceptor = {
     AdminComponent,
     TrainerComponent,
     ProductComponent,
-    UserComponent
+    UserComponent,
+    UserCreationComponent,
+    DeleteNotifyComponent
   ],
   imports: [
     BrowserModule,
@@ -196,6 +205,9 @@ const authInterceptor = {
     MatTooltipModule,
     MdePopoverModule,
     ScrollingModule,
+    ChartsModule,
+    NgxPrintModule,
+    QrCodeModule
     // AgmCoreModule.forRoot({
     //   apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     // })

@@ -1,0 +1,10 @@
+<h1 mat-dialog-title class="text-center text-danger">Delete Confirmation</h1>
+<h3 class="text-center">{{ data }}!</h3>
+<div class="row text-center mt-3">
+    <div class="col col-md-6">
+        <button class="ml-auto mr-auto" mat-stroked-button color="accent">Delete</button>
+    </div>
+    <div class="col col-md-6">
+        <button (click)="closeDialogEvent()" class="ml-auto mr-auto" mat-stroked-button color="primary">Cancel</button>
+    </div>
+</div>
