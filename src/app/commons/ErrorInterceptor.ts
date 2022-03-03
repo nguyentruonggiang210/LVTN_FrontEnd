@@ -14,9 +14,17 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         return next.handle(req)
             .pipe(catchError((error, caught) => {
-                this.toastService.error(error.message)
-                this.commonService.distroySpinner();
-                console.log(error.message);
+                if(error.error){
+                    this.toastService.error(error.error.error)
+                    this.commonService.distroySpinner();
+                    console.log(error);
+                }
+                else{
+                    this.toastService.error(error.message)
+                    this.commonService.distroySpinner();
+                    console.log(error);
+                }
+               
                 return Observable.throw(error);
             })) as any;
     }

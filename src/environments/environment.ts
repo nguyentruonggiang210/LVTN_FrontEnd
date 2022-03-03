@@ -5,7 +5,9 @@
 export const environment = {
   production: false,
   apiUrl: 'https://localhost:5001/api/',
-  tokenName: 'fitnessToken'
+  tokenName: 'fitnessToken',
+  googleClientId: '333934555231-3ri2pq81dnfvidel11ept1t9guchlonl.apps.googleusercontent.com',
+  facebookClientId: '351753203524687',
 };
 
 /*

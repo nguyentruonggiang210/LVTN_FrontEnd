@@ -26,13 +26,13 @@ export class CarouselComponent implements OnInit {
   };
 
   constructor(private toastrService: ToastrService, private commonService: CommonService, private carouselService : CarouselService) { 
-    for(var i = 0; i < 2; i++){
-      this.carouselImages.push(this.carouselImage);
-    }
+    // for(var i = 0; i < 2; i++){
+    //   this.carouselImages.push(this.carouselImage);
+    // }
   }
 
   ngOnInit(): void {
-    //this.getCarousel();
+    this.getCarousel();
   }
 
   getCarousel()

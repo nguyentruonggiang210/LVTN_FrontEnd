@@ -1,16 +1,26 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { SocialAuthService, SocialUser } from 'angularx-social-login';
+import { BaseResponse } from 'src/app/models/BaseResponse';
+import { LoginRequest } from 'src/app/models/LoginRequest';
+import { LoginResponse } from 'src/app/models/LoginResponse';
+import { AuthService } from 'src/app/services/common/auth.service';
+import { CommonService } from 'src/app/services/common/common.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login-dialog',
   templateUrl: './login-dialog.component.html',
   styleUrls: ['./login-dialog.component.scss']
 })
-export class LoginDialogComponent {
+export class LoginDialogComponent implements OnInit {
 
   // userName: string = '';
   // password: string = '';
+  user: SocialUser;
+  isSignedin: boolean = null;
 
   loginFormGroup = new FormGroup({
     userName: new FormControl('', [
@@ -20,17 +30,58 @@ export class LoginDialogComponent {
       Validators.required,
       Validators.pattern(/^(?=.{8,}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$/)
     ]),
-
   });
+
   constructor(
-    public dialogRef: MatDialogRef<LoginDialogComponent>) { }
+    public dialogRef: MatDialogRef<LoginDialogComponent>,
+    private authService: AuthService,
+    private commonService: CommonService,
+    private router: Router,
+    private socialAuthService: SocialAuthService) { }
+
+  ngOnInit() {
+    this.socialAuthService.authState.subscribe((user) => {
+      this.user = user;
+      this.isSignedin = (user != null);
+      console.log(this.user);
+    });
+  }
 
   closeDialogEvent(): void {
     this.dialogRef.close();
   }
 
   loginEvent(): void {
-    console.log(this.loginFormGroup);
+    var request = <LoginRequest>{
+      userName: this.loginFormGroup.value['userName'],
+      passWord: this.loginFormGroup.value['password']
+    };
+
+    this.authService.loginEvent(request)
+      .subscribe(x => {
+        if (x) {
+          let obj = <BaseResponse<LoginResponse>>x;
+          let token = obj?.body?.token;
+          console.log(token);
+          this.commonService.setLocalStorage(environment.tokenName, token);
+          window.location.reload();
+        }
+      });
+
+  }
+
+  googleLogin() {
+    this.authService.signInWithGoogle().then(res => {
+      const user: SocialUser = { ...res };
+      console.log(user);
+    }, error => console.log(error));
+  }
+
+  facebookLogin() {
+    this.authService.signInWitFacebook().then(res => {
+      const user: SocialUser = { ...res };
+      console.log(user);
+    }, error => console.log(error));
   }
 
   get userName() {

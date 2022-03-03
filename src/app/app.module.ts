@@ -54,6 +54,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ChartsModule } from 'ng2-charts';
 import { NgxPrintModule } from 'ngx-print';
 import { QrCodeModule } from 'ng-qrcode';
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 
 // import { AgmCoreModule } from '@agm/core';
 
@@ -113,6 +115,28 @@ const authInterceptor = {
   multi: true,
 };
 
+// google config
+
+const externalLoginConfig = {
+  provide: 'SocialAuthServiceConfig',
+  useValue: {
+    autoLogin: false,
+    providers: [
+      {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider(
+          environment.googleClientId
+        )
+      },
+      {
+        id: FacebookLoginProvider.PROVIDER_ID,
+        provider: new FacebookLoginProvider(
+          environment.facebookClientId
+        ),
+      }
+    ],
+  }
+}
 
 
 @NgModule({
@@ -207,14 +231,18 @@ const authInterceptor = {
     ScrollingModule,
     ChartsModule,
     NgxPrintModule,
-    QrCodeModule
+    QrCodeModule,
+    SocialLoginModule,
+
     // AgmCoreModule.forRoot({
     //   apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     // })
   ],
   providers: [
     errorInterceptor,
-    authInterceptor
+    authInterceptor,
+    externalLoginConfig,
+    
   ],
   bootstrap: [AppComponent]
 })
