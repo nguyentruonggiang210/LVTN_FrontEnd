@@ -8,23 +8,26 @@ import { CommonService } from '../services/common/common.service';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-    constructor(public toastService: ToastrService, private commonService: CommonService){ }
+    constructor(public toastService: ToastrService, private commonService: CommonService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         return next.handle(req)
             .pipe(catchError((error, caught) => {
-                if(error.error){
-                    this.toastService.error(error.error.error)
-                    this.commonService.distroySpinner();
-                    console.log(error);
-                }
-                else{
-                    this.toastService.error(error.message)
-                    this.commonService.distroySpinner();
-                    console.log(error);
-                }
-               
+                // if (error.error) {
+                //     this.toastService.error(error.error.error)
+                //     this.commonService.distroySpinner();
+                //     console.log(error);
+                // }
+                // else {
+                //     this.toastService.error(error.message)
+                //     this.commonService.distroySpinner();
+                //     console.log(error);
+                // }
+
+                this.toastService.error(error.message)
+                this.commonService.distroySpinner();
+                console.log(error);
                 return Observable.throw(error);
             })) as any;
     }

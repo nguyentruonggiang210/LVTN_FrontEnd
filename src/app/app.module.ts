@@ -101,6 +101,8 @@ import { ProductComponent } from './management/product/product.component';
 import { UserComponent } from './management/user/user.component';
 import { UserCreationComponent } from './management/user-creation/user-creation.component';
 import { DeleteNotifyComponent } from './components/delete-notify/delete-notify.component';
+import { CartDialogComponent } from './components/cart-dialog/cart-dialog.component';
+import { CartComponent } from './home/cart/cart.component';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -168,7 +170,9 @@ const externalLoginConfig = {
     ProductComponent,
     UserComponent,
     UserCreationComponent,
-    DeleteNotifyComponent
+    DeleteNotifyComponent,
+    CartDialogComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,7 @@ import { CommonService } from './common.service';
 import { Router } from '@angular/router';
 import { FacebookLoginProvider, SocialAuthService } from "angularx-social-login";
 import { GoogleLoginProvider } from "angularx-social-login";
+import { ExternalAuthDto } from 'src/app/models/ExternalAuthDto';
 
 const signOutVal = null;
 
@@ -21,27 +22,31 @@ export class AuthService {
     private _externalAuthService: SocialAuthService) { }
 
   public loginEvent(request: LoginRequest) {
-    return this.http.post(environment.apiUrl+"Authentication/login/", request);
+    return this.http.post(environment.apiUrl + "Authentication/login/", request);
   }
 
-  public registerEvent(request: RegisterRequest){
-    return this.http.post(environment.apiUrl+"Authentication/register/", request);
+  public registerEvent(request: RegisterRequest) {
+    return this.http.post(environment.apiUrl + "Authentication/register/", request);
   }
 
-  public logOut(){
+  public logOut() {
     this.commonSerivce.setLocalStorage(environment.tokenName, signOutVal);
     this.router.navigate(['/']);
   }
 
-  public signInWithGoogle = ()=> {
+  public signInWithGoogle = () => {
     return this._externalAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
 
-  public signInWitFacebook = ()=> {
+  public signInWitFacebook = () => {
     return this._externalAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
   public signOutExternal = () => {
     this._externalAuthService.signOut();
+  }
+
+  public externalLogin = (request: ExternalAuthDto) => {
+    return this.http.post(environment.apiUrl + "Authentication/external-login/", request);
   }
 }

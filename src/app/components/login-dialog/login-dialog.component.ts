@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { Router } from '@angular/router';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { BaseResponse } from 'src/app/models/BaseResponse';
+import { ExternalAuthDto } from 'src/app/models/ExternalAuthDto';
 import { LoginRequest } from 'src/app/models/LoginRequest';
 import { LoginResponse } from 'src/app/models/LoginResponse';
 import { AuthService } from 'src/app/services/common/auth.service';
@@ -43,7 +44,6 @@ export class LoginDialogComponent implements OnInit {
     this.socialAuthService.authState.subscribe((user) => {
       this.user = user;
       this.isSignedin = (user != null);
-      console.log(this.user);
     });
   }
 
@@ -60,11 +60,7 @@ export class LoginDialogComponent implements OnInit {
     this.authService.loginEvent(request)
       .subscribe(x => {
         if (x) {
-          let obj = <BaseResponse<LoginResponse>>x;
-          let token = obj?.body?.token;
-          console.log(token);
-          this.commonService.setLocalStorage(environment.tokenName, token);
-          window.location.reload();
+          this.setToken(x);
         }
       });
 
@@ -73,15 +69,41 @@ export class LoginDialogComponent implements OnInit {
   googleLogin() {
     this.authService.signInWithGoogle().then(res => {
       const user: SocialUser = { ...res };
+
       console.log(user);
-    }, error => console.log(error));
+
+      const externalAuth: ExternalAuthDto = {
+        provider: user.provider,
+        idToken: user.idToken,
+        email: null,
+        facebookId: null,
+        firstName: null,
+        lastName: null,
+        pictureUrl: null,
+      }
+
+      this.validateExternalAuth(externalAuth);
+    });
   }
 
   facebookLogin() {
     this.authService.signInWitFacebook().then(res => {
       const user: SocialUser = { ...res };
+
       console.log(user);
-    }, error => console.log(error));
+
+      const externalAuth: ExternalAuthDto = {
+        provider: user.provider,
+        idToken: null,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        pictureUrl: user.photoUrl,
+        facebookId: user.id
+      }
+
+      this.validateExternalAuth(externalAuth);
+    });
   }
 
   get userName() {
@@ -90,6 +112,24 @@ export class LoginDialogComponent implements OnInit {
 
   get password() {
     return this.loginFormGroup.get('password');
+  }
+
+  private validateExternalAuth(externalAuth: ExternalAuthDto) {
+    this.authService.externalLogin(externalAuth)
+      .subscribe(res => {
+        console.log(res);
+
+        if (res) {
+          this.setToken(res);
+        }
+      });
+  }
+
+  private setToken(x: any) {
+    let obj = <BaseResponse<LoginResponse>>x;
+    let token = obj?.body?.token;
+    this.commonService.setLocalStorage(environment.tokenName, token)
+    window.location.reload();
   }
 }
 
