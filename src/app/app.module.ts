@@ -54,7 +54,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { ChartsModule } from 'ng2-charts';
 import { NgxPrintModule } from 'ngx-print';
 import { QrCodeModule } from 'ng-qrcode';
-import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { SocialLoginModule } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 
 // import { AgmCoreModule } from '@agm/core';

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MdePopoverPanel } from '@material-extended/mde';
 
 @Component({
   selector: 'app-cart-dialog',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartDialogComponent implements OnInit {
 
+  @Input() cartPopOver: MdePopoverPanel;
+
   constructor() { }
 
   ngOnInit(): void {
-  }
 
+  }
 }

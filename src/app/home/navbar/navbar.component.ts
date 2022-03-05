@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { SearchDto } from 'src/app/models/SearchDto';
 import { CarouselService } from 'src/app/services/home/carousel.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -9,6 +9,8 @@ import { CalendarComponent } from 'src/app/components/calendar/calendar.componen
 import { LoginDialogComponent } from 'src/app/components/login-dialog/login-dialog.component';
 import { RegisterDialogComponent } from 'src/app/components/register-dialog/register-dialog.component';
 import { Router } from '@angular/router';
+import { MdePopoverPanel, MdePopoverTrigger } from '@material-extended/mde';
+import { CartDialogComponent } from 'src/app/components/cart-dialog/cart-dialog.component';
 
 
 @Component({
@@ -17,6 +19,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  //
+  itemCount: number = 0;
+  isclicked: boolean = false;
+  pid: 1;
+
   tokenString: string = this.commonService.getLocalStorage(this.commonService.tokenName);
   defaultSelect: number = 1;
   searchForm: FormGroup;
@@ -37,7 +44,7 @@ export class NavbarComponent implements OnInit {
       name: 'Trainer'
     }
   ];
-  data
+
   constructor(private carouselService: CarouselService,
     private formBuilder: FormBuilder,
     private commonService: CommonService,
@@ -150,9 +157,22 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  logOutEvent(): void{
+  logOutEvent(): void {
     this.commonService.setLocalStorage(this.commonService.tokenName, null);
     window.location.href = '/';
+  }
+
+  openCartDialog() {
+    const dialogRef = this.dialog.open(CartDialogComponent, {
+      width: '70%',
+      height: '90vh',
+      maxWidth: '1000px',
+      minWidth: '450px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Cart dialog was closed');
+    });
   }
 }
 

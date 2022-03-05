@@ -75,13 +75,13 @@
             </form>
             <div *ngIf="tokenString != null && tokenString != undefined; else elseBlock">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 my-nav-item">
-                    <li class="nav-item me-3 me-lg-1 active">
-                        <a class="nav-link" href="#">
+                    <!-- Cart dialog -->
+                    <li class="nav-item me-3 me-lg-1">
+                        <a class="nav-link" (click)="openCartDialog()">
                             <span><i class="fas fa-shopping-cart fa-lg"></i></span>
                             <span class="badge rounded-pill badge-notification bg-danger">1</span>
                         </a>
                     </li>
-
                     <li class="nav-item me-3 me-lg-1">
                         <a class="nav-link" [mdePopoverTriggerFor]="chatPopOver" mdePopoverTriggerOn="click"
                             #popoverTrigger="mdePopoverTrigger">
