@@ -56,6 +56,9 @@ import { NgxPrintModule } from 'ngx-print';
 import { QrCodeModule } from 'ng-qrcode';
 import { SocialLoginModule } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { NgScrollbarModule } from 'ngx-scrollbar';
+import { ScheduleModule, View } from '@syncfusion/ej2-angular-schedule';
+import { WeekService, MonthService } from '@syncfusion/ej2-angular-schedule';
 
 // import { AgmCoreModule } from '@agm/core';
 
@@ -237,7 +240,8 @@ const externalLoginConfig = {
     NgxPrintModule,
     QrCodeModule,
     SocialLoginModule,
-
+    NgScrollbarModule,
+    ScheduleModule
     // AgmCoreModule.forRoot({
     //   apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     // })
@@ -246,7 +250,8 @@ const externalLoginConfig = {
     errorInterceptor,
     authInterceptor,
     externalLoginConfig,
-    
+    WeekService,
+    MonthService
   ],
   bootstrap: [AppComponent]
 })

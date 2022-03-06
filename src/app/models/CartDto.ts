@@ -1,6 +1,7 @@
-export interface CartDto{
+export interface CartDto {
     id: number,
     name: string,
-    price: string,
-    quantity: number
+    price: number,
+    quantity: number,
+    image: string
 }
