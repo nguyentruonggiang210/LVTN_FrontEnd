@@ -9,8 +9,7 @@ import { UserComponent } from './management/user/user.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'category/:type/:searchString', component: CategoryComponent },
-  { path: 'category/:type/', component: CategoryComponent },
+  { path: 'category/:type', component: CategoryComponent },
   { path: 'detail/:type/:id', component: DetailMainComponent },
   { path: 'detail/user', component: UserDetailComponent },
   { path: 'management/user', component: UserComponent },

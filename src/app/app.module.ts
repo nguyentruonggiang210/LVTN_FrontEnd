@@ -59,6 +59,7 @@ import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-logi
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { ScheduleModule, View } from '@syncfusion/ej2-angular-schedule';
 import { WeekService, MonthService } from '@syncfusion/ej2-angular-schedule';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 // import { AgmCoreModule } from '@agm/core';
 
@@ -241,7 +242,8 @@ const externalLoginConfig = {
     QrCodeModule,
     SocialLoginModule,
     NgScrollbarModule,
-    ScheduleModule
+    ScheduleModule,
+    MatSnackBarModule
     // AgmCoreModule.forRoot({
     //   apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     // })

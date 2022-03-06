@@ -1,7 +1,7 @@
 <div class="normal-component">
     <h1 class="text-center">Category</h1>
-    <app-filter [sortItem]="sortBy"></app-filter>
-    <div class="form-group col col-md-2">
+    <app-filter style="width: 95vw;" [sortItem]="sortBy"></app-filter>
+    <div class="form-group col col-md-2 m-5 p-0">
         <label class="my-form-label">Sort By</label>
         <select class="custom-select" id="inlineFormCustomSelect" name="sortList" (change)="sortListChange($event)">
             <option value="1" selected>Newest</option>
