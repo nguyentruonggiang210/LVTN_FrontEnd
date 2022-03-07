@@ -44,6 +44,7 @@
     "mdb-angular-ui-kit": "^1.6.0",
     "ng-qrcode": "^6.0.0",
     "ng2-charts": "^2.4.2",
+    "ngx-paypal": "^9.0.0",
     "ngx-print": "^1.2.1",
     "ngx-scrollbar": "^9.0.2",
     "ngx-toastr": "^14.2.1",

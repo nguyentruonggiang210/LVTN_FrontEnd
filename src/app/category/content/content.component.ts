@@ -8,6 +8,8 @@ import { CartDto } from 'src/app/models/CartDto';
 import { CartService } from 'src/app/services/home/cart.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { setTime } from '@syncfusion/ej2-angular-schedule';
+import { CartType } from 'src/app/enums/CartType';
+import { SearchType } from 'src/app/enums/SearchType';
 
 const TrainerType = "trainer";
 const CourseType = "course";
@@ -21,10 +23,11 @@ const ActionString = "Close";
   styleUrls: ['./content.component.scss']
 })
 export class ContentComponent implements OnInit {
-
+  dataType: number;
   snackBarTimeout: any;
   dataSource: CategoryDto[] = [];
-
+  productCart = CartType.product;
+  courseCart = CartType.course;
   constructor(private categoryService: CategoryService,
     private route: Router,
     private commonService: CommonService,
@@ -42,12 +45,14 @@ export class ContentComponent implements OnInit {
     var routeArr = routeStr.split('/');
     var typeSearch = routeArr[2];
     if (typeSearch.toUpperCase() === TrainerType) {
-      ///
+      this.dataType = SearchType.Trainer;
     }
     else if (typeSearch.toUpperCase() === CourseType) {
-
+      this.dataType = SearchType.Course;
     }
     else {
+      this.dataType = SearchType.Product;
+
       this.categoryService.getAllProduct("?$skip=0&$top=20")
         .subscribe(x => {
           if (x) {
@@ -59,16 +64,17 @@ export class ContentComponent implements OnInit {
     }
   }
 
-  addToCart(id: string, image: string, price: number, name: string) {
+  addToCart(id: string, image: string, price: number, name: string, cartType: CartType) {
     let model: CartDto = {
       id: Number(id),
       name: name,
       image: image,
       price: price,
-      quantity: NewQuantity
+      quantity: NewQuantity,
+      type: cartType
     }
     this.cartService.setCart(model);
-    
+
     clearTimeout(this.snackBarTimeout);
 
     this.snackBar.open(CartMessage, ActionString);

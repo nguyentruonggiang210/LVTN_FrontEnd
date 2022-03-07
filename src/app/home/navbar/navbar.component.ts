@@ -9,7 +9,7 @@ import { CalendarComponent } from 'src/app/components/calendar/calendar.componen
 import { LoginDialogComponent } from 'src/app/components/login-dialog/login-dialog.component';
 import { RegisterDialogComponent } from 'src/app/components/register-dialog/register-dialog.component';
 import { Router } from '@angular/router';
-import { MdePopoverPanel, MdePopoverTrigger } from '@material-extended/mde';
+import { CartService } from 'src/app/services/home/cart.service';
 import { CartDialogComponent } from 'src/app/components/cart-dialog/cart-dialog.component';
 
 
@@ -19,11 +19,12 @@ import { CartDialogComponent } from 'src/app/components/cart-dialog/cart-dialog.
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  //
+  // variables
   itemCount: number = 0;
   isclicked: boolean = false;
   pid: 1;
 
+  cartCount: number = 0;
   tokenString: string = this.commonService.getLocalStorage(this.commonService.tokenName);
   defaultSelect: number = 1;
   searchForm: FormGroup;
@@ -49,12 +50,17 @@ export class NavbarComponent implements OnInit {
     private formBuilder: FormBuilder,
     private commonService: CommonService,
     public dialog: MatDialog,
-    private router: Router) {
+    private router: Router,
+    private cartService: CartService) {
     this.foucusOutEvent();
     this.searchForm = this.formBuilder.group({
       searchResult: '',
       searchType: ''
     });
+
+    var cartInterval = setInterval(() => {
+      this.cartCount = this.cartService.getCart().length;
+    }, 300);
   }
 
   ngOnInit(): void {

@@ -60,6 +60,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { ScheduleModule, View } from '@syncfusion/ej2-angular-schedule';
 import { WeekService, MonthService } from '@syncfusion/ej2-angular-schedule';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 // import { AgmCoreModule } from '@agm/core';
 
@@ -107,6 +108,7 @@ import { UserCreationComponent } from './management/user-creation/user-creation.
 import { DeleteNotifyComponent } from './components/delete-notify/delete-notify.component';
 import { CartDialogComponent } from './components/cart-dialog/cart-dialog.component';
 import { CartComponent } from './home/cart/cart.component';
+import { MoneyPipe } from './pipes/money.pipe';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -176,7 +178,8 @@ const externalLoginConfig = {
     UserCreationComponent,
     DeleteNotifyComponent,
     CartDialogComponent,
-    CartComponent
+    CartComponent,
+    MoneyPipe
   ],
   imports: [
     BrowserModule,
@@ -243,7 +246,8 @@ const externalLoginConfig = {
     SocialLoginModule,
     NgScrollbarModule,
     ScheduleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    NgxPayPalModule
     // AgmCoreModule.forRoot({
     //   apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     // })

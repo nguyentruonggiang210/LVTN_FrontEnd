@@ -8,6 +8,7 @@ export const environment = {
   tokenName: 'fitnessToken',
   googleClientId: '333934555231-3ri2pq81dnfvidel11ept1t9guchlonl.apps.googleusercontent.com',
   facebookClientId: '351753203524687',
+  paypalClientId: 'AeiQS0YNiaIX8CLU0xpZkryxPZgdYc82ot4Auw0uTsS8SIXJg1BjgJGZnVzSHP8zZFzlDqMDqtTyIGGL'
 };
 
 /*

@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class OdataService<T> {
+export class OdataService{
   constructor(
     private http: HttpClient) { }
 
@@ -25,7 +25,7 @@ export class OdataService<T> {
     return `and ${key} ge ${fromVal} and ${key} le ${toVal}`;  
   }
 
-  queryObject(filterUrl: string){
+  queryObject<T>(filterUrl: string){
     return this.http.get<T>(environment.apiUrl + filterUrl);
   }
 

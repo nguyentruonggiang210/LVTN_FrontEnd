@@ -11,12 +11,14 @@
                     <label class="my-form-label">From Price</label>
                     <div>
                         <mat-slider class="w-100" thumbLabel [displayWith]="formatLabel" tickInterval="100" step="100"
-                            min="0" max="20000" aria-label="units" color="primary" (input)="fromPriceChange($event)"></mat-slider>
+                            min="0" max="20000" aria-label="units" color="primary" (input)="fromPriceChange($event)">
+                        </mat-slider>
                     </div>
                     <label class="my-form-label">To Price</label>
                     <div>
                         <mat-slider class="w-100" thumbLabel [displayWith]="formatLabel" tickInterval="100" step="100"
-                            min="0" max="20000" aria-label="units" color="primary" (input)="toPriceChange($event)"></mat-slider>
+                            min="0" max="20000" aria-label="units" color="primary" (input)="toPriceChange($event)">
+                        </mat-slider>
                     </div>
                 </div>
                 <div class="form-group col-md-6">
@@ -38,16 +40,19 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <input type="date" class="form-control" placeholder="Begin Date" name="startDate" (change)="startDateChange($event)">
+                            <input type="date" class="form-control" placeholder="Begin Date" name="startDate"
+                                (change)="startDateChange($event)">
                         </div>
                         <div class="col-md-6">
-                            <input type="date" class="form-control" placeholder="End Date" name="endDate" (change)="endDateChange($event)">
+                            <input type="date" class="form-control" placeholder="End Date" name="endDate"
+                                (change)="endDateChange($event)">
                         </div>
                     </div>
                 </div>
                 <div class="form-group col col-md-3">
                     <label class="my-form-label">Tags</label>
-                    <mat-selection-list color="primary"  #list [(ngModel)]="tag" name="tag" (selectionChange)="listChange($event.option)" style="height: 200px; overflow: auto;" >
+                    <mat-selection-list color="primary" #list [(ngModel)]="tag" name="tag"
+                        (selectionChange)="listChange($event.option)" style="height: 200px; overflow: auto;">
                         <mat-list-option *ngFor="let tt of tags" [value]="tt">
                             {{ tt }}
                         </mat-list-option>
@@ -57,7 +62,8 @@
             <div class="row">
                 <div class="form-group col col-md-3">
                     <label class="my-form-label">Member Ship</label>
-                    <mat-selection-list color="primary" #list [(ngModel)]="menberShip" name="memberShip" (selectionChange)="listChange($event.option)">
+                    <mat-selection-list color="primary" #list [(ngModel)]="menberShip" name="memberShip"
+                        (selectionChange)="listChange($event.option)">
                         <mat-list-option *ngFor="let ms of memberships" [value]="ms">
                             {{ ms }}
                         </mat-list-option>
@@ -65,15 +71,17 @@
                 </div>
                 <div class="form-group col col-md-3">
                     <label class="my-form-label">Difficulty</label>
-                    <mat-selection-list color="primary" #list [(ngModel)]="difficulty" name="difficulty" (selectionChange)="listChange($event.option)">
-                        <mat-list-option *ngFor="let d of difficulties" [value]="d"> 
+                    <mat-selection-list color="primary" #list [(ngModel)]="difficulty" name="difficulty"
+                        (selectionChange)="listChange($event.option)">
+                        <mat-list-option *ngFor="let d of difficulties" [value]="d">
                             {{ d }}
                         </mat-list-option>
                     </mat-selection-list>
                 </div>
                 <div class="form-group col col-md-3">
                     <label class="my-form-label">Body Focus</label>
-                    <mat-selection-list color="primary" #list [(ngModel)]="bodyFocus" name="bodyFocus" (selectionChange)="listChange($event.option)">
+                    <mat-selection-list color="primary" #list [(ngModel)]="bodyFocus" name="bodyFocus"
+                        (selectionChange)="listChange($event.option)">
                         <mat-list-option *ngFor="let b of bodyFocuses" [value]="b">
                             {{ b }}
                         </mat-list-option>

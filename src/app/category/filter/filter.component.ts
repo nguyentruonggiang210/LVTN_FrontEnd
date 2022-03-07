@@ -40,7 +40,7 @@ export class FilterComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private odataService: OdataService<CategoryDto>,
+    private odataService: OdataService,
     private commonService: CommonService) { }
 
   ngOnInit(): void {
@@ -77,7 +77,7 @@ export class FilterComponent implements OnInit {
     // save to local storage
     localStorage.setItem('categoryUrl', this.url);
     // call api
-    this.odataService.queryObject(this.url)
+    this.odataService.queryObject<any>(this.url)
       .subscribe(body => console.log(body));
   }
 
