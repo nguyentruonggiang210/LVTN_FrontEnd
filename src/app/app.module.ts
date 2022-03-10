@@ -61,6 +61,9 @@ import { ScheduleModule, View } from '@syncfusion/ej2-angular-schedule';
 import { WeekService, MonthService } from '@syncfusion/ej2-angular-schedule';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgxPayPalModule } from 'ngx-paypal';
+import { NgxImageGalleryModule } from 'ngx-image-gallery';
+import { NgxImageZoomModule } from 'ngx-image-zoom';
+import { SwiperModule } from "swiper/angular";
 
 // import { AgmCoreModule } from '@agm/core';
 
@@ -76,6 +79,9 @@ import { ToastrService } from 'ngx-toastr';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './commons/AuthInterceptor';
 import { ErrorInterceptor } from './commons/ErrorInterceptor';
+
+// Pipes
+import { MoneyPipe } from './pipes/money.pipe';
 
 // components
 import { AppComponent } from './app.component';
@@ -108,7 +114,6 @@ import { UserCreationComponent } from './management/user-creation/user-creation.
 import { DeleteNotifyComponent } from './components/delete-notify/delete-notify.component';
 import { CartDialogComponent } from './components/cart-dialog/cart-dialog.component';
 import { CartComponent } from './home/cart/cart.component';
-import { MoneyPipe } from './pipes/money.pipe';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -247,7 +252,10 @@ const externalLoginConfig = {
     NgScrollbarModule,
     ScheduleModule,
     MatSnackBarModule,
-    NgxPayPalModule
+    NgxPayPalModule,
+    NgxImageGalleryModule,
+    NgxImageZoomModule,
+    SwiperModule
     // AgmCoreModule.forRoot({
     //   apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     // })

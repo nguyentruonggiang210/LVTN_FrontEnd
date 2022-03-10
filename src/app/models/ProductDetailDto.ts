@@ -4,5 +4,6 @@ export interface ProductDetailDto {
     bought: number,
     price: number,
     stock: number,
-    productDetailImages: string[]
+    productDetailImages: string[],
+    productBiggerImages: string[]
 }

@@ -1,57 +1,28 @@
 <div class="container-fluid w-75">
-    <div class="row">
-        <div class="col col-md-8 m-0">
-            <vg-player>
-                <vg-overlay-play></vg-overlay-play>
-                <vg-buffering></vg-buffering>
-
-                <vg-scrub-bar>
-                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-                    <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
-                </vg-scrub-bar>
-
-                <vg-controls>
-                    <vg-play-pause></vg-play-pause>
-                    <vg-playback-button></vg-playback-button>
-
-                    <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
-
-                    <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
-
-                    <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
-                    <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
-
-                    <vg-track-selector></vg-track-selector>
-                    <vg-mute></vg-mute>
-                    <vg-volume></vg-volume>
-
-                    <vg-fullscreen></vg-fullscreen>
-                </vg-controls>
-
-                <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" crossorigin>
-                    <source src="http://static.videogular.com/assets/videos/videogular.mp4" type="video/mp4">
-                    <source src="http://static.videogular.com/assets/videos/videogular.ogg" type="video/ogg">
-                    <source src="http://static.videogular.com/assets/videos/videogular.webm" type="video/webm">
-
-                    <track kind="subtitles" label="English"
-                        src="http://static.videogular.com/assets/subs/pale-blue-dot.vtt" srclang="en" default>
-                    <track kind="subtitles" label="Español"
-                        src="http://static.videogular.com/assets/subs/pale-blue-dot-es.vtt" srclang="es">
-                </video>
-            </vg-player>
+    <div class="row mt-2">
+        <div class="col col-md-6 m-0">
+            <lib-ngx-image-zoom style="height: 200px;" [thumbImage]="imageSource" [fullImage]="fullImageSource"
+                [magnification]="1" [zoomMode]="'hover'" [enableScrollZoom]="true"></lib-ngx-image-zoom>
+            <p-carousel [value]="productSlider" styleClass="custom-carousel" [numVisible]="6" [numScroll]="1"
+                [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+                <ng-template let-product pTemplate="item">
+                    <div class="product-item" (click)="changeImageEvent(product.name)">
+                       <img [src]="product.image" width="80px" height="80px" />
+                    </div>
+                </ng-template>
+            </p-carousel>
         </div>
-        <div class="col col-md-4 p-4 bg-dark text-light m-0">
+        <div class="col col-md-6 p-4 bg-dark text-light m-0">
             <div class="row">
-                <div class="col col-md-7">
-                    <h2 class="mb-3">WORKOUT DETAILS</h2>
-                    <p>Duration: 30 Minutes</p>
-                    <p>Calorie Burn: 76-144</p>
-                    <p>Difficulty: 2/5</p>
-                    <p>Equipment: Exercise Band, Mat, Other</p>
+                <div class="col col-md-12">
+                    <h2 class="mb-3">{{ dataSource.productName }}</h2>
+                    <p>Price: ${{ dataSource.productDetails[this.detailIndex].price | money }}</p>
+                    <p>Languages: 9</p>
+                    <p>Difficulty: {{ dataSource.difficulty }}/5</p>
+                    <p>Weight: 107 lbs / (48.53 Kilograms)</p>
+                    <p>Max User Weight: 400 lbs / (181.43 Kilograms)</p>
                     <p>Training Type: Low Impact, Strength Training</p>
-                </div>
-                <div class="col col-md-5">
-                    <i class="icon -focus-core_lower_body" aria-hidden="true"></i>
+                    <p>Warrant: 1 Year Parts & On-Site Labor w/Ext. Warranty Options</p>
                 </div>
             </div>
             <div class="text-center left-0 mt-5">
