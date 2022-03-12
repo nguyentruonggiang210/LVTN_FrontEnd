@@ -32,13 +32,15 @@
 @import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-angular-schedule/styles/material.css';
 
-/* Importing google font */
+/* Import quill rich textbox editor */
+@import '~quill/dist/quill.bubble.css'; 
 
+
+/* Importing google font */
 @import 'https://fonts.googleapis.com/css2?family=Nunito:wght@200;400&display=swap';
 //font-family: 'Nunito', sans-serif;
 @import 'https://fonts.googleapis.com/css2?family=Merriweather:wght@300&family=Nunito:wght@200;400&display=swap';
 //font-family: 'Merriweather', serif;
-
 
 * {
     margin: 0;

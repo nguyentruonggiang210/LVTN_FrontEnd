@@ -7,7 +7,7 @@
                 [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
                 <ng-template let-product pTemplate="item">
                     <div class="product-item" (click)="changeImageEvent(product.name)">
-                       <img [src]="product.image" width="80px" height="80px" />
+                        <img [src]="product.image" width="80px" height="80px" />
                     </div>
                 </ng-template>
             </p-carousel>
@@ -85,6 +85,35 @@
             allow the body to expand and prepare for delivery. This includes relaxation of the pelvic bones and pelvic
             floor, making them unstable and lax while bearing the burden of the baby weight.
         </p>
+    </div>
+    <div class="recommendation-slider">
+        <h1 class="mt-4">Recommendation</h1>
+        <p-carousel [value]="products" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1" [circular]="true"
+            [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+            <ng-template let-product pTemplate="item">
+                <div class="product-item">
+                    <div class="product-item-content">
+                        <div class="p-mb-3">
+                            <img src="{{product.image}}" [alt]="product.name" class="product-image" />
+                        </div>
+                        <div>
+                            <h4 class="p-mb-1">{{product.name}}</h4>
+                            <h6 class="p-mt-0 p-mb-3">${{product.price}}</h6>
+                            <span
+                                [class]="'product-badge status-'+product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
+                            <div class="car-buttons p-mt-5">
+                                <p-button type="button" styleClass="p-button p-button-rounded p-mr-2"
+                                    icon="pi pi-search"></p-button>
+                                <p-button type="button" styleClass="p-button-success p-button-rounded p-mr-2"
+                                    icon="pi pi-star-fill"></p-button>
+                                <p-button type="button" styleClass="p-button-help p-button-rounded" icon="pi pi-cog">
+                                </p-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-carousel>
     </div>
     <div class="comment mt-5">
         <h1 class="mt-2">46 Comments</h1>

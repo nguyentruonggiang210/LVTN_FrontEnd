@@ -64,6 +64,8 @@ import { NgxPayPalModule } from 'ngx-paypal';
 import { NgxImageGalleryModule } from 'ngx-image-gallery';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
 import { SwiperModule } from "swiper/angular";
+import { QuillModule } from 'ngx-quill'
+
 
 // import { AgmCoreModule } from '@agm/core';
 
@@ -128,7 +130,7 @@ const authInterceptor = {
   multi: true,
 };
 
-// google config
+// google/ facebook auth config
 
 const externalLoginConfig = {
   provide: 'SocialAuthServiceConfig',
@@ -150,6 +152,24 @@ const externalLoginConfig = {
     ],
   }
 }
+
+// richtextbox config
+const toolbarConfig: any = [
+  ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+  ['blockquote', 'code-block'],
+  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+  [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+  [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+  [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+  [{ 'direction': 'rtl' }],                         // text direction
+  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+  [{ 'font': [] }],
+  [{ 'align': [] }],
+  ['clean'],                                         // remove formatting button
+  ['link', 'image', 'video']                         // link and image, video
+]
 
 
 @NgModule({
@@ -255,7 +275,8 @@ const externalLoginConfig = {
     NgxPayPalModule,
     NgxImageGalleryModule,
     NgxImageZoomModule,
-    SwiperModule
+    SwiperModule,
+    QuillModule.forRoot()
     // AgmCoreModule.forRoot({
     //   apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     // })

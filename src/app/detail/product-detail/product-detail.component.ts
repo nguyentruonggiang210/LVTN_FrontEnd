@@ -42,7 +42,7 @@ export class ProductDetailComponent implements OnInit {
             this.dataSource = body;
             this.imageSource = body.productDetails[this.detailIndex].productDetailImages[0];
             this.fullImageSource = body.productDetails[this.detailIndex].productBiggerImages[0];
-            this.productSlider = data.body.productDetails[this.detailIndex].productDetailImages.map((d, index) =>  <DetailCarousel>{
+            this.productSlider = data.body.productDetails[this.detailIndex].productDetailImages.map((d, index) => <DetailCarousel>{
               image: d,
               name: index.toString()
             });
@@ -73,8 +73,43 @@ export class ProductDetailComponent implements OnInit {
     this.imageSource = this.dataSource.productDetails[this.detailIndex].productDetailImages[i];
     this.fullImageSource = this.dataSource.productDetails[this.detailIndex].productBiggerImages[i];
   }
+
+  products: Product[] = [
+    {
+      image: "https://www.primefaces.org/showcase/javax.faces.resource/demo/images/product/bamboo-watch.jpg.xhtml",
+      name: "abc",
+      inventoryStatus: "abc",
+      price: 10
+    },
+    {
+      image: "https://www.primefaces.org/showcase/javax.faces.resource/demo/images/product/bamboo-watch.jpg.xhtml",
+      name: "abc",
+      inventoryStatus: "abc",
+      price: 10
+    },
+    {
+      image: "https://www.primefaces.org/showcase/javax.faces.resource/demo/images/product/bamboo-watch.jpg.xhtml",
+      name: "abc",
+      inventoryStatus: "abc",
+      price: 10
+    },
+    {
+      image: "https://www.primefaces.org/showcase/javax.faces.resource/demo/images/product/bamboo-watch.jpg.xhtml",
+      name: "abc",
+      inventoryStatus: "abc",
+      price: 10
+    }
+  ];
 }
 export interface DetailCarousel {
   image: string
   name: string,
+};
+
+export interface Product {
+  image: string
+  name: string,
+  inventoryStatus: string,
+  price: number,
+
 };

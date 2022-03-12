@@ -85,7 +85,7 @@ export class ContentComponent implements OnInit {
   }
 
   navigateToDetail(id: string) {
-
+    this.route.navigate([`/detail/product/${id}`]);
   }
 }
 

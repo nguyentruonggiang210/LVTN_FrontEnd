@@ -17,7 +17,9 @@
             </mat-card-content>
             <mat-card-actions>
                 <button mat-button (click)="navigateToDetail(item.id)">DETAIL</button>
-                <button mat-button (click)="addToCart(item.id, item.image, item.price, item.name, dataType === productCart ? productCart : courseCart)">ADD TO CART</button>
+                <button mat-button
+                    (click)="addToCart(item.id, item.image, item.price, item.name, dataType === productCart ? productCart : courseCart)">ADD
+                    TO CART</button>
             </mat-card-actions>
         </mat-card>
     </div>
