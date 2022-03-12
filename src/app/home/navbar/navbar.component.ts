@@ -4,7 +4,7 @@ import { CarouselService } from 'src/app/services/home/carousel.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommonService } from 'src/app/services/common/common.service';
 import { SearchType } from 'src/app/enums/SearchType';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { CalendarComponent } from 'src/app/components/calendar/calendar.component';
 import { LoginDialogComponent } from 'src/app/components/login-dialog/login-dialog.component';
 import { RegisterDialogComponent } from 'src/app/components/register-dialog/register-dialog.component';
@@ -26,10 +26,9 @@ export class NavbarComponent implements OnInit {
 
   cartCount: number = 0;
   tokenString: string = this.commonService.getLocalStorage(this.commonService.tokenName);
-  defaultSelect: number = 1;
+  defaultSelect: number;
   searchForm: FormGroup;
   dataSource: SearchDto[];
-  selectedType: number = 1;
   keyword: string = "";
   searchType: any[] = [
     {
@@ -64,7 +63,8 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.setDefaultType();
+    this.setDefaultSearchValue();
   }
 
   keyUpEvent(event): void {
@@ -83,8 +83,8 @@ export class NavbarComponent implements OnInit {
 
   changeSelectOption(event): void {
     let val = event.value;
-    this.selectedType = val;
-    this.commonService.setLocalStorage("searchType", this.searchTypeClassify(val));
+    this.defaultSelect = val;
+    this.commonService.setLocalStorage("searchType", val);
   }
 
   foucusOutEvent(): void {
@@ -111,7 +111,7 @@ export class NavbarComponent implements OnInit {
   }
 
   searchResult(): void {
-    this.carouselService.getSearchResult(this.selectedType, this.keyword)
+    this.carouselService.getSearchResult(this.defaultSelect, this.keyword)
       .subscribe(x => {
         this.dataSource = x;
       });
@@ -119,16 +119,6 @@ export class NavbarComponent implements OnInit {
 
   onSubmit(): void {
     console.log(this.searchForm.value);
-  }
-
-  private searchTypeClassify(value): string {
-    if (value == SearchType.Product) {
-      return "product";
-    }
-    else if (value == SearchType.Course) {
-      return "course";
-    }
-    return "trainer";
   }
 
   calendarEvent(): void {
@@ -179,6 +169,33 @@ export class NavbarComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('Cart dialog was closed');
     });
+  }
+
+  searchValue() {
+    this.commonService.setLocalStorage('searchValue', this.keyword);
+    this.router.navigate([]);
+  }
+
+  private setDefaultType() {
+    let searchTypeLocal = this.commonService.getLocalStorage('searchType');    
+    if (searchTypeLocal == null || searchTypeLocal == undefined || searchTypeLocal == '') {
+      this.commonService.setLocalStorage('searchType', SearchType.Product);
+      this.defaultSelect = SearchType.Product;
+    }
+    else {
+      this.defaultSelect = searchTypeLocal;
+    }
+  }
+
+  private setDefaultSearchValue() {
+    let searchValLocal = this.commonService.getLocalStorage('searchValue');
+    if (searchValLocal == null || searchValLocal == undefined || searchValLocal == '') {
+      this.commonService.setLocalStorage('searchValue', '');
+      this.keyword = '';
+    }
+    else {
+      this.keyword = searchValLocal;
+    }
   }
 }
 

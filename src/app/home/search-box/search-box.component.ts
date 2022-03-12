@@ -16,5 +16,9 @@ export class SearchBoxComponent implements OnInit {
   ngOnInit(): void {
    
   }
+
+  navigateToCategory(name: string){
+    
+  }
 }
 

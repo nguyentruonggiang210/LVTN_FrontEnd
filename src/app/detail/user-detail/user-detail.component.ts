@@ -5,6 +5,8 @@ import { GenderType } from 'src/app/enums/GenderType';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserInfoDto } from 'src/app/models/UserInfoDto';
 import { UserDetailService } from 'src/app/services/detail/user-detail.service';
+import { Location } from '@angular/common';
+import { CommonService } from 'src/app/services/common/common.service';
 
 const DialogMessage = "Update successfull";
 const ActionString = "Close";
@@ -40,12 +42,17 @@ export class UserDetailComponent implements OnInit {
     description: new FormControl(),
     gender: new FormControl(),
   });
+  userNameState: string = 'nguyentruonggiang210@gmail.com';
 
   constructor(private userDetailService: UserDetailService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private location: Location,
+    private commonService: CommonService) { }
 
   ngOnInit(): void {
-    this.userDetailService.getUserInf('nguyentruonggiang210@gmail.com')
+    this.handlerUserNameState();
+
+    this.userDetailService.getUserInf(this.userNameState)
       .subscribe(user => {
         if (user) {
           // set value 
@@ -108,7 +115,16 @@ export class UserDetailComponent implements OnInit {
 
   }
 
-  handlerDisplayImage(){
+  handlerDisplayImage() {
     return this.dataSource.avatar == null || this.dataSource.avatar === '' ? DefaultAvatar : this.dataSource.avatar;
+  }
+
+  private handlerUserNameState() {
+    let state = this.location.getState()['userNameState'];
+    console.log(state);
+    
+    if (state !== '' && state !== undefined && state !== null) {
+      this.userNameState = state;
+    }
   }
 }

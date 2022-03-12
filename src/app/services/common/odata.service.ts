@@ -9,7 +9,10 @@ export class OdataService{
   constructor(
     private http: HttpClient) { }
 
-  addFilterEqual(key: string, value: string): string{
+  addFilterEqual(key: string, value: string, isString: boolean = false): string{
+    if(isString){
+      return `and ${key} eq '${value}'`;
+    }
     return `and ${key} eq ${value}`;
   }
 

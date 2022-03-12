@@ -7,9 +7,17 @@ import { environment } from 'src/environments/environment';
 import { PayPalItem } from 'src/app/models/PayPalItem';
 import { CartType } from 'src/app/enums/CartType';
 import { UnitAmount } from 'src/app/models/UnitAmount';
+import { PaymentService } from 'src/app/services/payment/payment.service';
+import { PaymentDto } from 'src/app/models/PaymentDto';
+import { PaymentDetailDto } from 'src/app/models/PaymentDetailDto';
+import { BillType } from 'src/app/enums/BillType';
+import { PaymentType } from 'src/app/enums/PaymentType';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const ProductString = "Product";
 const CourseString = "Course";
+const CartMessage = "Payment successful";
+const ActionString = "Close";
 
 @Component({
   selector: 'app-cart-dialog',
@@ -23,9 +31,12 @@ export class CartDialogComponent implements OnInit {
   productArray: CartDto[] = [];
   courseArray: CartDto[] = [];
   paypalArray: PayPalItem[] = [];
-  moneyCode = 'EUR';
+  moneyCode = 'USD';
+  snackBarTimeout: any;
 
-  constructor(private cartService: CartService) {
+  constructor(private cartService: CartService,
+    private paymentService: PaymentService,
+    private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -59,7 +70,7 @@ export class CartDialogComponent implements OnInit {
 
   private getListItem() {
     return this.cartArray
-      .map(x =><PayPalItem>{
+      .map(x => <PayPalItem>{
         name: x.name,
         quantity: x.quantity.toString(),
         category: 'DIGITAL_GOODS',
@@ -110,6 +121,40 @@ export class CartDialogComponent implements OnInit {
         });
       },
       onClientAuthorization: (data) => {
+        if (data.status == 'COMPLETED') {
+          let detailArray: PaymentDetailDto[] = [];
+          for (const d of this.cartArray) {
+            let tempData: PaymentDetailDto = {
+              amount: d.price,
+              quantity: d.quantity,
+              productId: d.id,
+              productDetailId: 1
+            };
+            detailArray.push(tempData);
+          }
+
+          let payment: PaymentDto = {
+            userId: '8e3e873b-c0fe-412c-b3d7-c6480ae1bbf8',
+            billType: BillType.EWallet,
+            paymentType: PaymentType.FullPaid,
+            totalAmount: this.getTotalAmount(),
+            paymentDetails: detailArray
+          };
+          this.paymentService.uploadPayment(payment)
+            .subscribe(x => {
+              if (x) {
+                clearTimeout(this.snackBarTimeout);
+
+                this.snackBar.open(CartMessage, ActionString);
+
+                this.snackBarTimeout = setTimeout(() => {
+                  this.snackBar.dismiss();
+                }, 3000);
+              }
+            });
+
+          this.clearCart();
+        }
         console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
         /// call api to update into database
 
@@ -124,5 +169,12 @@ export class CartDialogComponent implements OnInit {
         console.log('onClick', data, actions);
       },
     };
+  }
+
+  private clearCart() {
+    this.cartArray = [];
+    this.productArray = [];
+    this.courseArray = [];
+    this.cartService.clearAll();
   }
 }

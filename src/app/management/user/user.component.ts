@@ -5,6 +5,10 @@ import { SingleDataSet, Label, Color, monkeyPatchChartJsLegend, monkeyPatchChart
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteNotifyComponent } from 'src/app/components/delete-notify/delete-notify.component';
+import { UserManagementService } from 'src/app/services/management/user-management.service';
+import { UserManagementDto } from 'src/app/models/admin/UserManagementDto';
+import { ODataResponse } from 'angular-odata';
+import { PageEvent } from '@angular/material/paginator';
 
 const contentDelete = "Are you sure to delete user ";
 const contentDelete1 = "!. You can't restore this account after that!";
@@ -14,7 +18,7 @@ const contentDelete1 = "!. You can't restore this account after that!";
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
-  value: string;
+  searchValue: string;
 
   // bar chart
   public barChartOptions: ChartOptions = {
@@ -51,15 +55,20 @@ export class UserComponent implements OnInit {
     userStatus: true,
   }
 
+  total: number;
+  dataSource: UserManagementDto[] = [];
+  skip: number = 0;
+  take: number = 10;
   constructor(private router: Router,
-    public dialog: MatDialog) {
+    public dialog: MatDialog,
+    private userManagementService: UserManagementService) {
     for (let i = 0; i < 10; i++) {
       this.userList.push(this.user);
     }
   }
 
   ngOnInit() {
-
+    this.getProductList();
   };
 
   navigateCreateUser() {
@@ -86,8 +95,12 @@ export class UserComponent implements OnInit {
     document.getElementById("hiden-component").style.display = "block";
   }
 
-  navigateUpdatePage(id) {
-    this.router.navigate(['management', 'user', id])
+  navigateUpdatePage(userName) {
+    this.router.navigate(['detail/user'], {
+      state: {
+        userNameState: userName
+      }
+    });
   }
   confirmDelete(id) {
     const dialogRef = this.dialog.open(DeleteNotifyComponent, {
@@ -98,5 +111,26 @@ export class UserComponent implements OnInit {
 
     dialogRef.componentInstance.data = contentDelete + id + contentDelete1;
 
+  }
+
+  private getProductList(otherFilter: string = '') {
+    let filter = `?$top=${this.take}&$skip=${this.skip}` + otherFilter;
+    this.userManagementService.getAllUser(filter)
+      .subscribe(x => {
+        if (x) {
+          this.dataSource = x.items;
+          this.total = x.count;
+        }
+      })
+  }
+
+  getPaginatorData(event?: PageEvent) {
+    this.skip = event.pageIndex * this.take;
+    this.getProductList();
+  }
+
+  searchByUserName() {
+    let filter = `&$filter=contains(userName, '${this.searchValue}')`;
+    this.getProductList(filter);
   }
 }

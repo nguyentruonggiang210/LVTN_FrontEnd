@@ -15,8 +15,8 @@
                             <div class="col col-6">
                                 <mat-form-field class="example-form-field" appearance="fill">
                                     <mat-label>Search User</mat-label>
-                                    <input matInput type="text" [(ngModel)]="value">
-                                    <button matSuffix mat-icon-button aria-label="Clear">
+                                    <input matInput type="text" [(ngModel)]="searchValue">
+                                    <button (click)="searchByUserName()" matSuffix mat-icon-button aria-label="Clear">
                                         <mat-icon>search</mat-icon>
                                     </button>
                                 </mat-form-field>
@@ -90,16 +90,16 @@
                             <table class="table">
                                 <thead class=" text-primary">
                                     <th>
-                                        ID
+                                        Order
+                                    </th>
+                                    <th>
+                                        UserName
                                     </th>
                                     <th>
                                         Name
                                     </th>
                                     <th>
-                                        Role
-                                    </th>
-                                    <th>
-                                        City
+                                        Address
                                     </th>
                                     <th>
                                         Date Create
@@ -112,34 +112,34 @@
                                     </th>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let user of userList; let i = index">
+                                    <tr *ngFor="let user of dataSource; let i = index">
                                         <td>
-                                            <a [routerLink]="[user.id]">{{ user.id }}</a>
+                                            {{ i + 1 }}
+                                        </td>
+                                        <td>
+                                            {{ user.userName }}
                                         </td>
                                         <td>
                                             {{ user.name }}
                                         </td>
                                         <td>
-                                            {{ user.role }}
+                                            {{ user.address }}
                                         </td>
                                         <td>
-                                            {{ user.city }}
+                                            {{ user.createDate | date }}
                                         </td>
-                                        <td>
-                                            {{ user.dateCreate | date }}
-                                        </td>
-                                        <td [ngClass]="handlerStatus(user.userStatus)">
-                                            {{ user.userStatus ? "Activated" : "Disabled" }}
+                                        <td [ngClass]="handlerStatus(user.status)">
+                                            {{ user.status ? "Activated" : "Disabled" }}
                                         </td>
                                         <td>
                                             <div class="row text-center">
                                                 <div class="col col-lg-6">
                                                     <button class="ml-auto mr-auto" mat-stroked-button color="primary"
-                                                        (click)="navigateUpdatePage(user.id)">Update</button>
+                                                        (click)="navigateUpdatePage(user.userName)">Update</button>
                                                 </div>
                                                 <div class="col col-lg-6">
                                                     <button class="ml-auto mr-auto" mat-stroked-button color="accent"
-                                                        (click)="confirmDelete(user.id)">Delete</button>
+                                                        (click)="confirmDelete(user.userName)">Delete</button>
                                                 </div>
                                             </div>
                                         </td>
@@ -150,8 +150,8 @@
                         </div>
                     </div>
                     <div class="text-left mt-3">
-                        <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
-                            aria-label="Select page">
+                        <mat-paginator #paginator [length]="total" [pageSize]="take" [pageSizeOptions]="[10]"
+                            aria-label="Select page" (page)="getPaginatorData($event)">
                         </mat-paginator>
                     </div>
                 </div>

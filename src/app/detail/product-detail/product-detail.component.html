@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col col-md-12">
                     <h2 class="mb-3">{{ dataSource.productName }}</h2>
-                    <p>Price: ${{ dataSource.productDetails[this.detailIndex].price | money }}</p>
+                    <p>Price: ${{ dataSource.productDetails[detailIndex].price | money }}</p>
                     <p>Languages: 9</p>
                     <p>Difficulty: {{ dataSource.difficulty }}/5</p>
                     <p>Weight: 107 lbs / (48.53 Kilograms)</p>
@@ -88,8 +88,8 @@
     </div>
     <div class="recommendation-slider">
         <h1 class="mt-4">Recommendation</h1>
-        <p-carousel [value]="products" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1" [circular]="true"
-            [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
+        <p-carousel [value]="recommendationProducts" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1"
+            [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
             <ng-template let-product pTemplate="item">
                 <div class="product-item">
                     <div class="product-item-content">
@@ -97,17 +97,13 @@
                             <img src="{{product.image}}" [alt]="product.name" class="product-image" />
                         </div>
                         <div>
-                            <h4 class="p-mb-1">{{product.name}}</h4>
-                            <h6 class="p-mt-0 p-mb-3">${{product.price}}</h6>
-                            <span
-                                [class]="'product-badge status-'+product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
-                            <div class="car-buttons p-mt-5">
-                                <p-button type="button" styleClass="p-button p-button-rounded p-mr-2"
-                                    icon="pi pi-search"></p-button>
-                                <p-button type="button" styleClass="p-button-success p-button-rounded p-mr-2"
-                                    icon="pi pi-star-fill"></p-button>
-                                <p-button type="button" styleClass="p-button-help p-button-rounded" icon="pi pi-cog">
-                                </p-button>
+                            <h3 class="p-mb-1">{{product.name}}</h3>
+                            <h4 class="p-mt-0 p-mb-3">${{product.price}}</h4>
+                            <div class="">
+                                <button mat-button (click)="navigateToDetail(product.id)">DETAIL</button>
+                                <button mat-button
+                                    (click)="addToCart(product.id, product.image, product.price, product.name, productCart)">ADD
+                                    TO CART</button>
                             </div>
                         </div>
                     </div>

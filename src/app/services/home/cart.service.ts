@@ -80,6 +80,10 @@ export class CartService {
     return;
   }
 
+  clearAll() {
+    this.commonService.setLocalStorage(CartName, []);
+  }
+
   private updateToLocalStorage(cartArray: CartDto[]): void {
     this.commonService.setLocalStorage(CartName, cartArray);
   }
