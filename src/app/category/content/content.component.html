@@ -1,7 +1,7 @@
 <div class="container-fluid" style="padding: 0;">
-    <div class="row card-container" *ngIf="dataSource !== null && dataSource.length > 0; else elseBlock"
+    <div class="row card-container" *ngIf="dataSource !== null && dataSource.items.length > 0; else elseBlock"
         style="padding: 0;">
-        <mat-card class="example-card" *ngFor="let item of dataSource">
+        <mat-card class="example-card" *ngFor="let item of dataSource.items">
             <mat-card-header>
                 <div mat-card-avatar class="example-header-image"></div>
                 <mat-card-title>{{ "sdsdsds" }}</mat-card-title>
@@ -23,7 +23,7 @@
             </mat-card-actions>
         </mat-card>
     </div>
-    <div class="text-center mt-3">
+    <div class="text-center mt-3" *ngIf="pageIndexArray && pageIndexArray.length != 0">
         <div style="margin: 0 auto; width: fit-content;">
             <ul class="pagination pagination-circle pg-blue text-center" style="margin-right: 0 !important;">
                 <li class="page-item disabled"><a class="page-link" mdbWavesEffect>First</a></li>
@@ -33,11 +33,7 @@
                         <span class="sr-only">Previous</span>
                     </a>
                 </li>
-                <li class="page-item active"><a class="page-link" mdbWavesEffect>1</a></li>
-                <li class="page-item"><a class="page-link" mdbWavesEffect>2</a></li>
-                <li class="page-item"><a class="page-link" mdbWavesEffect>3</a></li>
-                <li class="page-item"><a class="page-link" mdbWavesEffect>4</a></li>
-                <li class="page-item"><a class="page-link" mdbWavesEffect>5</a></li>
+                <li class="page-item" *ngFor="let e of pageIndexArray"><a class="page-link" mdbWavesEffect>{{ e }}</a></li>
                 <li class="page-item">
                     <a class="page-link" aria-label="Next" mdbWavesEffect>
                         <span aria-hidden="true">&raquo;</span>

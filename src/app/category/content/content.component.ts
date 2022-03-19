@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { Router } from '@angular/router';
 import { CategoryDto } from 'src/app/models/CategoryDto';
@@ -7,10 +7,10 @@ import { CommonService } from 'src/app/services/common/common.service';
 import { CartDto } from 'src/app/models/CartDto';
 import { CartService } from 'src/app/services/home/cart.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { setTime } from '@syncfusion/ej2-angular-schedule';
 import { CartType } from 'src/app/enums/CartType';
 import { SearchType } from 'src/app/enums/SearchType';
 
+const pageSize: number = 40;
 const TrainerType = "trainer";
 const CourseType = "course";
 const NewQuantity = 1;
@@ -23,11 +23,13 @@ const ActionString = "Close";
   styleUrls: ['./content.component.scss']
 })
 export class ContentComponent implements OnInit {
+  @Input() dataSource: OdataResponse<CategoryDto[]>;
   dataType: number;
   snackBarTimeout: any;
-  dataSource: CategoryDto[] = [];
   productCart = CartType.product;
   courseCart = CartType.course;
+  pageIndexArray: number[] = [];
+
   constructor(private categoryService: CategoryService,
     private route: Router,
     private commonService: CommonService,
@@ -37,31 +39,10 @@ export class ContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.classifyCategoryType();
-  }
-
-  private classifyCategoryType(): void {
-    let routeStr = this.route.url;
-    var routeArr = routeStr.split('/');
-    var typeSearch = routeArr[2];
-    if (typeSearch.toUpperCase() === TrainerType) {
-      this.dataType = SearchType.Trainer;
+    for(let i = 0; i < (this.dataSource.count / pageSize) + 1;i++){
+      this.pageIndexArray.push(i + 1);
     }
-    else if (typeSearch.toUpperCase() === CourseType) {
-      this.dataType = SearchType.Course;
-    }
-    else {
-      this.dataType = SearchType.Product;
-
-      this.categoryService.getAllProduct("?$skip=0&$top=20")
-        .subscribe(x => {
-          if (x) {
-            let data = <OdataResponse<CategoryDto[]>>x;
-            this.dataSource = data.items;
-            this.commonService.distroySpinner;
-          }
-        });
-    }
+    console.log(this.dataSource);
   }
 
   addToCart(id: string, image: string, price: number, name: string, cartType: CartType) {

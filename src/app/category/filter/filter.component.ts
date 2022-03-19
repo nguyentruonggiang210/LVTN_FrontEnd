@@ -1,7 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { ThrowStmt } from '@angular/compiler';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router'; import { SearchType } from 'src/app/enums/SearchType';
 import { SortType } from 'src/app/enums/SortType';
+import { BaseResponse } from 'src/app/models/BaseResponse';
 import { CategoryDto } from 'src/app/models/CategoryDto';
+import { CategoryOdata } from 'src/app/models/odata/CategoryOdata';
 import { OdataResponse } from 'src/app/models/OdataResponse';
 import { CommonService } from 'src/app/services/common/common.service';
 import { OdataService } from 'src/app/services/common/odata.service';
@@ -15,15 +18,15 @@ const blankSpace: string = ' ';
   styleUrls: ['./filter.component.scss']
 })
 
-
 export class FilterComponent implements OnInit {
+  /// filter variables
+  @Output() emitFilterCategory = new EventEmitter<OdataResponse<CategoryDto[]>>();
   @Input() sortItem: number;
-  dataSource: CategoryDto[];
+  dataSource: OdataResponse<CategoryDto[]>;
   memberships: string[] = ['Free', 'Plush'];
   difficulties: number[] = [1, 2, 3, 4, 5,];
   bodyFocuses: string[] = ['Upper', 'Core', 'Lower', 'Total'];
   tags: string[] = ['HIIT', 'Streight Training', 'Pilates', 'Low Impact', 'Warm Up / Cool Down', 'Kickboxing', 'Yoga', 'Medicine Ball', 'Barre', 'Stretching / Flexibility', 'Toning'];
-  /// filter variables
   fromPrice: number = null;
   toPrice: number = null;
   calorieMin: number = null;
@@ -36,12 +39,9 @@ export class FilterComponent implements OnInit {
   bodyFocus: string[] = null;
   sortBy: string;
   searchTypeString: string = 'product';
-
-  private url: string;
   private page: number = 0;
+
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private odataService: OdataService,
     private commonService: CommonService) { }
 
@@ -50,43 +50,37 @@ export class FilterComponent implements OnInit {
     this.queryDayta(true);
   }
 
-  queryDayta(isFirstTime: boolean = false) {
-    // search type classify
-    this.searchTypeClassify();
+  emitNewItem(value: OdataResponse<CategoryDto[]>) {
+    this.emitFilterCategory.emit(value);
+  }
 
-    this.url = `Category/${this.searchTypeString}?$take=${pageSize}`;
-    // pagination
-    this.url += `&$skip=${this.page}&$filter=`;
-    // search value
-    this.url += this.searchValueQuery();
-    if (!isFirstTime) {
-      // price
-      this.url += this.priceQuery();
-      // date
-      this.url += this.dateQuery();
-      // calorie
-      this.url += this.calorieQuery();
-      // tags
-      this.url += this.tagQuery();
-      // member ship
-      this.url += this.memberShipQuery();
-      // difficulty
-      this.url += this.difficultyQuery();
-      // body focus
-      this.url += this.bodyFocusQuery();
-    }
-    // controll url
-    this.adjustUrl();
-    this.removeFilter();
-    // sortby
-    this.url += this.sortQuery();
-
-    console.log(this.url);
-    // save to local storage
-    localStorage.setItem('categoryUrl', this.url);
-    // call api
-    this.odataService.queryObject<any>(this.url)
-      .subscribe(body => console.log(body));
+  public queryDayta(isFirstTime: boolean = false) {
+    setTimeout(() => {
+      // search type classify
+      this.searchTypeClassify()
+      // call api
+      let model: CategoryOdata = {
+        searchType: this.searchTypeString,
+        pageSize: pageSize,
+        pagePass: this.page,
+        searchValue: this.searchValueQuery(),
+        price: this.priceQuery(),
+        date: this.dateQuery(),
+        calorie: this.calorieQuery(),
+        tag: this.tagQuery(),
+        memberShip: this.memberShipQuery(),
+        difficulty: this.difficultyQuery(),
+        bodyFocus: this.bodyFocusQuery(),
+        sort: this.sortQuery(),
+        isFirstTime: isFirstTime
+      };
+      this.odataService.categoryQueryOjbect(model)
+        .subscribe(body => {
+          if (body) {
+            this.emitNewItem(body);
+          }
+        });
+    }, 300);
   }
 
   priceQuery() {
@@ -163,31 +157,6 @@ export class FilterComponent implements OnInit {
     return "";
   }
 
-  adjustUrl() {
-    let index = this.url.indexOf('filter=and');
-    if (index != -1) {
-      this.url = this.url.replace(this.url.substring(index + 7, index + 10), '');
-    }
-  }
-
-  removeFilter() {
-    let index = this.url.indexOf('&$filter=');
-    if (index + 9 == this.url.trim().length) {
-      this.url = this.url.substring(0, index);
-    }
-
-    index = this.url.indexOf('&$filter= and');
-    if (index != -1) {
-      if (index + 13 == this.url.trim().length) {
-        this.url = this.url.substring(0, index);
-      }
-      else {
-        this.url = this.url.substring(0, index + 9) + this.url.substring(index + 13, this.url.trim().length);
-      }
-    }
-
-  }
-
   formatLabel(value: number) {
     if (value >= 1000) {
       return Math.round(value / 1000) + 'k';
@@ -253,7 +222,6 @@ export class FilterComponent implements OnInit {
 
   endDateChange(event) {
     let value = event.target.value;
-    console.log(value);
     if (value === "") {
       this.endDate = null;
     }
@@ -291,7 +259,7 @@ export class FilterComponent implements OnInit {
     const Name = 'name';
     let searchValue = this.commonService.getLocalStorage('searchValue');
 
-    return searchValue !== '' && searchValue !== null && searchValue != undefined ? this.odataService.addFilterEqual(Name, searchValue, true) + blankSpace : '';
+    return searchValue !== '' && searchValue !== null && searchValue != undefined ? this.odataService.addFilterIn(Name, [searchValue]) + blankSpace : '';
   }
 
   searchTypeClassify() {

@@ -11,6 +11,7 @@ import { RegisterDialogComponent } from 'src/app/components/register-dialog/regi
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/home/cart.service';
 import { CartDialogComponent } from 'src/app/components/cart-dialog/cart-dialog.component';
+import { FilterComponent } from 'src/app/category/filter/filter.component';
 
 
 @Component({
@@ -23,13 +24,13 @@ export class NavbarComponent implements OnInit {
   itemCount: number = 0;
   isclicked: boolean = false;
   pid: 1;
-
   cartCount: number = 0;
   tokenString: string = this.commonService.getLocalStorage(this.commonService.tokenName);
   defaultSelect: number;
   searchForm: FormGroup;
   dataSource: SearchDto[];
   keyword: string = "";
+  searchTypeString: string = 'product';
   searchType: any[] = [
     {
       id: 1,
@@ -64,6 +65,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.setDefaultType();
+    this.searchTypeClassify();
     this.setDefaultSearchValue();
   }
 
@@ -85,6 +87,7 @@ export class NavbarComponent implements OnInit {
     let val = event.value;
     this.defaultSelect = val;
     this.commonService.setLocalStorage("searchType", val);
+    this.searchTypeClassify();
   }
 
   foucusOutEvent(): void {
@@ -173,7 +176,7 @@ export class NavbarComponent implements OnInit {
 
   searchValue() {
     this.commonService.setLocalStorage('searchValue', this.keyword);
-    this.router.navigate([]);
+    window.location.href = `/category/${this.searchTypeString}`;
   }
 
   private setDefaultType() {
@@ -195,6 +198,23 @@ export class NavbarComponent implements OnInit {
     }
     else {
       this.keyword = searchValLocal;
+    }
+  }
+
+  searchTypeClassify() {
+    let searchType = this.commonService.getLocalStorage('searchType');
+    switch (searchType) {
+      case SearchType.Product:
+        this.searchTypeString = 'product';
+        break;
+      case SearchType.Course:
+        this.searchTypeString = 'course';
+        break;
+      case SearchType.Trainer:
+        this.searchTypeString = 'trainer';
+        break;
+      default:
+        this.searchTypeString = 'product';
     }
   }
 }
