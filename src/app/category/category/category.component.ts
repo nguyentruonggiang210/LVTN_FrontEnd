@@ -13,6 +13,8 @@ export class CategoryComponent implements OnInit {
   type: string;
   sortBy: number = 1;
   dataSource: OdataResponse<CategoryDto[]>;
+  currentPageIndex: number;
+
   constructor(private activatedroute: ActivatedRoute) {
     this.activatedroute.params.subscribe(x => {
       this.id = x.id;

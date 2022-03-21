@@ -8,8 +8,9 @@ import { CategoryOdata } from 'src/app/models/odata/CategoryOdata';
 import { OdataResponse } from 'src/app/models/OdataResponse';
 import { CommonService } from 'src/app/services/common/common.service';
 import { OdataService } from 'src/app/services/common/odata.service';
+import { environment } from 'src/environments/environment';
 
-const pageSize: number = 40;
+const pageSize: number = environment.categoryPageSize;
 const blankSpace: string = ' ';
 
 @Component({
@@ -22,6 +23,7 @@ export class FilterComponent implements OnInit {
   /// filter variables
   @Output() emitFilterCategory = new EventEmitter<OdataResponse<CategoryDto[]>>();
   @Input() sortItem: number;
+  page: number;
   dataSource: OdataResponse<CategoryDto[]>;
   memberships: string[] = ['Free', 'Plush'];
   difficulties: number[] = [1, 2, 3, 4, 5,];
@@ -39,13 +41,22 @@ export class FilterComponent implements OnInit {
   bodyFocus: string[] = null;
   sortBy: string;
   searchTypeString: string = 'product';
-  private page: number = 0;
 
   constructor(
     private odataService: OdataService,
-    private commonService: CommonService) { }
+    private commonService: CommonService,
+    private activeRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.activeRoute.params.subscribe(p => {
+      if (p && p['pageIndex']) {
+        this.page = p['pageIndex'];
+      }
+      else {
+        this.page = 1;
+      }
+    })
+
     this.searchTypeClassify();
     this.queryDayta(true);
   }
@@ -62,7 +73,7 @@ export class FilterComponent implements OnInit {
       let model: CategoryOdata = {
         searchType: this.searchTypeString,
         pageSize: pageSize,
-        pagePass: this.page,
+        pagePass: (this.page - 1) * pageSize,
         searchValue: this.searchValueQuery(),
         price: this.priceQuery(),
         date: this.dateQuery(),

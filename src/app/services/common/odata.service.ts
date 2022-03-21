@@ -63,7 +63,7 @@ export class OdataService {
   }
 
   categoryQueryOjbect(model: CategoryOdata) {
-    let url = `Category/${model.searchType}?$take=${model.pageSize}`;
+    let url = `Category/${model.searchType}?$top=${model.pageSize}`;
     url += `&$skip=${model.pagePass}&$filter=`;
     url += model.searchValue;
     if (!model.isFirstTime) {

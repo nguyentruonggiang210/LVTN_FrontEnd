@@ -112,10 +112,10 @@ import { AdminComponent } from './management/admin/admin.component';
 import { TrainerComponent } from './management/trainer/trainer.component';
 import { ProductComponent } from './management/product/product.component';
 import { UserComponent } from './management/user/user.component';
-import { UserCreationComponent } from './management/user-creation/user-creation.component';
 import { DeleteNotifyComponent } from './components/delete-notify/delete-notify.component';
 import { CartDialogComponent } from './components/cart-dialog/cart-dialog.component';
 import { CartComponent } from './home/cart/cart.component';
+import { UserCreateDialogComponent } from './components/user-create-dialog/user-create-dialog.component';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -200,11 +200,11 @@ const toolbarConfig: any = [
     TrainerComponent,
     ProductComponent,
     UserComponent,
-    UserCreationComponent,
     DeleteNotifyComponent,
     CartDialogComponent,
     CartComponent,
-    MoneyPipe
+    MoneyPipe,
+    UserCreateDialogComponent
   ],
   imports: [
     BrowserModule,

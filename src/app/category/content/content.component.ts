@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/services/category/category.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryDto } from 'src/app/models/CategoryDto';
 import { OdataResponse } from 'src/app/models/OdataResponse';
 import { CommonService } from 'src/app/services/common/common.service';
@@ -8,11 +8,9 @@ import { CartDto } from 'src/app/models/CartDto';
 import { CartService } from 'src/app/services/home/cart.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CartType } from 'src/app/enums/CartType';
-import { SearchType } from 'src/app/enums/SearchType';
+import { environment } from 'src/environments/environment';
 
-const pageSize: number = 40;
-const TrainerType = "trainer";
-const CourseType = "course";
+const pageSize: number = environment.categoryPageSize;
 const NewQuantity = 1;
 const CartMessage = "Add successfully";
 const ActionString = "Close";
@@ -24,14 +22,18 @@ const ActionString = "Close";
 })
 export class ContentComponent implements OnInit {
   @Input() dataSource: OdataResponse<CategoryDto[]>;
+
+  currentPageIndex: number;
   dataType: number;
   snackBarTimeout: any;
   productCart = CartType.product;
   courseCart = CartType.course;
   pageIndexArray: number[] = [];
+  categoryType: string = 'product';
 
   constructor(private categoryService: CategoryService,
     private route: Router,
+    private activeRoute: ActivatedRoute,
     private commonService: CommonService,
     private cartService: CartService,
     private snackBar: MatSnackBar) {
@@ -39,10 +41,7 @@ export class ContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    for(let i = 0; i < (this.dataSource.count / pageSize) + 1;i++){
-      this.pageIndexArray.push(i + 1);
-    }
-    console.log(this.dataSource);
+    this.setCurrentPageIndex();
   }
 
   addToCart(id: string, image: string, price: number, name: string, cartType: CartType) {
@@ -67,6 +66,64 @@ export class ContentComponent implements OnInit {
 
   navigateToDetail(id: string) {
     this.route.navigate([`/detail/product/${id}`]);
+  }
+
+  getListPageIndex() {
+    let pageIndexes: number[] = [];
+
+    for (let i = 0; i < (this.dataSource.count / pageSize); i++) {
+      pageIndexes.push(i + 1);
+    }
+
+    return pageIndexes;
+  }
+
+  hadnlerRouteLink(value: number) {
+    window.location.href = `/category/${this.categoryType}/${value}`;
+  }
+
+  nextPage() {
+
+    this.setCurrentPageIndex();
+
+    if (this.currentPageIndex == (this.dataSource.count >= pageSize ? (this.dataSource.count / pageSize) : (this.dataSource.count / pageSize) + 1)) {
+      return;
+    }
+
+    window.location.href = `/category/${this.categoryType}/${++this.currentPageIndex}`;
+  }
+
+  previousPage() {
+    this.setCurrentPageIndex();
+
+    if (this.currentPageIndex == 1) {
+      return;
+    }
+
+    window.location.href = `/category/${this.categoryType}/${--this.currentPageIndex}`;
+  }
+
+  firstPage() {
+    const FirstPage = 1;
+    window.location.href = `/category/${this.categoryType}/${FirstPage}`;
+  }
+
+  lastPage() {
+    const LastPage = this.dataSource.count >= pageSize ? (this.dataSource.count / pageSize) : (this.dataSource.count / pageSize) + 1;
+    window.location.href = `/category/${this.categoryType}/${LastPage}`;
+  }
+
+  private setCurrentPageIndex() {
+    this.activeRoute.params
+      .subscribe(p => {
+        if (p && p['type']) {
+          this.categoryType = p['type'];
+        }
+
+        if (p && p['pageIndex']) {
+          this.currentPageIndex = p['pageIndex'];
+        }
+      });
   }
 }
 
