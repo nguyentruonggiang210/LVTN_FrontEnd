@@ -6,8 +6,7 @@
             <img src="../../../assets/logo.png" height="80" alt="" loading="lazy" />
         </a>
         <!-- Navbar brand -->
-        <a class="navbar-brand" href="/">Home</a>
-
+        <a class="navbar-brand" href="/">{{ 'HomeTitle' | translate }}</a>
         <!-- Toggle button -->
         <button class="navbar-toggler" type="button" (click)="basicNavbar.toggle()" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -18,31 +17,37 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent" mdbCollapse #basicNavbar="mdbCollapse">
             <!-- Left links -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li mdbDropdown class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" routerLink="category/product"
-                        role="button" mdbDropdownToggle aria-expanded="false">
-                        Category
+                <li class="nav-item dropdown my-nav-item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ 'CategoryTitle' | translate }}
                     </a>
-                    <ul mdbDropdownMenu class="dropdown-menu my-nav-item-list" aria-labelledby="navbarDropdownMenuLink">
-                        <li>
-                            <a class="dropdown-item" routerLink="category/product">Product</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Course</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">Trainer</a>
-                        </li>
-                    </ul>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" routerLink="/category/product">{{ 'Product' | translate }}</a>
+                        <a class="dropdown-item" routerLink="/category/course">{{ 'Course' | translate }}</a>
+                        <!-- <div class="dropdown-divider">T</div> -->
+                        <a class="dropdown-item" routerLink="/category/trainer">{{ 'Trainer' | translate }}</a>
+                    </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                <li class="nav-item my-nav-item">
+                    <a class="nav-link" href="#">{{ 'Abount' | translate }}</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Community</a>
+                <li class="nav-item my-nav-item">
+                    <a class="nav-link" href="#">{{ 'Community' | translate }}</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="management/user">Management</a>
+                <li class="nav-item my-nav-item">
+                    <a class="nav-link" routerLink="management/user">{{ 'ManagementTitle' | translate }}</a>
+                </li>
+                <li class="nav-item dropdown my-nav-item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ 'LanguageTitle' | translate }}
+                    </a>
+                    <div class="dropdown-menu" #selectedLang aria-labelledby="navbarDropdown">
+                        <a *ngFor="let l of translateService.getLangs()" class="dropdown-item"
+                            (click)="changeLanguage(l)">
+                            {{ handlerLanguageDisplay(l) }}</a>
+                    </div>
                 </li>
             </ul>
             <!-- Left links -->
@@ -50,14 +55,14 @@
             <!-- Search form -->
             <div class="input-group row">
                 <mat-form-field class="col-md-2 m-0">
-                    <mat-label>Type</mat-label>
+                    <mat-label>{{ 'Type' | translate }}</mat-label>
                     <mat-select required (selectionChange)="changeSelectOption($event)" [(ngModel)]="defaultSelect">
-                        <mat-option *ngFor="let seach of searchType" [value]="seach.id">{{ seach.name }}
+                        <mat-option *ngFor="let seach of searchType" [value]="seach.id">{{ seach.name | translate }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field class="col-md-8 m-0 position-relative">
-                    <mat-label>Search</mat-label>
+                    <mat-label>{{ 'Search' | translate }}</mat-label>
                     <input id="input-container" [(ngModel)]="keyword" autocomplete="off" matInput placeholder="Enter."
                         (keyup)="keyUpEvent($event)">
                     <button type="button" (click)="searchValue()" class="my-search-icon" mat-icon-button color="primary"

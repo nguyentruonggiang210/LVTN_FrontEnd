@@ -11,7 +11,7 @@ import { RegisterDialogComponent } from 'src/app/components/register-dialog/regi
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/home/cart.service';
 import { CartDialogComponent } from 'src/app/components/cart-dialog/cart-dialog.component';
-import { FilterComponent } from 'src/app/category/filter/filter.component';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -51,7 +51,8 @@ export class NavbarComponent implements OnInit {
     private commonService: CommonService,
     public dialog: MatDialog,
     private router: Router,
-    private cartService: CartService) {
+    private cartService: CartService,
+    public translateService: TranslateService) {
     this.foucusOutEvent();
     this.searchForm = this.formBuilder.group({
       searchResult: '',
@@ -61,12 +62,28 @@ export class NavbarComponent implements OnInit {
     var cartInterval = setInterval(() => {
       this.cartCount = this.cartService.getCart().length;
     }, 300);
+
+    translateService.addLangs(['en', 'vi']);
+    translateService.setDefaultLang('vi');
   }
 
   ngOnInit(): void {
     this.setDefaultType();
     this.searchTypeClassify();
     this.setDefaultSearchValue();
+  }
+
+  changeLanguage(lang: string) {
+    this.translateService.use(lang);
+  }
+
+  handlerLanguageDisplay(language: string): string {
+    switch (language) {
+      case 'en':
+        return 'English';
+      default:
+        return 'Việt Nam';
+    }
   }
 
   keyUpEvent(event): void {
@@ -180,7 +197,7 @@ export class NavbarComponent implements OnInit {
   }
 
   private setDefaultType() {
-    let searchTypeLocal = this.commonService.getLocalStorage('searchType');    
+    let searchTypeLocal = this.commonService.getLocalStorage('searchType');
     if (searchTypeLocal == null || searchTypeLocal == undefined || searchTypeLocal == '') {
       this.commonService.setLocalStorage('searchType', SearchType.Product);
       this.defaultSelect = SearchType.Product;

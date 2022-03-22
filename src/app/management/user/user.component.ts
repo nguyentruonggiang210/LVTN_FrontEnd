@@ -228,6 +228,9 @@ export class UserComponent implements OnInit {
       case 4:
         return this.odataService.sortBy('createDate', true);
       default:
+        return this.odataService.sortBy('userName', false);
     }
   }
+
+  
 }

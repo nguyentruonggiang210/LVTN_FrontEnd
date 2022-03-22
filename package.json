@@ -27,6 +27,8 @@
     "@material-extended/mde": "^3.0.3",
     "@mobiscroll/angular": "https://npm.mobiscroll.com/@mobiscroll/angular-trial/-/angular-trial-5.14.1.tgz",
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
+    "@ngx-translate/core": "^14.0.0",
+    "@ngx-translate/http-loader": "^7.0.0",
     "@syncfusion/ej2-angular-pdfviewer": "^19.4.53",
     "@syncfusion/ej2-angular-popups": "^19.4.53",
     "@syncfusion/ej2-angular-richtexteditor": "^19.4.55",
