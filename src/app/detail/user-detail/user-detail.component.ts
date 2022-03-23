@@ -122,7 +122,7 @@ export class UserDetailComponent implements OnInit {
   private handlerUserNameState() {
     let state = this.location.getState()['userNameState'];
     console.log(state);
-    
+
     if (state !== '' && state !== undefined && state !== null) {
       this.userNameState = state;
     }

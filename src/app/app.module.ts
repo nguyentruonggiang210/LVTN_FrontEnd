@@ -117,6 +117,7 @@ import { DeleteNotifyComponent } from './components/delete-notify/delete-notify.
 import { CartDialogComponent } from './components/cart-dialog/cart-dialog.component';
 import { CartComponent } from './home/cart/cart.component';
 import { UserCreateDialogComponent } from './components/user-create-dialog/user-create-dialog.component';
+import { MeetingRoomComponent } from './detail/meeting-room/meeting-room.component';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -205,7 +206,8 @@ const toolbarConfig: any = [
     CartDialogComponent,
     CartComponent,
     MoneyPipe,
-    UserCreateDialogComponent
+    UserCreateDialogComponent,
+    MeetingRoomComponent
   ],
   imports: [
     BrowserModule,

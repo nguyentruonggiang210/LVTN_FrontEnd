@@ -11,10 +11,14 @@ import { ODataResponse } from 'angular-odata';
 import { PageEvent } from '@angular/material/paginator';
 import { OdataService } from 'src/app/services/common/odata.service';
 import { UserCreateDialogComponent } from 'src/app/components/user-create-dialog/user-create-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const blankSpace = ' ';
 const contentDelete = "Are you sure to delete user ";
 const contentDelete1 = "!. You can't restore this account after that!";
+const Action = "Close";
+const DeleteMessageSuccess = "Delete Success";
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -92,10 +96,10 @@ export class UserComponent implements OnInit {
     public dialog: MatDialog,
     private userManagementService: UserManagementService,
     private odataService: OdataService,
-    private matDialog: MatDialog) {
-    for (let i = 0; i < 10; i++) {
-      this.userList.push(this.user);
-    }
+    private snackBar: MatSnackBar) {
+    // for (let i = 0; i < 10; i++) {
+    //   this.userList.push(this.user);
+    // }
   }
 
   ngOnInit() {
@@ -125,9 +129,6 @@ export class UserComponent implements OnInit {
 
   printEvent() {
     document.getElementById("hiden-component").style.display = "none";
-    // let originalContents = document.body.innerHTML;
-
-    // document.body.innerHTML = printContents;
 
     window.print();
 
@@ -141,15 +142,33 @@ export class UserComponent implements OnInit {
       }
     });
   }
-  confirmDelete(id) {
+
+  confirmDelete(id: any) {
     const dialogRef = this.dialog.open(DeleteNotifyComponent, {
       width: '400px',
       maxWidth: '800px',
       minWidth: '350px',
     });
 
-    dialogRef.componentInstance.data = contentDelete + id + contentDelete1;
+    if (typeof (id) == "string") {
+      dialogRef.componentInstance.data = contentDelete + id + contentDelete1;
+    }
+    else {
+      let userNames = <string[]>id.toString();
+      dialogRef.componentInstance.data = contentDelete + userNames + contentDelete1;
 
+    }
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 'Y') {
+        if (typeof (id) == "string") {
+          this.deleteEvent(id);
+        }
+        else {
+          this.deleteEvent(null);
+        }
+      }
+    });
   }
 
   private getProductList(otherFilter: string = '') {
@@ -232,5 +251,22 @@ export class UserComponent implements OnInit {
     }
   }
 
-  
+  deleteEvent(id: string) {
+    if (id) {
+      // delete one record
+      this.userManagementService.deleteUser(new Array<string>(id));
+    }
+    else {
+      // delete all
+      let userNames = this.dataSource.map(x => x.userName);
+      this.userManagementService.deleteUser(userNames)
+        .subscribe(x => {
+          if (x && x.body == true) {
+            this.snackBar.open(DeleteMessageSuccess, Action);
+          }
+        });
+    }
+  }
+
+
 }

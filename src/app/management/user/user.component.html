@@ -10,18 +10,24 @@
                             </div>
                             <div class="col col-md-1">
                                 <button (click)="navigateCreateUser()" class="ml-3 mr-3 user-button" mat-stroked-button
-                                color="primary">Create User</button>
+                                    color="primary">Create User</button>
                             </div>
                             <div class="col col-md-1">
-                                <button (click)="printEvent()" class="ml-3 mr-3 user-button" mat-stroked-button color="primary">Export
+                                <button (click)="printEvent()" class="ml-3 mr-3 user-button" mat-stroked-button
+                                    color="primary">Export
                                     Pdf</button>
                             </div>
                             <div class="col col-md-1">
-                                <button (click)="basicCollapse.toggle()" class="ml-3 mr-3 user-button" aria-expanded="false" aria-controls="adminCollapse"
-                            mat-stroked-button color="primary">Filter</button>
+                                <button (click)="basicCollapse.toggle()" class="ml-3 mr-3 user-button"
+                                    aria-expanded="false" aria-controls="adminCollapse" mat-stroked-button
+                                    color="primary">Filter</button>
+                            </div>
+                            <div class="col col-md-1">
+                                <button (click)="deleteEvent(null)" class="ml-3 mr-3 user-button" aria-expanded="false"
+                                    aria-controls="adminCollapse" mat-stroked-button color="warn">Delete All</button>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="card-body mb-3">
                         <div class="mt-3 mb-3" id="adminCollapse" mdbCollapse #basicCollapse="mdbCollapse">

@@ -8,13 +8,16 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DeleteNotifyComponent implements OnInit {
   public data: string;
+
+  signalYes: string = 'Y';
+  signalNo: string = 'N';
   constructor(
     public dialogRef: MatDialogRef<DeleteNotifyComponent>) { }
 
   ngOnInit(): void {
   }
 
-  closeDialogEvent(): void {
-    this.dialogRef.close();
+  closeDialogEvent(signal: string): void {
+    this.dialogRef.close(signal);
   }
 }

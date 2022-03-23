@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserManagementDto } from 'src/app/models/admin/UserManagementDto';
 import { BaseResponse } from 'src/app/models/BaseResponse';
@@ -16,7 +16,14 @@ export class UserManagementService {
     return this.httpClient.get<OdataResponse<UserManagementDto[]>>(environment.apiUrl + 'UserManagement/' + filter);
   }
 
-  deleteUser(userNames: string) {
-    return this.httpClient.delete<BaseResponse<boolean>>(environment.apiUrl + '');
+  deleteUser(userNames: string[]) {
+    return this.httpClient.delete<BaseResponse<boolean>>(environment.apiUrl + 'UserManagement', {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      params: {
+        userNames: userNames
+      }
+    });
   }
 }

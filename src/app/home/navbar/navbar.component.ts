@@ -63,7 +63,7 @@ export class NavbarComponent implements OnInit {
       this.cartCount = this.cartService.getCart().length;
     }, 300);
 
-    translateService.addLangs(['en', 'vi']);
+    translateService.addLangs(['vi', 'en']);
     translateService.setDefaultLang('vi');
   }
 
