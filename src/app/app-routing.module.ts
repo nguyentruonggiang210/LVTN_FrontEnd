@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'detail/product/:id', component: ProductDetailComponent },
   // admin
   { path: 'management/user', component: UserComponent },
-  { path: 'management/user/update/:id', component: UserDetailComponent },
+  { path: 'management/user/update/:userName', component: CreateUpdateUserComponent },
   { path: 'management/user/create', component: CreateUpdateUserComponent },
   { path: 'management/course', component: TrainerComponent },
   { path: 'management/product', component: TrainerComponent },

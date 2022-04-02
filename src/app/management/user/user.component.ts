@@ -94,15 +94,7 @@ export class UserComponent implements OnInit {
   };
 
   navigateCreateUser() {
-    const dialogRef = this.dialog.open(UserCreateDialogComponent, {
-      width: '50%',
-      maxWidth: '800px',
-      minWidth: '350px',
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The UserCreateDialogComponent was closed');
-      console.log(result);
-    });
+    this.router.navigate(['management/user/create/']);
   }
 
   public handlerStatus(status) {
@@ -123,11 +115,7 @@ export class UserComponent implements OnInit {
   }
 
   navigateUpdatePage(userName) {
-    this.router.navigate(['detail/user'], {
-      state: {
-        userNameState: userName
-      }
-    });
+    this.router.navigate(['management/user/update/' + userName]);
   }
 
   confirmDelete(id: any) {

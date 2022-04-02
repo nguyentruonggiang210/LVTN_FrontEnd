@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CreateUserManagementDto } from 'src/app/models/admin/CreateUserManagementDto';
 import { UserManagementDto } from 'src/app/models/admin/UserManagementDto';
 import { BaseResponse } from 'src/app/models/BaseResponse';
 import { UserInfoDto } from 'src/app/models/UserInfoDto';
@@ -25,5 +26,17 @@ export class UserManagementService {
         userNames: userNames
       }
     });
+  }
+
+  createUser(model: CreateUserManagementDto) {
+    return this.httpClient.post<BaseResponse<boolean>>(`${environment.apiUrl}UserManagement`, model);
+  }
+
+  getUserByUserName(userName: string) {
+    return this.httpClient.get<BaseResponse<CreateUserManagementDto>>(environment.apiUrl + 'UserManagement/' + userName);
+  }
+
+  updateUser(model: CreateUserManagementDto) {
+    return this.httpClient.put<BaseResponse<boolean>>(`${environment.apiUrl}UserManagement`, model);
   }
 }

@@ -17,5 +17,18 @@
     "ExportPdf": "Xuất file PDF",
     "Filter": "Bộ lọc",
     "DeleteAll": "Xóa tất cả",
-    "Order": "STT"
+    "Order": "STT",
+    "UserName": "Tên đăng nhập",
+    "Required": "Yêu cầu",
+    "Name": "Họ tên",
+    "Password": "Mật khẩu",
+    "ConfirmPassword": "Nhập lại mật khẩu",
+    "Roles": "Vai trò",
+    "Age": "Tuổi",
+    "Address": "Địa chỉ",
+    "Gender": "Giới tính",
+    "Status": "Trạng thái",
+    "CreateUserTitle": "Tạo User",
+    "UpdateUserTitle": "Cập nhật User",
+    "Back": "Trở về"
 }

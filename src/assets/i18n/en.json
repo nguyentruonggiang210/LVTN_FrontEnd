@@ -17,5 +17,18 @@
     "ExportPdf": "Export PDF",
     "Filter": "Filter",
     "DeleteAll": "Delete All",
-    "Order": "Order"
+    "Order": "Order",
+    "UserName": "User Name",
+    "Required": "Required",
+    "Name": "Name",
+    "Password": "Password",
+    "ConfirmPassword": "Confirm Password",
+    "Roles": "Roles",
+    "Age": "Age",
+    "Address": "Address",
+    "Gender": "Gender",
+    "Status": "Status",
+    "CreateUserTitle": "Create User",
+    "UpdateUserTitle": "Update User",
+    "Back": "Back"
 }

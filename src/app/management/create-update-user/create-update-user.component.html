@@ -1,24 +1,25 @@
 <div class="screen-component">
-    <h1 class="title">{{ title }}</h1>
+    <h1 class="title">{{ title | translate }}</h1>
     <div class="container">
-        <form class="text-center" [formGroup]="managementFormGroup" (submit)="submitEvent()">
-            <div class="row">
-                <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-8">
+                <form class="text-center" [formGroup]="managementFormGroup" (submit)="submitEvent()">
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">User Name</mat-label>
-                        <input class="myform-input" matInput formControlName="userName" autocomplete="off">
-                        <mat-hint align="start">Required</mat-hint>
+                        <mat-label class="myform-label">{{ 'UserName' | translate }}</mat-label>
+                        <input class="myform-input" [readonly]="dataSource != null" matInput formControlName="userName"
+                            autocomplete="off">
+                        <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100 mt-4">
-                        <mat-label class="myform-label">Name</mat-label>
+                        <mat-label class="myform-label">{{ 'Name' | translate }}</mat-label>
                         <input class="myform-input" matInput formControlName="name" autocomplete="off">
-                        <mat-hint align="start">Required</mat-hint>
+                        <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100 mt-4">
-                        <mat-label class="myform-label">Password</mat-label>
+                        <mat-label class="myform-label">{{ 'Password' | translate }}</mat-label>
                         <input class="myform-input" matInput type="password" formControlName="password"
                             autoComplete="new-password">
-                        <mat-hint align="start">Required</mat-hint>
+                        <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                         <i class="fa-solid fa-circle-question fa-2x myform-tooltip" matTooltipClass="my-tooltip"
                             matTooltip="Password must:
                     Has at least 1 digit.
@@ -27,10 +28,10 @@
                     Length must be more than 8."></i>
                     </mat-form-field>
                     <mat-form-field class="w-100 mt-4">
-                        <mat-label class="myform-label">Confirm Password</mat-label>
+                        <mat-label class="myform-label">{{ "ConfirmPassword" | translate }}</mat-label>
                         <input class="myform-input" matInput type="password" formControlName="confirmPassword"
                             autocomplete="off">
-                        <mat-hint align="start">Required</mat-hint>
+                        <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                         <i class="fa-solid fa-circle-question fa-2x myform-tooltip" matTooltipClass="my-tooltip"
                             matTooltip="Confirm Password must:
                     Has at least 1 digit.
@@ -40,13 +41,13 @@
                     Confirm passsword must equal password."></i>
                     </mat-form-field>
                     <mat-form-field class="w-100 mt-4">
-                        <mat-label>Roles</mat-label>
+                        <mat-label>{{ 'Roles' | translate }}</mat-label>
                         <mat-select formControlName="role" multiple>
                             <mat-option *ngFor="let role of roleList" [value]="role">{{ role }}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="w-100 mt-4">
-                        <mat-label class="myform-label">Age</mat-label>
+                        <mat-label class="myform-label">{{ 'Age' | translate }}</mat-label>
                         <input type="number" max="100" min="1" class="myform-input" matInput formControlName="age"
                             autocomplete="off">
                     </mat-form-field>
@@ -55,31 +56,40 @@
                         <input type="email" class="myform-input" matInput formControlName="email" autocomplete="off">
                     </mat-form-field>
                     <mat-form-field class="w-100 mt-4">
-                        <mat-label class="myform-label">Address</mat-label>
+                        <mat-label class="myform-label">{{ 'Address' | translate }}</mat-label>
                         <input type="text" class="myform-input" matInput formControlName="address" autocomplete="off">
                     </mat-form-field>
                     <mat-form-field class="w-100 mt-4">
-                        <mat-label>Gender</mat-label>
+                        <mat-label>{{ 'Gender' | translate }}</mat-label>
                         <mat-select formControlName="gender">
                             <mat-option *ngFor="let g of genderList" [value]="g.id">{{ g.value }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="this.dataSource != null" class="w-100 mt-4">
+                        <mat-label>{{ 'Status' | translate }}</mat-label>
+                        <mat-select formControlName="status">
+                            <mat-option *ngFor="let stt of statusList" [value]="stt.id">{{ stt.value }}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <br>
                     <button mat-stroked-button style="width: 120px;" color="primary" class="mt-4 mr-2 myform-button p-2"
                         type="submit" [disabled]="!managementFormGroup.valid">{{ buttonTitle }}</button>
                     <button mat-stroked-button style="width: 120px;" color="accent" class="mt-4 ml-2 myform-button p-2"
-                        type="button">Back</button>
-
-                </div>
-                <div class="col-md-4">
-                    <img [src]="imageUrl == null ? defaultAvatar : imageUrl" class="my-user-image" />
-                    <div class="mt-3">
-                        <button (click)="uploadFile.click()"  class="m-1" mat-raised-button color="primary" style="width: 120px">Choose Image</button>
-                        <input #uploadFile (change)="upload($event.target)" type='file' style="display:none" />
-                        <button *ngIf="imageFile != null" (click)="uploadImage()" class="m-1" mat-raised-button color="primary" style="width: 120px">Upload Image</button>
-                    </div>
+                        type="button" (click)="backEvent()">{{ 'Back' | translate }}</button>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <img [src]="dataSource != null && dataSource.avatar != '' && dataSource.avatar != null ? dataSource.avatar : imageUrl"
+                    class="my-user-image" />
+                <div *ngIf="dataSource != null" class="mt-3">
+                    <button (click)="uploadFile.click()" class="m-1" mat-raised-button color="primary"
+                        style="width: 120px">Choose Image</button>
+                    <input #uploadFile (change)="upload($event.target)" type='file' style="display:none" />
+                    <button *ngIf="imageFile != null" (click)="uploadImage()" class="m-1" mat-raised-button
+                        color="primary" style="width: 120px">Upload Image</button>
                 </div>
             </div>
-        </form>
+        </div>
+
     </div>
 </div>
