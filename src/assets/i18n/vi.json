@@ -8,6 +8,14 @@
     "LanguageTitle": "Ngôn ngữ",
     "Search": "Tìm kiếm",
     "Type": "Loại",
-    "Abount": "Chi tiết",
-    "Community": "Cộng đồng"
+    "About": "Giới thiệu",
+    "Community": "Cộng đồng",
+    "MeetingRoomTile": "Phòng học",
+    "EnterClassCode": "Nhập mã lớp",
+    "CourseManagementTitle": "Quản lý khóa học",
+    "CreateCourse": "Tạo khóa học",
+    "ExportPdf": "Xuất file PDF",
+    "Filter": "Bộ lọc",
+    "DeleteAll": "Xóa tất cả",
+    "Order": "STT"
 }

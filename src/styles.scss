@@ -70,6 +70,7 @@ p {
     border-radius: 7px;
     overflow: hidden;
     min-height: 50vh;
+    overflow: auto;
 }
 
 .normal-component {
@@ -105,7 +106,7 @@ h2 {
 }
 
 .myform-input {
-    height: 40px;
+    height: 35px;
 }
 
 .myform-label {
@@ -127,6 +128,13 @@ h2 {
 
 .my-tooltip {
     white-space: pre-line !important;
+}
+
+.title{
+    margin-top: 40px;
+    text-align: center;
+    display : block; 
+    line-height: 2 !important;
 }
 
 // navbar search responsive

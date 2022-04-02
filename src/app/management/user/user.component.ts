@@ -1,13 +1,11 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import * as Chartist from 'chartist';
+import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
-import { SingleDataSet, Label, Color, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip } from 'ng2-charts';
+import { SingleDataSet, Label } from 'ng2-charts';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteNotifyComponent } from 'src/app/components/delete-notify/delete-notify.component';
 import { UserManagementService } from 'src/app/services/management/user-management.service';
 import { UserManagementDto } from 'src/app/models/admin/UserManagementDto';
-import { ODataResponse } from 'angular-odata';
 import { PageEvent } from '@angular/material/paginator';
 import { OdataService } from 'src/app/services/common/odata.service';
 import { UserCreateDialogComponent } from 'src/app/components/user-create-dialog/user-create-dialog.component';
@@ -78,14 +76,6 @@ export class UserComponent implements OnInit {
 
   // user list
   userList: Array<any> = [];
-  user = {
-    id: '1523',
-    name: 'Dakota Rice',
-    role: 'admin',
-    city: 'Can Tho',
-    dateCreate: '6/10/2021',
-    userStatus: true,
-  }
 
   total: number;
   dataSource: UserManagementDto[] = [];
@@ -97,9 +87,6 @@ export class UserComponent implements OnInit {
     private userManagementService: UserManagementService,
     private odataService: OdataService,
     private snackBar: MatSnackBar) {
-    // for (let i = 0; i < 10; i++) {
-    //   this.userList.push(this.user);
-    // }
   }
 
   ngOnInit() {
@@ -243,9 +230,9 @@ export class UserComponent implements OnInit {
       case 2:
         return this.odataService.sortBy('userName', true);
       case 3:
-        return this.odataService.sortBy('createDate', false);
+        return this.odataService.sortBy('status', false);
       case 4:
-        return this.odataService.sortBy('createDate', true);
+        return this.odataService.sortBy('status', true);
       default:
         return this.odataService.sortBy('userName', false);
     }

@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
 import { FacebookLoginProvider, SocialAuthService } from "angularx-social-login";
 import { GoogleLoginProvider } from "angularx-social-login";
 import { ExternalAuthDto } from 'src/app/models/ExternalAuthDto';
+import { BaseResponse } from 'src/app/models/BaseResponse';
+import { TokenDto } from 'src/app/models/TokenDto';
+import jwt_decode from 'jwt-decode';
 
 const signOutVal = null;
 
@@ -22,7 +25,7 @@ export class AuthService {
     private _externalAuthService: SocialAuthService) { }
 
   public loginEvent(request: LoginRequest) {
-    return this.http.post(environment.apiUrl + "Authentication/login/", request);
+    return this.http.post<BaseResponse<TokenDto>>(environment.apiUrl + "Authentication/login/", request);
   }
 
   public registerEvent(request: RegisterRequest) {
@@ -48,5 +51,9 @@ export class AuthService {
 
   public externalLogin = (request: ExternalAuthDto) => {
     return this.http.post(environment.apiUrl + "Authentication/external-login/", request);
+  }
+
+  public getDecodedAccessToken(token: string): any {
+    return jwt_decode(token);
   }
 }

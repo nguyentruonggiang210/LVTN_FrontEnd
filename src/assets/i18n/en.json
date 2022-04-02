@@ -8,6 +8,14 @@
     "LanguageTitle": "Language",
     "Search": "Search",
     "Type": "Type",
-    "Abount": "Abount",
-    "Community": "Community"
+    "About": "About",
+    "Community": "Community",
+    "MeetingRoomTile": "Meeting Room",
+    "EnterClassCode": "Enter class code",
+    "CourseManagementTitle": "Course Management",
+    "CreateCourse": "Create Course",
+    "ExportPdf": "Export PDF",
+    "Filter": "Filter",
+    "DeleteAll": "Delete All",
+    "Order": "Order"
 }

@@ -117,8 +117,6 @@ export class LoginDialogComponent implements OnInit {
   private validateExternalAuth(externalAuth: ExternalAuthDto) {
     this.authService.externalLogin(externalAuth)
       .subscribe(res => {
-        console.log(res);
-
         if (res) {
           this.setToken(res);
         }

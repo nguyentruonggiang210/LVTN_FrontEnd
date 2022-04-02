@@ -57,7 +57,7 @@ import { QrCodeModule } from 'ng-qrcode';
 import { SocialLoginModule } from 'angularx-social-login';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-import { ScheduleModule, View } from '@syncfusion/ej2-angular-schedule';
+import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
 import { WeekService, MonthService } from '@syncfusion/ej2-angular-schedule';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NgxPayPalModule } from 'ngx-paypal';
@@ -118,6 +118,9 @@ import { CartDialogComponent } from './components/cart-dialog/cart-dialog.compon
 import { CartComponent } from './home/cart/cart.component';
 import { UserCreateDialogComponent } from './components/user-create-dialog/user-create-dialog.component';
 import { MeetingRoomComponent } from './detail/meeting-room/meeting-room.component';
+import { CreateUpdateCourseComponent } from './management/create-update-course/create-update-course.component';
+import { CreateUpdateUserComponent } from './management/create-update-user/create-update-user.component';
+import { CreateUpdateProductComponent } from './management/create-update-product/create-update-product.component';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -207,7 +210,10 @@ const toolbarConfig: any = [
     CartComponent,
     MoneyPipe,
     UserCreateDialogComponent,
-    MeetingRoomComponent
+    MeetingRoomComponent,
+    CreateUpdateCourseComponent,
+    CreateUpdateUserComponent,
+    CreateUpdateProductComponent
   ],
   imports: [
     BrowserModule,

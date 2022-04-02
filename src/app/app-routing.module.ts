@@ -1,22 +1,30 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home/home.component';
-import { DetailMainComponent } from './detail/detail-main/detail-main.component';
 import { CategoryComponent } from './category/category/category.component';
 import { UserDetailComponent } from './detail/user-detail/user-detail.component';
 import { UserComponent } from './management/user/user.component';
 import { ProductDetailComponent } from './detail/product-detail/product-detail.component';
+import { MeetingRoomComponent } from './detail/meeting-room/meeting-room.component';
+import { TrainerComponent } from './management/trainer/trainer.component';
+import { CreateUpdateUserComponent } from './management/create-update-user/create-update-user.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'category/:type', component: CategoryComponent },
   { path: 'category/:type/:pageIndex', component: CategoryComponent },
+  { path: 'course/room', component: MeetingRoomComponent },
+
   // { path: 'detail/:type/:id', component: DetailMainComponent },
   { path: 'detail/user', component: UserDetailComponent },
   { path: 'detail/product/:id', component: ProductDetailComponent },
+  // admin
   { path: 'management/user', component: UserComponent },
-  { path: 'management/user/:id', component: UserDetailComponent },
+  { path: 'management/user/update/:id', component: UserDetailComponent },
+  { path: 'management/user/create', component: CreateUpdateUserComponent },
+  { path: 'management/course', component: TrainerComponent },
+  { path: 'management/product', component: TrainerComponent },
   // others
   { path: '**', component: HomeComponent }
 ];
