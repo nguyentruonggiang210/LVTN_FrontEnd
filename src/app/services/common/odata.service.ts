@@ -33,22 +33,30 @@ export class OdataService {
     return tempVal;
   }
 
+  addFilterOr(key: string, value: any): string {
+    let tempVal = '';
+    for (const v of value) {
+      tempVal += `or contains(${key}, '${v}') `;
+    }
+    return tempVal;
+  }
+
   addFilterBetween(key: string, fromVal: string, toVal: string): string {
-    if(fromVal && toVal){
+    if (fromVal && toVal) {
       return `and ${key} ge ${fromVal} and ${key} le ${toVal}`;
     }
     return '';
   }
 
   addFilterLessThanEqual(key: string, value: string): string {
-    if(value){
+    if (value) {
       return `and ${key} le ${value}`;
     }
     return '';
   }
 
   addFilterGreaterThanEqual(key: string, value: string): string {
-    if(value){
+    if (value) {
       return `and ${key} ge ${value}`;
     }
     return '';
@@ -71,9 +79,12 @@ export class OdataService {
       url += model.date;
       url += model.calorie;
       url += model.tag;
-      url += model.memberShip;
       url += model.difficulty;
       url += model.bodyFocus;
+      url += model.name;
+      url += model.startDate;
+      url += model.endDate;
+      
     }
     url = this.adjustUrl(url);
     url = this.removeFilter(url);
@@ -88,6 +99,22 @@ export class OdataService {
     if (index != -1) {
       return url.replace(url.substring(index + 7, index + 10), '');
     }
+
+    index = url.indexOf('filter=   and');
+    if (index != -1) {
+      return url.replace(url.substring(index + 10, index + 13), '');
+    }
+
+    index = url.indexOf('filter=or');
+    if (index != -1) {
+      return url.replace(url.substring(index + 7, index + 10), '');
+    }
+
+    index = url.indexOf('filter=  or');
+    if (index != -1) {
+      return url.replace(url.substring(index + 9, index + 12), '');
+    }
+
     return url;
   }
 
@@ -106,6 +133,17 @@ export class OdataService {
         url = url.substring(0, index + 9) + url.substring(index + 13, url.trim().length);
       }
     }
+
+    index = url.indexOf('&$filter= or');
+    if (index != -1) {
+      if (index + 12 == url.trim().length) {
+        url = url.substring(0, index);
+      }
+      else {
+        url = url.substring(0, index + 9) + url.substring(index + 12, url.trim().length);
+      }
+    }
+
     return url;
   }
 }

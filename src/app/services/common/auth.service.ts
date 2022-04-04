@@ -53,7 +53,15 @@ export class AuthService {
     return this.http.post(environment.apiUrl + "Authentication/external-login/", request);
   }
 
-  public getDecodedAccessToken(token: string): any {
+  public getDecodedAccessToken(token: string = null): any {
+    if (token == null) {
+      token = this.commonSerivce.getLocalStorage(environment.tokenName);
+    }
+
     return jwt_decode(token);
+  }
+
+  public getUserId() {
+    return this.getDecodedAccessToken()['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
   }
 }

@@ -8,7 +8,6 @@ import { UserManagementService } from 'src/app/services/management/user-manageme
 import { UserManagementDto } from 'src/app/models/admin/UserManagementDto';
 import { PageEvent } from '@angular/material/paginator';
 import { OdataService } from 'src/app/services/common/odata.service';
-import { UserCreateDialogComponent } from 'src/app/components/user-create-dialog/user-create-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 const blankSpace = ' ';
@@ -242,6 +241,4 @@ export class UserComponent implements OnInit {
         });
     }
   }
-
-
 }

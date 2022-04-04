@@ -30,6 +30,7 @@ export class ContentComponent implements OnInit {
   courseCart = CartType.course;
   pageIndexArray: number[] = [];
   categoryType: string = 'product';
+  defaultAvatar: string = "assets/img/default-avatar.png";
 
   constructor(private categoryService: CategoryService,
     private route: Router,
@@ -116,8 +117,10 @@ export class ContentComponent implements OnInit {
   private setCurrentPageIndex() {
     this.activeRoute.params
       .subscribe(p => {
+        console.log(p);
         if (p && p['type']) {
           this.categoryType = p['type'];
+          this.dataType = p['type'] == 'product' ? 1 : 2;
         }
 
         if (p && p['pageIndex']) {

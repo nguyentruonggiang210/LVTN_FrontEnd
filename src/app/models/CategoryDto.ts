@@ -1,4 +1,4 @@
-export interface CategoryDto{
+export interface CategoryDto {
     id: string,
     image: string,
     name: string,
@@ -14,5 +14,9 @@ export interface CategoryDto{
     maxCalorieBurn: number,
     bodyFocus: string,
     memberShip: string,
-    tag: string
+    tag: string,
+    startDate: Date,
+    endDate: Date,
+    trainerName: string,
+    shopName: string
 }

@@ -5,11 +5,13 @@ export interface CategoryOdata{
     searchValue: string,
     price: string,
     date: string,
+    startDate: string,
+    endDate: string,
     calorie: string,
     tag: string,
-    memberShip: string,
     difficulty: string,
     bodyFocus: string,
-    sort: string
-    isFirstTime: boolean
+    sort: string,
+    name: string,
+    isFirstTime: boolean,
 }

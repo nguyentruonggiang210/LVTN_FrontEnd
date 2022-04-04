@@ -13,6 +13,7 @@ import { PaymentDetailDto } from 'src/app/models/PaymentDetailDto';
 import { BillType } from 'src/app/enums/BillType';
 import { PaymentType } from 'src/app/enums/PaymentType';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from 'src/app/services/common/auth.service';
 
 const ProductString = "Product";
 const CourseString = "Course";
@@ -27,6 +28,7 @@ const ActionString = "Close";
 export class CartDialogComponent implements OnInit {
 
   public payPalConfig?: IPayPalConfig;
+  token: any = null;
   cartArray: CartDto[] = [];
   productArray: CartDto[] = [];
   courseArray: CartDto[] = [];
@@ -36,16 +38,21 @@ export class CartDialogComponent implements OnInit {
 
   constructor(private cartService: CartService,
     private paymentService: PaymentService,
-    private snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar,
+    private authService: AuthService) {
+    this.token = authService.getDecodedAccessToken();
   }
 
   ngOnInit(): void {
+
     this.cartArray = this.cartService.getCart();
+    console.log(this.cartArray);
+
     this.initConfig();
     this.productArray = this.cartArray.filter(x => x.type == CartType.product);
     this.courseArray = this.cartArray.filter(x => x.type == CartType.course);
-
-    console.log(this.getListItem());
+    console.log('product' + this.productArray);
+    console.log('course' + this.courseArray);
   }
 
   plusCart(item: CartDto) {
@@ -134,7 +141,7 @@ export class CartDialogComponent implements OnInit {
           }
 
           let payment: PaymentDto = {
-            userId: '8e3e873b-c0fe-412c-b3d7-c6480ae1bbf8',
+            userId: this.token['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'].toString(),
             billType: BillType.EWallet,
             paymentType: PaymentType.FullPaid,
             totalAmount: this.getTotalAmount(),

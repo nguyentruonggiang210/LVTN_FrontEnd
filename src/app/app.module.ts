@@ -67,6 +67,7 @@ import { SwiperModule } from "swiper/angular";
 import { QuillModule } from 'ngx-quill'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
+import { DragScrollModule } from 'ngx-drag-scroll';
 
 // import { AgmCoreModule } from '@agm/core';
 
@@ -121,6 +122,7 @@ import { MeetingRoomComponent } from './detail/meeting-room/meeting-room.compone
 import { CreateUpdateCourseComponent } from './management/create-update-course/create-update-course.component';
 import { CreateUpdateUserComponent } from './management/create-update-user/create-update-user.component';
 import { CreateUpdateProductComponent } from './management/create-update-product/create-update-product.component';
+import { DateTimePipe } from './pipes/datetime.pipe';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -209,6 +211,7 @@ const toolbarConfig: any = [
     CartDialogComponent,
     CartComponent,
     MoneyPipe,
+    DateTimePipe,
     UserCreateDialogComponent,
     MeetingRoomComponent,
     CreateUpdateCourseComponent,
@@ -293,6 +296,7 @@ const toolbarConfig: any = [
         deps: [HttpClient]
       }
     }),
+    DragScrollModule
     // AgmCoreModule.forRoot({
     //   apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     // })

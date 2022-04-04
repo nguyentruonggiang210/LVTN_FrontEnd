@@ -6,6 +6,7 @@ import { BaseResponse } from 'src/app/models/BaseResponse';
 import { CategoryDto } from 'src/app/models/CategoryDto';
 import { CategoryOdata } from 'src/app/models/odata/CategoryOdata';
 import { OdataResponse } from 'src/app/models/OdataResponse';
+import { CategoryService } from 'src/app/services/category/category.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { OdataService } from 'src/app/services/common/odata.service';
 import { environment } from 'src/environments/environment';
@@ -25,10 +26,9 @@ export class FilterComponent implements OnInit {
   @Input() sortItem: number;
   page: number;
   dataSource: OdataResponse<CategoryDto[]>;
-  memberships: string[] = ['Free', 'Plush'];
   difficulties: number[] = [1, 2, 3, 4, 5,];
-  bodyFocuses: string[] = ['Upper', 'Core', 'Lower', 'Total'];
-  tags: string[] = ['HIIT', 'Streight Training', 'Pilates', 'Low Impact', 'Warm Up / Cool Down', 'Kickboxing', 'Yoga', 'Medicine Ball', 'Barre', 'Stretching / Flexibility', 'Toning'];
+  bodyFocuses: string[] = [];
+  tags: string[] = [];
   fromPrice: number = null;
   toPrice: number = null;
   calorieMin: number = null;
@@ -36,18 +36,20 @@ export class FilterComponent implements OnInit {
   startDate: Date = null;
   endDate: Date = null;
   tag: string[] = null;
-  menberShip: string[] = null;
   difficulty: number[] = null;
   bodyFocus: string[] = null;
   sortBy: string;
   searchTypeString: string = 'product';
-
+  shopName: string = null;
+  trainerName: string = null;
   constructor(
     private odataService: OdataService,
     private commonService: CommonService,
-    private activeRoute: ActivatedRoute) { }
+    private activeRoute: ActivatedRoute,
+    private categoryService: CategoryService) { }
 
   ngOnInit(): void {
+    this.getInitFilter();
     this.activeRoute.params.subscribe(p => {
       if (p && p['pageIndex']) {
         this.page = p['pageIndex'];
@@ -58,14 +60,14 @@ export class FilterComponent implements OnInit {
     })
 
     this.searchTypeClassify();
-    this.queryDayta(true);
+    this.queryData(true);
   }
 
   emitNewItem(value: OdataResponse<CategoryDto[]>) {
     this.emitFilterCategory.emit(value);
   }
 
-  public queryDayta(isFirstTime: boolean = false) {
+  public queryData(isFirstTime: boolean = false) {
     setTimeout(() => {
       // search type classify
       this.searchTypeClassify()
@@ -76,12 +78,14 @@ export class FilterComponent implements OnInit {
         pagePass: (this.page - 1) * pageSize,
         searchValue: this.searchValueQuery(),
         price: this.priceQuery(),
-        date: this.dateQuery(),
+        date: '',
+        startDate: this.startDateQuery(),
+        endDate: this.endDateQuery(),
         calorie: this.calorieQuery(),
         tag: this.tagQuery(),
-        memberShip: this.memberShipQuery(),
         difficulty: this.difficultyQuery(),
         bodyFocus: this.bodyFocusQuery(),
+        name: this.shopNameQuery(),
         sort: this.sortQuery(),
         isFirstTime: isFirstTime
       };
@@ -136,18 +140,26 @@ export class FilterComponent implements OnInit {
     return "";
   }
 
-  tagQuery() {
-    const key: string = "tag";
-    if (this.tag != null) {
-      return this.odataService.addFilterIn(key, this.tag) + blankSpace;
+  startDateQuery() {
+    const key: string = "startDate";
+    if (this.startDate != null) {
+      return this.odataService.addFilterEqual(key, this.startDate.toString()) + blankSpace;
     }
     return "";
   }
 
-  memberShipQuery() {
-    const key: string = "memberShip";
-    if (this.menberShip != null) {
-      return this.odataService.addFilterIn(key, this.menberShip) + blankSpace;
+  endDateQuery() {
+    const key: string = "endDate";
+    if (this.endDate != null) {
+      return this.odataService.addFilterEqual(key, this.endDate.toString()) + blankSpace;
+    }
+    return "";
+  }
+
+  tagQuery() {
+    const key: string = "tag";
+    if (this.tag != null) {
+      return this.odataService.addFilterOr(key, this.tag) + blankSpace;
     }
     return "";
   }
@@ -155,7 +167,7 @@ export class FilterComponent implements OnInit {
   difficultyQuery() {
     const key: string = "difficulty";
     if (this.difficulty != null) {
-      return this.odataService.addFilterIn(key, this.difficulty) + blankSpace;
+      return this.odataService.addFilterOr(key, this.difficulty) + blankSpace;
     }
     return "";
   }
@@ -163,7 +175,7 @@ export class FilterComponent implements OnInit {
   bodyFocusQuery() {
     const key: string = "bodyFocus";
     if (this.bodyFocus != null) {
-      return this.odataService.addFilterIn(key, this.bodyFocus) + blankSpace;
+      return this.odataService.addFilterOr(key, this.bodyFocus) + blankSpace;
     }
     return "";
   }
@@ -184,7 +196,7 @@ export class FilterComponent implements OnInit {
     else {
       this.calorieMin = value;
     }
-    this.queryDayta();
+    this.queryData();
   }
 
   calorieMaxChange(event): void {
@@ -195,7 +207,7 @@ export class FilterComponent implements OnInit {
     else {
       this.calorieMax = value;
     }
-    this.queryDayta();
+    this.queryData();
   }
 
   fromPriceChange(event): void {
@@ -206,7 +218,7 @@ export class FilterComponent implements OnInit {
     else {
       this.fromPrice = value;
     }
-    this.queryDayta();
+    this.queryData();
   }
 
   toPriceChange(event): void {
@@ -217,7 +229,7 @@ export class FilterComponent implements OnInit {
     else {
       this.toPrice = value;
     }
-    this.queryDayta();
+    this.queryData();
   }
 
   startDateChange(event) {
@@ -228,7 +240,7 @@ export class FilterComponent implements OnInit {
     else {
       this.startDate = value;
     }
-    this.queryDayta();
+    this.queryData();
   }
 
   endDateChange(event) {
@@ -239,11 +251,50 @@ export class FilterComponent implements OnInit {
     else {
       this.endDate = value;
     }
-    this.queryDayta();
+    this.queryData();
+  }
+
+  NameChange(event) {
+    let value = event.target.value;
+    if (value === "") {
+      if (this.searchTypeString == 'product') {
+        this.shopName = null;
+      }
+      else {
+        this.trainerName = null;
+      }
+    }
+    else {
+      if (this.searchTypeString == 'product') {
+        this.shopName = value;
+      }
+      else {
+        this.trainerName = value;
+      }
+    }
+
+    this.queryData();
+  }
+
+  shopNameQuery() {
+    if (this.searchTypeString == 'product') {
+      const key: string = "shopName";
+      if (this.shopName != null) {
+        return this.odataService.addFilterIn(key, [this.shopName]) + blankSpace;
+      }
+    }
+    else {
+      const key: string = "trainerName";
+      if (this.trainerName != null) {
+        return this.odataService.addFilterIn(key, [this.trainerName]) + blankSpace;
+      }
+    }
+
+    return "";
   }
 
   listChange(event): void {
-    this.queryDayta();
+    this.queryData();
   }
 
   sortQuery(): string {
@@ -257,10 +308,6 @@ export class FilterComponent implements OnInit {
         return this.odataService.sortBy('price', true);
       case SortType.PriceGain.toString():
         return this.odataService.sortBy('price', false);
-      case SortType.RateReduce.toString():
-        return this.odataService.sortBy('rate', true);
-      case SortType.RateGain.toString():
-        return this.odataService.sortBy('rate', false);
       default:
         return "";
     }
@@ -288,5 +335,21 @@ export class FilterComponent implements OnInit {
       default:
         this.searchTypeString = 'product';
     }
+  }
+
+  private getInitFilter() {
+    this.categoryService.getAllTag()
+      .subscribe(x => {
+        if (x) {
+          this.tags = x.body;
+        }
+      });
+
+    this.categoryService.getAllBodyFocus()
+      .subscribe(x => {
+        if (x) {
+          this.bodyFocuses = x.body;
+        }
+      })
   }
 }

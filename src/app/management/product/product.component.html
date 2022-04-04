@@ -1,1 +1,271 @@
-<p>product works!</p>
+z
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row" id="hiden-component">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <div class="row">
+                            <div class="col col-md-2">
+                                <h2 class="card-title" style="float: left;">Product Management</h2>
+                            </div>
+                            <div class="col col-md-1">
+                                <button (click)="navigateProductCreate()" class="ml-3 mr-3 user-button" mat-stroked-button
+                                    color="primary">Create product</button>
+                            </div>
+                            <div class="col col-md-1">
+                                <button (click)="printEvent()" class="ml-3 mr-3 user-button" mat-stroked-button
+                                    color="primary">Export
+                                    Pdf</button>
+                            </div>
+                            <div class="col col-md-1">
+                                <button (click)="basicCollapse.toggle()" class="ml-3 mr-3 user-button"
+                                    aria-expanded="false" aria-controls="adminCollapse" mat-stroked-button
+                                    color="primary">Filter</button>
+                            </div>
+                            <div class="col col-md-1">
+                                <button (click)="deleteEvent(null)" class="ml-3 mr-3 user-button" aria-expanded="false"
+                                    aria-controls="adminCollapse" mat-stroked-button color="warn">Delete All</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-body mb-3">
+                        <div class="mt-3 mb-3" id="adminCollapse" mdbCollapse #basicCollapse="mdbCollapse">
+                            <div class="row">
+                                <div class="col col-md-3">
+                                    <mat-form-field class="user-form-field" appearance="fill">
+                                        <mat-label>UserName</mat-label>
+                                        <input matInput type="text" [(ngModel)]="userName">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col col-md-3">
+                                    <mat-form-field class="user-form-field" appearance="fill">
+                                        <mat-label>Name</mat-label>
+                                        <input matInput type="text" [(ngModel)]="name">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col col-md-3">
+                                    <mat-form-field class="user-form-field" appearance="fill">
+                                        <mat-label>Address</mat-label>
+                                        <input matInput type="text" [(ngModel)]="address">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col col-md-3">
+                                    <mat-form-field class="user-form-field" appearance="fill">
+                                        <mat-label>Date Create</mat-label>
+                                        <input matInput type="date" [(ngModel)]="dateCreate">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col col-md-3">
+                                    <mat-form-field class="user-form-field" appearance="fill">
+                                        <mat-label>Sort by</mat-label>
+                                        <mat-select [(ngModel)]="sortBy">
+                                            <mat-option *ngFor="let s of sortByList" [value]="s.value">
+                                                {{ s.display }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col col-md-3">
+                                    <button mat-raised-button style="height: 52px; width: 100px;" color="primary"
+                                        (click)="applyFilter()">Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        Order
+                                    </th>
+                                    <th>
+                                        Product Name
+                                    </th>
+                                    <th>
+                                        Date Import
+                                    </th>
+                                    <th>
+                                        Price
+                                    </th>
+                                    <th>
+                                        Bought
+                                    </th>
+                                    <th>
+                                        Remain Quantity
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th style="width: 10%;">
+                                        Action
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let product of dataSource; let i = index">
+                                        <ng-template #tolTemplate>
+                                            <img id="tool-tip" src="https://placehold.jp/200x200.png" />
+                                        </ng-template>
+                                        <td>
+                                            {{ i + 1 }}
+                                        </td>
+                                        <td>
+                                            {{ product.productName }}
+                                        </td>
+                                        <td>
+                                            {{ product.importDate | datetime: 'dd-MM-yyyy' }}
+                                        </td>
+                                        <td>
+                                            {{ product.price | money }} $
+                                        </td>
+                                        <td>
+                                            {{ product.bought }}
+                                        </td>
+                                        <td>
+                                            {{ product.remainQuantity }}
+                                        </td>
+                                        <td [ngClass]="handlerStatus(product.status)">
+                                            {{ product.status ? "Activated" : "Disabled" }}
+                                        </td>
+                                        <td>
+                                            <div class="row text-center">
+                                                <div class="col col-lg-6">
+                                                    <button class="ml-auto mr-auto" mat-stroked-button color="primary"
+                                                        (click)="navigateUpdatePage(product.productId)">Update</button>
+                                                </div>
+                                                <div class="col col-lg-6">
+                                                    <button class="ml-auto mr-auto" mat-stroked-button color="accent"
+                                                        (click)="confirmDelete(product.productId)">Delete</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="text-left mt-3">
+                        <mat-paginator #paginator [length]="total" [pageSize]="take" [pageSizeOptions]="[10]"
+                            aria-label="Select page" (page)="getPaginatorData($event)">
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Chart -->
+        <div id="print-section">
+            <h2 class="col-12">Statistics</h2>
+            <div class="row">
+                <!-- Bar Chart -->
+                <div class="col-lg-4">
+                    <div class="card card-chart">
+                        <div class="card-header">
+                            <h4 class="card-title">New Account / Year</h4>
+                            <div ngbDropdown>
+                                <button type="button"
+                                    class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret"
+                                    ngbDropdownToggle>
+                                    <i class="now-ui-icons loader_gear"></i>
+                                </button>
+                                <div ngbDropdownMenu class="dropdown-menu-right">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <a class="dropdown-item text-danger" href="#">Remove Data</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <div style="display: block;">
+                                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels"
+                                        [options]="barChartOptions" [plugins]="barChartPlugins"
+                                        [legend]="barChartLegend" [chartType]="barChartType">
+                                    </canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pie Chart -->
+                <div class="col-lg-4">
+                    <div class="card card-chart">
+                        <div class="card-header">
+                            <h4 class="card-title">Type Account</h4>
+                            <div ngbDropdown>
+                                <button type="button"
+                                    class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret"
+                                    ngbDropdownToggle>
+                                    <i class="now-ui-icons loader_gear"></i>
+                                </button>
+                                <div ngbDropdownMenu class="dropdown-menu-right">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <a class="dropdown-item text-danger" href="#">Remove Data</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <div style="display: block;">
+                                    <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels"
+                                        [chartType]="pieChartType" [options]="pieChartOptions"
+                                        [plugins]="pieChartPlugins" [legend]="pieChartLegend">
+                                    </canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card card-chart">
+                        <div class="card-header">
+                            <h4 class="card-title">New Account / Year</h4>
+                            <div ngbDropdown>
+                                <button type="button"
+                                    class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret"
+                                    ngbDropdownToggle>
+                                    <i class="now-ui-icons loader_gear"></i>
+                                </button>
+                                <div ngbDropdownMenu class="dropdown-menu-right">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                    <a class="dropdown-item text-danger" href="#">Remove Data</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <div style="display: block;">
+                                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels"
+                                        [options]="barChartOptions" [plugins]="barChartPlugins"
+                                        [legend]="barChartLegend" [chartType]="barChartType">
+                                    </canvas>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="stats">
+                                    <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>

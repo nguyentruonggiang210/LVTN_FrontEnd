@@ -9,7 +9,7 @@ export const environment = {
   googleClientId: '333934555231-3ri2pq81dnfvidel11ept1t9guchlonl.apps.googleusercontent.com',
   facebookClientId: '351753203524687',
   paypalClientId: 'AeiQS0YNiaIX8CLU0xpZkryxPZgdYc82ot4Auw0uTsS8SIXJg1BjgJGZnVzSHP8zZFzlDqMDqtTyIGGL',
-  categoryPageSize: 1,
+  categoryPageSize: 20,
   signalConnection: 'https://localhost:5001/',
   rtcApiKey: '65a3cb1d1908a73cc0906060c70f8d6f'
 };

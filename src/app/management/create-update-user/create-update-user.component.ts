@@ -108,10 +108,10 @@ export class CreateUpdateUserComponent implements OnInit {
 
   submitEvent() {
     if (this.dataSource == null) {
-      this.loginEvent();
+      this.createEvent();
     }
     else {
-      this.registerEvent();
+      this.updateEvent();
     }
   }
 
@@ -138,7 +138,7 @@ export class CreateUpdateUserComponent implements OnInit {
         this.buttonTitle = this.dataSource == null ? 'Create' : 'Update';
         this.setFormValue(b.body);
         console.log(this.imageFile);
-        
+
       });
   }
 
@@ -157,7 +157,7 @@ export class CreateUpdateUserComponent implements OnInit {
     });
   }
 
-  private loginEvent() {
+  private createEvent() {
     let model: CreateUserManagementDto = {
       userName: this.managementFormGroup.value['userName'],
       name: this.managementFormGroup.value['name'],
@@ -180,7 +180,7 @@ export class CreateUpdateUserComponent implements OnInit {
       });
   }
 
-  private registerEvent() {
+  private updateEvent() {
     let model: CreateUserManagementDto = {
       userName: this.managementFormGroup.value['userName'],
       name: this.managementFormGroup.value['name'],

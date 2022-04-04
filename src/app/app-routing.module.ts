@@ -8,6 +8,8 @@ import { ProductDetailComponent } from './detail/product-detail/product-detail.c
 import { MeetingRoomComponent } from './detail/meeting-room/meeting-room.component';
 import { TrainerComponent } from './management/trainer/trainer.component';
 import { CreateUpdateUserComponent } from './management/create-update-user/create-update-user.component';
+import { ProductComponent } from './management/product/product.component';
+import { CreateUpdateProductComponent } from './management/create-update-product/create-update-product.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -23,8 +25,9 @@ const routes: Routes = [
   { path: 'management/user', component: UserComponent },
   { path: 'management/user/update/:userName', component: CreateUpdateUserComponent },
   { path: 'management/user/create', component: CreateUpdateUserComponent },
+  { path: 'management/product/create', component: CreateUpdateProductComponent },
   { path: 'management/course', component: TrainerComponent },
-  { path: 'management/product', component: TrainerComponent },
+  { path: 'management/product', component: ProductComponent },
   // others
   { path: '**', component: HomeComponent }
 ];

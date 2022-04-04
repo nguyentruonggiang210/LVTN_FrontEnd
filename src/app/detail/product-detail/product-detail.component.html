@@ -1,8 +1,9 @@
 <div class="container-fluid w-75">
+    <h1 class="text-center mt-4">{{ "MeetingRoomTile" | translate }}</h1>
     <div class="row mt-2">
         <div class="col col-md-6 m-0">
-            <lib-ngx-image-zoom style="height: 200px;" [thumbImage]="imageSource" [fullImage]="fullImageSource"
-                [magnification]="1" [zoomMode]="'hover'" [enableScrollZoom]="true"></lib-ngx-image-zoom>
+            <lib-ngx-image-zoom [thumbImage]="imageSource" [fullImage]="fullImageSource" [magnification]="1"
+                [zoomMode]="'hover'" [enableScrollZoom]="true"></lib-ngx-image-zoom>
             <p-carousel [value]="productSlider" styleClass="custom-carousel" [numVisible]="6" [numScroll]="1"
                 [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
                 <ng-template let-product pTemplate="item">
@@ -17,18 +18,19 @@
                 <div class="col col-md-12">
                     <h2 class="mb-3">{{ dataSource.productName }}</h2>
                     <p>Price: ${{ dataSource.productDetails[detailIndex].price | money }}</p>
-                    <p>Languages: 9</p>
-                    <p>Difficulty: {{ dataSource.difficulty }}/5</p>
-                    <p>Weight: 107 lbs / (48.53 Kilograms)</p>
-                    <p>Max User Weight: 400 lbs / (181.43 Kilograms)</p>
-                    <p>Training Type: Low Impact, Strength Training</p>
-                    <p>Warrant: 1 Year Parts & On-Site Labor w/Ext. Warranty Options</p>
+                    <p>Languages: {{ dataSource.languageSupport || '-' }}</p>
+                    <p>Difficulty: {{ dataSource.difficulty || '-' }}/5</p>
+                    <p>Weight: {{ dataSource.weight || '-' }} Kilograms</p>
+                    <p>Max User Weight: {{ dataSource.maxUserWeight || '-' }} Kilograms</p>
+                    <p>Body Focus: {{ dataSource.bodyFocus || '-' }}</p>
+                    <p>Tags: {{ dataSource.tag || '-' }}</p>
                 </div>
             </div>
             <div class="text-center left-0 mt-5">
-                <button type="button" class="btn btn-outline-primary mt-2 w-100">Add to card</button>
-                <button type="button" class="btn btn-outline-primary mt-2 w-100">Buy now</button>
-                <button type="button" class="btn btn-outline-primary mt-2 w-100">Buy installment</button>
+                <button type="button" class="btn btn-outline-primary mt-2 mb-2 w-100"
+                    (click)="addToCart(dataSource.productId.toString(), dataSource.productDetails[0].productDetailImages[0], dataSource.productDetails[0].price, dataSource.productName, 1)">Add
+                    to card</button>
+                <ngx-paypal *ngIf="token != null" [config]="payPalConfig"></ngx-paypal>
             </div>
         </div>
     </div>
@@ -39,181 +41,95 @@
                 <div style="font-size: 20px; width: fit-content; border-radius: 8px;"
                     class="bg-light p-3 text-center my-avatar-btn">
                     <img alt="avatar" style="border-radius: 15px; display: inline-block;" width="30" height="30"
-                        src="https://media.istockphoto.com/vectors/allseeing-eye-of-god-inside-triangle-pyramid-vector-id1159957563?k=20&m=1159957563&s=612x612&w=0&h=1NOjNRYBCJ2kgwdET4qVq76SB6g5TsS4dGpvWkC8tfY=" />
-                    <span class="ml-2 align-middle" style="display: inline-block;">Nicolas
+                        [src]="dataSource.shopImage" />
+                    <span class="ml-2 align-middle" style="display: inline-block;">{{ dataSource.shopName }}
                         <i class="fas fa-chevron-right ml-1"></i></span>
                 </div>
             </div>
             <div class="col col-md-3">
-                <a class="ml-3 mr-3" href="#">
-                    <span><i class="far fa-comment-alt fa-2x"></i></span>
-                    <span class="badge rounded-pill badge-notification bg-danger" style="font-size: 13px;">1</span>
-                </a>
-                <a class="ml-2 mr-2" href="#">
+                <a *ngIf="dataSource.facebook != null" class="ml-2 mr-2" [href]="dataSource.facebook">
                     <span><i class="fab fa-facebook fa-2x"></i></span>
                 </a>
-                <a class="ml-2 mr-3 text-danger" href="#">
+                <a *ngIf="dataSource.youtube != null" class="ml-2 mr-3 text-danger" [href]="dataSource.youtube">
                     <span><i class="fab fa-youtube fa-2x"></i></span>
                 </a>
             </div>
         </div>
-        <qr-code value="http://localhost:4200/detail/product/1" size="150" errorCorrectionLevel="M"
-            centerImageSrc="undefined" centerImageSize="undefined" [margin]="4">
+        <qr-code [value]="'http://localhost:4200/detail/product/' + dataSource.productId" size="150"
+            errorCorrectionLevel="M" centerImageSrc="undefined" centerImageSize="undefined" [margin]="4">
         </qr-code>
-        <p>
-            Attention: for those who are pregnant, looking to become pregnant, or just out of a pregnancy, the ideas,
-            workouts, and strategies presented in this workout video and write-up reflect the research and experience of
-            the creator and should not be taken as a medical diagnosis or prescription. Information included is not
-            intended to be used as medical advice or in place of advice or guidance from your personal doctor. Before
-            beginning exercise of any kind, please consult with your doctor or other medical professional to make sure
-            it is appropriate for you and your unique situation.
-        </p>
-        <p>
-            Having a strong foundation is important for decreasing aches and pains, supporting good posture and pelvic
-            health, and setting you up for a faster postpartum recovery. This workout targets the muscles needed to
-            establish your foundation so you can stay functional and strong!
-        </p>
-        <p>
-            Note: Though this workout and content is tailored to pregnancy and postpartum, many can benefit from what
-            this workout provides.
-        </p>
-        <p>I think it’s helpful to first learn the demands placed on the body during pregnancy and postpartum in order
-            to fully understand how to train your core to meet the demands. Let’s take a look at a few key changes:
-        </p>
-        <p>
-            The hormone relaxin is responsible for relaxing all of the muscles and joints in your body in pregnancy to
-            allow the body to expand and prepare for delivery. This includes relaxation of the pelvic bones and pelvic
-            floor, making them unstable and lax while bearing the burden of the baby weight.
-        </p>
-    </div>
-    <div class="recommendation-slider">
-        <h1 class="mt-4">Recommendation</h1>
-        <p-carousel [value]="recommendationProducts" styleClass="custom-carousel" [numVisible]="3" [numScroll]="1"
-            [circular]="true" [autoplayInterval]="3000" [responsiveOptions]="responsiveOptions">
-            <ng-template let-product pTemplate="item">
-                <div class="product-item">
-                    <div class="product-item-content">
-                        <div class="p-mb-3">
-                            <img src="{{product.image}}" [alt]="product.name" class="product-image" />
+        <div>
+            {{ dataSource.description }}
+        </div>
+        <div class="recommendation-slider">
+            <h1 class="mt-4">Recommendation</h1>
+            <drag-scroll
+                *ngIf="recommendationProducts != null && recommendationProducts.length > 0; else recommendationElseBlock"
+                class="demo-one" [drag-scroll-y-disabled]="true" [scrollbar-hidden]="true" #nav>
+
+                <div drag-scroll-item *ngFor="let product of recommendationProducts">
+                    <div class="recommendation-item m-1" (click)="navigateToDetail(product.id)">
+                        <img [src]="product.image" [alt]="product.name" class="product-image" />
+                        <h3 class="text-center" style="overflow: hidden; text-overflow: ellipsis;">{{ product.name }}
+                        </h3>
+                    </div>
+                </div>
+            </drag-scroll>
+            <ng-template #recommendationElseBlock>
+                <h3 class="text-center">Cannot find any item</h3>
+            </ng-template>
+        </div>
+        <div class="comment mt-5">
+            <h1 class="mt-2">{{ commentDto.length }} Comments</h1>
+            <hr>
+            <div class="p-4 text-center">
+                <button *ngIf="token == null; else elseBlock" class="btn btn-primary w-75 m-auto"
+                    style="height: 50px; font-size: 22px; font-weight: 450;">SIGN IN
+                    TO REPLY</button>
+                <ng-template #elseBlock>
+                    <div class="comment-input mt-2 text-right">
+                        <div class="input-group">
+                            <textarea [(ngModel)]="commentContent" class="form-control" rows="5" style="height: 100px;"
+                                aria-label="With textarea" placeholder="Enter something ...."></textarea>
                         </div>
-                        <div>
-                            <h3 class="p-mb-1">{{product.name}}</h3>
-                            <h4 class="p-mt-0 p-mb-3">${{product.price}}</h4>
-                            <div class="">
-                                <button mat-button (click)="navigateToDetail(product.id)">DETAIL</button>
-                                <button mat-button
-                                    (click)="addToCart(product.id, product.image, product.price, product.name, productCart)">ADD
-                                    TO CART</button>
+                        <button (click)="sendComment()" mat-raised-button color="primary" class="mt-2">Send
+                            Comment</button>
+                    </div>
+                </ng-template>
+
+            </div>
+            <hr>
+            <div class="comment-list">
+                <div class="row mt-2 mb-3" *ngFor="let cmt of commentDto">
+                    <div class="col col-md-1">
+                        <img alt="avatar" style="border-radius: 35px;" width="70" height="70"
+                            [src]="cmt.avatar != null && cmt.avatar != '' ? cmt.avatar : defaultAvatar" />
+                    </div>
+                    <div class="col col-md-11">
+                        <h3>{{ cmt.name }} - {{ cmt.createDate | datetime : 'dd-MM-yyyy' }}</h3>
+                        <p>{{ cmt.commentContent }}</p>
+                        <div class="sub-comment row ml-2" *ngFor="let sub of cmt.subComments">
+                            <div class="col col-md-1">
+                                <img alt="avatar" style="border-radius: 35px;" width="70" height="70"
+                                    [src]="sub.avatar != null && sub.avatar != '' ? sub.avatar : defaultAvatar" />
+                            </div>
+                            <div class="col col-md-11">
+                                <h3>{{ sub.name }} - {{ sub.createDate | datetime : 'dd-MM-yyyy' }}</h3>
+                                <p>{{ sub.commentContent }}</p>
                             </div>
                         </div>
+                        <div class="comment-input mt-2 text-right">
+                            <div class="input-group">
+                                <textarea #textArea maxlength="400" [id]="'subcomment-'+ cmt.commentId"
+                                    class="form-control" rows="5" style="height: 100px;" aria-label="With textarea"
+                                    placeholder="Enter something ...."></textarea>
+                            </div>
+                            <button type="button" (click)="sendSubComment(cmt.commentId)" mat-raised-button
+                                color="primary" class="mt-2">Send
+                                Comment</button>
+                        </div>
                     </div>
-                </div>
-            </ng-template>
-        </p-carousel>
-    </div>
-    <div class="comment mt-5">
-        <h1 class="mt-2">46 Comments</h1>
-        <hr>
-        <div class="p-4 text-center">
-            <button *ngIf="token != null; else elseBlock" class="btn btn-primary w-75 m-auto"
-                style="height: 50px; font-size: 22px; font-weight: 450;">SIGN IN
-                TO REPLY</button>
-            <ng-template #elseBlock>
-                <div class="comment-input mt-2 text-right">
-                    <div class="input-group">
-                        <textarea class="form-control" rows="5" style="height: 100px;" aria-label="With textarea"
-                            placeholder="Enter something ...."></textarea>
-                    </div>
-                    <button class="btn btn-primary mt-2">Send Comment</button>
-                </div>
-            </ng-template>
-
-        </div>
-        <hr>
-        <div class="comment-list">
-            <div class="row mt-2 mb-3">
-                <div class="col col-md-1">
-                    <img alt="avatar" style="border-radius: 35px;" width="70" height="70"
-                        src="https://media.istockphoto.com/vectors/allseeing-eye-of-god-inside-triangle-pyramid-vector-id1159957563?k=20&m=1159957563&s=612x612&w=0&h=1NOjNRYBCJ2kgwdET4qVq76SB6g5TsS4dGpvWkC8tfY=" />
-                </div>
-                <div class="col col-md-11">
-                    <h3>By Hillary C — 13 hours ago</h3>
-                    <p>Really looking forward to doing this :) I'm very early in my second pregnancy and I've heard from
-                        others that things like your abs seem to go a heck of a lot faster the second time round. So I'm
-                        not waiting til 2nd tri. to shift to prenatal workouts this time!! 😅</p>
-                    <button class="btn btn-outline-primary mr-2" style="border: 0px;"><i
-                            class="fas fa-arrow-left mr-2"></i> Reply</button>
-                    <button class="btn btn-outline-primary" style="border: 0px;">Like <i
-                            class="far fa-thumbs-up ml-2 mr-2"></i> <span
-                            class="badge rounded-pill badge-notification bg-danger"
-                            style="font-size: 13px;">1</span></button>
-
-                </div>
-            </div>
-            <div class="row mt-2 mb-3">
-                <div class="col col-md-1">
-                    <img alt="avatar" style="border-radius: 35px;" width="70" height="70"
-                        src="https://media.istockphoto.com/vectors/allseeing-eye-of-god-inside-triangle-pyramid-vector-id1159957563?k=20&m=1159957563&s=612x612&w=0&h=1NOjNRYBCJ2kgwdET4qVq76SB6g5TsS4dGpvWkC8tfY=" />
-                </div>
-                <div class="col col-md-11">
-                    <h3>By Hillary C — 13 hours ago</h3>
-                    <p>Really looking forward to doing this :) I'm very early in my second pregnancy and I've heard from
-                        others that things like your abs seem to go a heck of a lot faster the second time round. So I'm
-                        not waiting til 2nd tri. to shift to prenatal workouts this time!! 😅</p>
-                    <button class="btn btn-outline-primary mr-2" style="border: 0px;"><i
-                            class="fas fa-arrow-left mr-2"></i> Reply</button>
-                    <button class="btn btn-outline-primary" style="border: 0px;">Like <i
-                            class="far fa-thumbs-up ml-2"></i></button>
-                </div>
-            </div>
-            <div class="row mt-2 mb-3">
-                <div class="col col-md-1">
-                    <img alt="avatar" style="border-radius: 35px;" width="70" height="70"
-                        src="https://media.istockphoto.com/vectors/allseeing-eye-of-god-inside-triangle-pyramid-vector-id1159957563?k=20&m=1159957563&s=612x612&w=0&h=1NOjNRYBCJ2kgwdET4qVq76SB6g5TsS4dGpvWkC8tfY=" />
-                </div>
-                <div class="col col-md-11">
-                    <h3>By Hillary C — 13 hours ago</h3>
-                    <p>Really looking forward to doing this :) I'm very early in my second pregnancy and I've heard from
-                        others that things like your abs seem to go a heck of a lot faster the second time round. So I'm
-                        not waiting til 2nd tri. to shift to prenatal workouts this time!! 😅</p>
-                    <button class="btn btn-outline-primary mr-2" style="border: 0px;"><i
-                            class="fas fa-arrow-left mr-2"></i> Reply</button>
-                    <button class="btn btn-outline-primary" style="border: 0px;">Like <i
-                            class="far fa-thumbs-up ml-2"></i></button>
-                </div>
-            </div>
-            <div class="row mt-2 mb-3">
-                <div class="col col-md-1">
-                    <img alt="avatar" style="border-radius: 35px;" width="70" height="70"
-                        src="https://media.istockphoto.com/vectors/allseeing-eye-of-god-inside-triangle-pyramid-vector-id1159957563?k=20&m=1159957563&s=612x612&w=0&h=1NOjNRYBCJ2kgwdET4qVq76SB6g5TsS4dGpvWkC8tfY=" />
-                </div>
-                <div class="col col-md-11">
-                    <h3>By Hillary C — 13 hours ago</h3>
-                    <p>Really looking forward to doing this :) I'm very early in my second pregnancy and I've heard from
-                        others that things like your abs seem to go a heck of a lot faster the second time round. So I'm
-                        not waiting til 2nd tri. to shift to prenatal workouts this time!! 😅</p>
-                    <button class="btn btn-outline-primary mr-2" style="border: 0px;"><i
-                            class="fas fa-arrow-left mr-2"></i> Reply</button>
-                    <button class="btn btn-outline-primary" style="border: 0px;">Like <i
-                            class="far fa-thumbs-up ml-2"></i></button>
-                </div>
-            </div>
-            <div class="row mt-2 mb-3">
-                <div class="col col-md-1">
-                    <img alt="avatar" style="border-radius: 35px;" width="70" height="70"
-                        src="https://media.istockphoto.com/vectors/allseeing-eye-of-god-inside-triangle-pyramid-vector-id1159957563?k=20&m=1159957563&s=612x612&w=0&h=1NOjNRYBCJ2kgwdET4qVq76SB6g5TsS4dGpvWkC8tfY=" />
-                </div>
-                <div class="col col-md-11">
-                    <h3>By Hillary C — 13 hours ago</h3>
-                    <p>Really looking forward to doing this :) I'm very early in my second pregnancy and I've heard from
-                        others that things like your abs seem to go a heck of a lot faster the second time round. So I'm
-                        not waiting til 2nd tri. to shift to prenatal workouts this time!! 😅</p>
-                    <button class="btn btn-outline-primary mr-2" style="border: 0px;"><i
-                            class="fas fa-arrow-left mr-2"></i> Reply</button>
-                    <button class="btn btn-outline-primary" style="border: 0px;">Like <i
-                            class="far fa-thumbs-up ml-2"></i></button>
                 </div>
             </div>
         </div>
     </div>
-</div>

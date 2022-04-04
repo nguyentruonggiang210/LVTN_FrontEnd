@@ -14,6 +14,6 @@ export class PaymentService {
   constructor(private httpClient: HttpClient) { }
 
   uploadPayment(model: PaymentDto) {
-    return this.httpClient.put<BaseResponse<boolean>>(`${environment}Payment`, model);
+    return this.httpClient.post<BaseResponse<boolean>>(`${environment.apiUrl}Payment`, model);
   }
 }
