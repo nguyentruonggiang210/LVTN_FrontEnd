@@ -26,6 +26,7 @@ const routes: Routes = [
   { path: 'management/user/update/:userName', component: CreateUpdateUserComponent },
   { path: 'management/user/create', component: CreateUpdateUserComponent },
   { path: 'management/product/create', component: CreateUpdateProductComponent },
+  { path: 'management/product/update/:productId', component: CreateUpdateProductComponent },
   { path: 'management/course', component: TrainerComponent },
   { path: 'management/product', component: ProductComponent },
   // others

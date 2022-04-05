@@ -1,16 +1,13 @@
-<div class="text-center">  
-    <ngb-carousel *ngIf="carouselImages">
-        <ng-template ngbSlide *ngFor="let menu of carouselImages; let i = index">
-          <div class="picsum-img-wrapper">
-            <img [src]="menu.url" alt="Random first slide">
-          </div>
-          <div class="carousel-caption">
-            <h3>{{ menu.content || default }}</h3>
-            <p>{{ menu.description || default }}</p>
-          </div>
-        </ng-template>
-      </ngb-carousel>
+<div class="text-center">
+  <ngb-carousel *ngIf="carouselImages">
+    <ng-template ngbSlide *ngFor="let menu of carouselImages; let i = index">
+      <div class="picsum-img-wrapper">
+        <img [src]="menu.url" alt="Random first slide">
+      </div>
+      <div class="carousel-caption">
+        <h3>{{ menu.content || default }}</h3>
+        <p>{{ menu.description || default }}</p>
+      </div>
+    </ng-template>
+  </ngb-carousel>
 </div>
-
-
-  

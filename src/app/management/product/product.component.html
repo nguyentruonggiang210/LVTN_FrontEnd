@@ -10,8 +10,8 @@ z
                                 <h2 class="card-title" style="float: left;">Product Management</h2>
                             </div>
                             <div class="col col-md-1">
-                                <button (click)="navigateProductCreate()" class="ml-3 mr-3 user-button" mat-stroked-button
-                                    color="primary">Create product</button>
+                                <button (click)="navigateProductCreate()" class="ml-3 mr-3 user-button"
+                                    mat-stroked-button color="primary">Create product</button>
                             </div>
                             <div class="col col-md-1">
                                 <button (click)="printEvent()" class="ml-3 mr-3 user-button" mat-stroked-button
@@ -35,26 +35,14 @@ z
                             <div class="row">
                                 <div class="col col-md-3">
                                     <mat-form-field class="user-form-field" appearance="fill">
-                                        <mat-label>UserName</mat-label>
-                                        <input matInput type="text" [(ngModel)]="userName">
+                                        <mat-label>Product Name</mat-label>
+                                        <input matInput type="text" [(ngModel)]="productName">
                                     </mat-form-field>
                                 </div>
                                 <div class="col col-md-3">
                                     <mat-form-field class="user-form-field" appearance="fill">
-                                        <mat-label>Name</mat-label>
-                                        <input matInput type="text" [(ngModel)]="name">
-                                    </mat-form-field>
-                                </div>
-                                <div class="col col-md-3">
-                                    <mat-form-field class="user-form-field" appearance="fill">
-                                        <mat-label>Address</mat-label>
-                                        <input matInput type="text" [(ngModel)]="address">
-                                    </mat-form-field>
-                                </div>
-                                <div class="col col-md-3">
-                                    <mat-form-field class="user-form-field" appearance="fill">
-                                        <mat-label>Date Create</mat-label>
-                                        <input matInput type="date" [(ngModel)]="dateCreate">
+                                        <mat-label>Date Import</mat-label>
+                                        <input type="date" matInput type="text" [(ngModel)]="dateImport">
                                     </mat-form-field>
                                 </div>
                                 <div class="col col-md-3">

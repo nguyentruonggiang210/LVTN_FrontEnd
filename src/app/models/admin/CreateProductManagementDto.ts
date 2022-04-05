@@ -1,4 +1,7 @@
+import { ImageDto } from "../ImageDto"
+
 export interface CreateProductManagementDto {
+    productId?: number,
     productName: string,
     weight: number,
     difficulty: number,
@@ -15,4 +18,5 @@ export interface CreateProductManagementDto {
     userId: string,
     bodyFocus: string[],
     tag: string[]
+    images?: ImageDto[]
 }

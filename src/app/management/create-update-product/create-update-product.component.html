@@ -92,6 +92,16 @@
                 </div>
                 <div class="col-md-4">
                     <h2 class="text-left">Product Image</h2>
+                    <ngb-carousel *ngIf="carouselImages != null && imageFiles == null">
+                        <ng-template ngbSlide *ngFor="let img of carouselImages">
+                            <div class="picsum-img-wrapper">
+                                <img style="max-height: 450px" [src]="img.biggerImageUrl" [alt]="img.imageId">
+                                <button class="text-center" mat-flat-button color="accent"
+                                    (click)="deleteImage(img.publicId)"
+                                    style="width: 70px;position: absolute; bottom: 10px; left: 10px;z-index: 100;">Delete</button>
+                            </div>
+                        </ng-template>
+                    </ngb-carousel>
                     <img *ngIf="imageUrl != null" style="max-height: 450px" [src]="imageUrl" />
                     <div class="mt-1">
                         <button mat-raised-button color="primary" (click)="uploadFile.click()">Choose Image</button>

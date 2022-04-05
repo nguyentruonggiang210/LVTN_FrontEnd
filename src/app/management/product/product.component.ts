@@ -24,25 +24,32 @@ const DeleteMessageSuccess = "Delete Success";
 export class ProductComponent implements OnInit {
   // variables
   searchValue: string;
-  userName: string;
-  name: string;
-  address: string;
+  productName: string;
+  dateImport: string;
   dateCreate: Date;
   sortByList: any[] = [
     {
       value: 1,
-      display: 'UserName Increase'
+      display: 'Date Import Increase'
     },
     {
       value: 2,
-      display: 'UserName Descrease'
+      display: 'Date Import Descrease'
     },
     {
       value: 3,
-      display: 'Status Activated'
+      display: 'Price Increase'
     },
     {
       value: 4,
+      display: 'Price Descrease'
+    },
+    {
+      value: 5,
+      display: 'Status Activated'
+    },
+    {
+      value: 6,
       display: 'Status Disabled'
     },
   ];
@@ -113,8 +120,8 @@ export class ProductComponent implements OnInit {
     document.getElementById("hiden-component").style.display = "block";
   }
 
-  navigateUpdatePage(userName) {
-    this.router.navigate(['management/user/update/' + userName]);
+  navigateUpdatePage(productId: number) {
+    this.router.navigate(['management/product/update/' + productId]);
   }
 
   confirmDelete(id: any) {
@@ -124,18 +131,17 @@ export class ProductComponent implements OnInit {
       minWidth: '350px',
     });
 
-    if (typeof (id) == "string") {
+    if (typeof (id) == "number") {
       dialogRef.componentInstance.data = contentDelete + id + contentDelete1;
     }
     else {
       let userNames = <string[]>id.toString();
       dialogRef.componentInstance.data = contentDelete + userNames + contentDelete1;
-
     }
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == 'Y') {
-        if (typeof (id) == "string") {
+        if (typeof (id) == "number") {
           this.deleteEvent(id);
         }
         else {
@@ -146,16 +152,15 @@ export class ProductComponent implements OnInit {
   }
 
   private getProductList(otherFilter: string = '') {
-    // let filter = `?$top=${this.take}&$skip=${this.skip}&$filter=` + otherFilter;
+    let filter = `?$top=${this.take}&$skip=${this.skip}&$filter=` + otherFilter;
 
-    // filter = this.odataService.adjustUrl(filter);
-    // filter = this.odataService.removeFilter(filter);
+    filter = this.odataService.adjustUrl(filter);
 
-    // filter += this.sortByQuery();
+    filter = this.odataService.removeFilter(filter);
 
-    // console.log(filter);
+    filter += this.sortByQuery();
 
-    this.productManagementService.getAllProduct('')
+    this.productManagementService.getAllProduct(filter)
       .subscribe(x => {
         if (x) {
           this.dataSource = x.items;
@@ -170,76 +175,61 @@ export class ProductComponent implements OnInit {
   }
 
   applyFilter() {
-    let filter = this.userNameQuery();
-    filter += this.nameQuery();
-    filter += this.addressQuery();
-    filter += this.dateCreateQuery();
+    let filter = this.productNameQuery();
+    filter += this.dateImportQuery();
     this.getProductList(filter);
   }
 
-  userNameQuery() {
-    if (this.userName && this.userName != '' && this.userName != null && this.userName != undefined) {
-      return this.odataService.addFilterIn('userName', [this.userName]) + blankSpace;
+  productNameQuery() {
+    if (this.productName && this.productName != '' && this.productName != null && this.productName != undefined) {
+      return this.odataService.addFilterIn('productName', [this.productName]) + blankSpace;
     }
 
     return '';
   }
 
-  nameQuery() {
-    if (this.name && this.name != '' && this.name != null && this.name != undefined) {
-      return this.odataService.addFilterIn('name', [this.name]) + blankSpace;
-    }
-
-    return '';
-  }
-
-  addressQuery() {
-    if (this.address && this.address != '' && this.address != null && this.address != undefined) {
-      return this.odataService.addFilterIn('address', [this.address]) + blankSpace;
-    }
-
-    return '';
-  }
-
-  dateCreateQuery() {
-    if (this.dateCreate && this.dateCreate != null && this.dateCreate != undefined) {
-      return this.odataService.addFilterEqual('createDate', this.dateCreate.toString()) + blankSpace;
+  dateImportQuery() {
+    if (this.dateImport && this.dateImport != null && this.dateImport != undefined) {
+      return this.odataService.addFilterEqual('importDate', this.dateImport.toString()) + blankSpace;
     }
 
     return '';
   }
 
   sortByQuery() {
-    console.log(this.sortBy);
     switch (this.sortBy) {
       case 1:
-        return this.odataService.sortBy('userName', false);
+        return this.odataService.sortBy('importDate', false);
       case 2:
-        return this.odataService.sortBy('userName', true);
+        return this.odataService.sortBy('importDate', true);
       case 3:
-        return this.odataService.sortBy('status', false);
+        return this.odataService.sortBy('price', false);
       case 4:
+        return this.odataService.sortBy('price', true);
+      case 5:
+        return this.odataService.sortBy('status', false);
+      case 6:
         return this.odataService.sortBy('status', true);
       default:
         return this.odataService.sortBy('userName', false);
     }
   }
 
-  deleteEvent(id: string) {
-    // if (id) {
-    //   // delete one record
-    //   this.userManagementService.deleteUser(new Array<string>(id));
-    // }
-    // else {
-    //   // delete all
-    //   let userNames = this.dataSource.map(x => x.userName);
-    //   this.userManagementService.deleteUser(userNames)
-    //     .subscribe(x => {
-    //       if (x && x.body == true) {
-    //         this.snackBar.open(DeleteMessageSuccess, Action);
-    //       }
-    //     });
-    // }
+  deleteEvent(productId?: number) {debugger
+    if (productId) {
+      // delete one record
+      this.productManagementService.deleteProduct(new Array<number>(productId));
+    }
+    else {
+      // delete all
+      let productIds = this.dataSource.map(x => x.productId);
+      this.productManagementService.deleteProduct(productIds)
+        .subscribe(x => {
+          if (x && x.body == true) {
+            this.snackBar.open(DeleteMessageSuccess, Action);
+          }
+        });
+    }
   }
 
 }

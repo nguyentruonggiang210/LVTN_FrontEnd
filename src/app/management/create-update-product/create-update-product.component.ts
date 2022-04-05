@@ -4,8 +4,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateProductManagementDto } from 'src/app/models/admin/CreateProductManagementDto';
 import { CreateUserManagementDto } from 'src/app/models/admin/CreateUserManagementDto';
+import { ImageDto } from 'src/app/models/ImageDto';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { AuthService } from 'src/app/services/common/auth.service';
+import { CommonService } from 'src/app/services/common/common.service';
 import { UserDetailService } from 'src/app/services/detail/user-detail.service';
 import { ProductManagementService } from 'src/app/services/management/product-management.service';
 import { UserManagementService } from 'src/app/services/management/user-management.service';
@@ -19,12 +21,13 @@ export class CreateUpdateProductComponent implements OnInit {
 
   permitImage: boolean = false;
   productId?: number = null;
-  dataSource: CreateUserManagementDto = null;
+  dataSource: CreateProductManagementDto = null;
   title: string = 'Create product';
   buttonTitle: string = 'Create';
   buttonImage: string = 'Upload Image';
   defaultAvatar: string = "assets/img/default-avatar.png";
   imageUrl: any = null;
+  carouselImages: ImageDto[] = null;
   imageFiles: any = null;
   difficultyList: number[] = [1, 2, 3, 4, 5];
   tagList: string[] = [];
@@ -99,15 +102,15 @@ export class CreateUpdateProductComponent implements OnInit {
   });
 
   constructor(private userManagementService: UserManagementService,
-    private userDetailService: UserDetailService,
     private snackBar: MatSnackBar,
     private router: ActivatedRoute,
     private authService: AuthService,
     private categoryService: CategoryService,
+    private commonService: CommonService,
     private productManagementService: ProductManagementService) {
     router.params
       .subscribe(x => {
-        this.getUser(x.userName);
+        this.getProduct(x.productId);
       });
   }
 
@@ -141,39 +144,63 @@ export class CreateUpdateProductComponent implements OnInit {
   uploadImage() {
     let file = this.imageFiles;
     const formData = new FormData();
-    formData.append('images', file);
+    for (const imageData of file) {
+      formData.append('fileImages', imageData);
+    }
+
     formData.append('userId', this.authService.getUserId());
     this.productManagementService.uploadProductImage(formData, this.productId)
       .subscribe(x => {
         if (x) {
-          this.snackBar.open('Create product success', 'Close');
+          this.commonService.displaySnackBar('Upload image success', 'Close');
+          if (this.dataSource != null) {
+            this.getImages();
+            this.imageFiles = null;
+            this.imageUrl = null;
+          }
         }
       });
   }
 
-  private getUser(userName: string) {
-    this.userManagementService.getUserByUserName(userName)
+  deleteImage(publicId: string) {
+    this.productManagementService.deleteImage(publicId)
+      .subscribe(x => {
+        if (x.body == true) {
+          this.commonService.displaySnackBar('Delete image success', 'Close');
+          this.getImages();
+        }
+      });
+  }
+
+  private getProduct(productId: number) {
+    this.productManagementService.getProductById(productId)
       .subscribe(b => {
         this.dataSource = b.body;
-        this.imageFiles = b.body.avatar != null && b.body.avatar != '' ? b.body.avatar : this.defaultAvatar;
-        this.title = this.dataSource == null ? 'Create User' : 'Update User';
+        this.productId = b.body.productId;
+        this.title = this.dataSource == null ? 'Create Product' : 'Update Product';
         this.buttonTitle = this.dataSource == null ? 'Create' : 'Update';
+        this.carouselImages = b.body.images;
         this.setFormValue(b.body);
       });
   }
 
-  private setFormValue(model: CreateUserManagementDto) {
+  private setFormValue(model: CreateProductManagementDto) {
     this.managementFormGroup.setValue({
-      name: model.name,
-      userName: model.userName,
-      role: model.roleNames,
-      age: model.age,
-      email: model.email,
-      address: model.address,
-      gender: model.gender,
-      password: '',
-      confirmPassword: '',
-      status: model.status
+      productName: model.productName,
+      weight: model.weight,
+      difficulty: model.difficulty,
+      userMaxWeight: model.userMaxWeight,
+      languageSupport: model.languageSupport,
+      price: model.price,
+      importDate: model.importDate,
+      importOriginal: model.importOriginal,
+      importQuantity: model.importQuantity,
+      importPrice: model.importPrice,
+      country: model.country,
+      company: model.company,
+      description: model.description,
+      bodyFocus: model.bodyFocus,
+      tag: model.tag
     });
   }
 
@@ -226,7 +253,7 @@ export class CreateUpdateProductComponent implements OnInit {
     this.userManagementService.updateUser(model)
       .subscribe(b => {
         if (b.body && b.body == true) {
-          this.snackBar.open('Update user success', 'Close');
+          this.commonService.displaySnackBar('Update user success', 'Close');
         }
       });
   }
@@ -241,5 +268,14 @@ export class CreateUpdateProductComponent implements OnInit {
 
     this.categoryService.getAllBodyFocus()
       .subscribe(b => this.bodyFocusList = b.body);
+  }
+
+  private getImages() {
+    this.productManagementService.getImages(this.productId)
+      .subscribe(x => {
+        if (x) {
+          this.carouselImages = x.body;
+        }
+      });
   }
 }
