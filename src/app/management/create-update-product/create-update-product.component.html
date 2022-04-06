@@ -7,9 +7,8 @@
                     <h2 class="text-left">Product Information</h2>
                     <mat-form-field class="w-100">
                         <mat-label class="myform-label">Product Name</mat-label>
-                        <input class="myform-input" [readonly]="dataSource != null" matInput
-                            formControlName="productName" autocomplete="off">
-                        <mat-hint align="start"></mat-hint>
+                        <input class="myform-input" matInput formControlName="productName" autocomplete="off">
+                        <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
                         <mat-label class="myform-label">Weight (Kg)</mat-label>

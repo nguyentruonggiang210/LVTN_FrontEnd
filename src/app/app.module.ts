@@ -123,6 +123,8 @@ import { CreateUpdateCourseComponent } from './management/create-update-course/c
 import { CreateUpdateUserComponent } from './management/create-update-user/create-update-user.component';
 import { CreateUpdateProductComponent } from './management/create-update-product/create-update-product.component';
 import { DateTimePipe } from './pipes/datetime.pipe';
+import { VideoDialogComponent } from './components/video-dialog/video-dialog.component';
+import { SafePipe } from './pipes/safe.pipe';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -181,6 +183,9 @@ const toolbarConfig: any = [
 
 @NgModule({
   declarations: [
+    MoneyPipe,
+    DateTimePipe,
+    SafePipe,
     AppComponent,
     CarouselComponent,
     HomeComponent,
@@ -210,13 +215,12 @@ const toolbarConfig: any = [
     DeleteNotifyComponent,
     CartDialogComponent,
     CartComponent,
-    MoneyPipe,
-    DateTimePipe,
     UserCreateDialogComponent,
     MeetingRoomComponent,
     CreateUpdateCourseComponent,
     CreateUpdateUserComponent,
-    CreateUpdateProductComponent
+    CreateUpdateProductComponent,
+    VideoDialogComponent
   ],
   imports: [
     BrowserModule,

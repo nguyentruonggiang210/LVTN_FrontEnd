@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateProductManagementDto } from 'src/app/models/admin/CreateProductManagementDto';
-import { CreateUserManagementDto } from 'src/app/models/admin/CreateUserManagementDto';
 import { ImageDto } from 'src/app/models/ImageDto';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { AuthService } from 'src/app/services/common/auth.service';
 import { CommonService } from 'src/app/services/common/common.service';
-import { UserDetailService } from 'src/app/services/detail/user-detail.service';
 import { ProductManagementService } from 'src/app/services/management/product-management.service';
 import { UserManagementService } from 'src/app/services/management/user-management.service';
 
@@ -101,17 +99,20 @@ export class CreateUpdateProductComponent implements OnInit {
     ]),
   });
 
-  constructor(private userManagementService: UserManagementService,
-    private snackBar: MatSnackBar,
-    private router: ActivatedRoute,
+  constructor(private activateRoute: ActivatedRoute,
+    private router: Router,
     private authService: AuthService,
     private categoryService: CategoryService,
     private commonService: CommonService,
     private productManagementService: ProductManagementService) {
-    router.params
-      .subscribe(x => {
-        this.getProduct(x.productId);
-      });
+    let currentUrl = router.url;
+    if (!currentUrl.includes('create')) {
+      debugger
+      activateRoute.params
+        .subscribe(x => {
+          this.getProduct(x.productId);
+        });
+    }
   }
 
   ngOnInit(): void {
@@ -230,30 +231,38 @@ export class CreateUpdateProductComponent implements OnInit {
     this.productManagementService.createProduct(model)
       .subscribe(b => {
         if (b) {
-          this.snackBar.open('Create product success', 'Close');
+          this.commonService.displaySnackBar('Create product success', 'Close');
           this.productId = b.body;
         }
       });
   }
 
   private updateEvent() {
-    let model: CreateUserManagementDto = {
-      userName: this.managementFormGroup.value['userName'],
-      name: this.managementFormGroup.value['name'],
-      password: this.managementFormGroup.value['password'],
-      confirmPassword: this.managementFormGroup.value['confirmPassword'],
-      age: this.managementFormGroup.value['age'] ?? 0,
-      email: this.managementFormGroup.value['email'] ?? '',
-      address: this.managementFormGroup.value['address'] ?? '',
-      gender: this.managementFormGroup.value['gender'] ?? 0,
-      status: this.managementFormGroup.value['status'],
-      roleNames: this.managementFormGroup.value['role'],
-      avatar: ''
+    let userid = this.authService.getUserId();
+    let model: CreateProductManagementDto = {
+      productId: this.productId,
+      productName: this.managementFormGroup.value['productName'],
+      weight: this.managementFormGroup.value['weight'],
+      userMaxWeight: this.managementFormGroup.value['userMaxWeight'],
+      difficulty: this.managementFormGroup.value['difficulty'],
+      languageSupport: this.managementFormGroup.value['languageSupport'],
+      price: this.managementFormGroup.value['price'],
+      bodyFocus: this.managementFormGroup.value['bodyFocus'],
+      tag: this.managementFormGroup.value['tag'],
+      importDate: this.managementFormGroup.value['importDate'],
+      importOriginal: this.managementFormGroup.value['importOriginal'],
+      importQuantity: this.managementFormGroup.value['importQuantity'],
+      importPrice: this.managementFormGroup.value['importPrice'],
+      country: this.managementFormGroup.value['country'],
+      company: this.managementFormGroup.value['company'],
+      description: this.managementFormGroup.value['description'],
+      userId: userid
     };
-    this.userManagementService.updateUser(model)
+    this.productManagementService.updateProduct(model)
       .subscribe(b => {
         if (b.body && b.body == true) {
-          this.commonService.displaySnackBar('Update user success', 'Close');
+          this.commonService.displaySnackBar('Update product success', 'Close');
+          this.getProduct(this.productId);
         }
       });
   }

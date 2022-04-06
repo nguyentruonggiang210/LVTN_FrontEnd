@@ -22,6 +22,10 @@ export class ProductManagementService {
     return this.httpClient.post<BaseResponse<number>>(environment.apiUrl + "ProductManagement/", model);
   }
 
+  updateProduct(model: CreateProductManagementDto) {
+    return this.httpClient.put<BaseResponse<boolean>>(environment.apiUrl + "ProductManagement/", model);
+  }
+
   uploadProductImage(formData: FormData, productId: number) {
     return this.httpClient.put<BaseResponse<string>>(environment.apiUrl + 'ProductManagement/image/' + productId, formData);
   }

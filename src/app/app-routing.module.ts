@@ -10,6 +10,7 @@ import { TrainerComponent } from './management/trainer/trainer.component';
 import { CreateUpdateUserComponent } from './management/create-update-user/create-update-user.component';
 import { ProductComponent } from './management/product/product.component';
 import { CreateUpdateProductComponent } from './management/create-update-product/create-update-product.component';
+import { CreateUpdateCourseComponent } from './management/create-update-course/create-update-course.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -27,6 +28,8 @@ const routes: Routes = [
   { path: 'management/user/create', component: CreateUpdateUserComponent },
   { path: 'management/product/create', component: CreateUpdateProductComponent },
   { path: 'management/product/update/:productId', component: CreateUpdateProductComponent },
+  { path: 'management/course/create', component: CreateUpdateCourseComponent },
+  { path: 'management/course/update/:courseId', component: CreateUpdateCourseComponent },
   { path: 'management/course', component: TrainerComponent },
   { path: 'management/product', component: ProductComponent },
   // others

@@ -76,11 +76,15 @@ export class CreateUpdateUserComponent implements OnInit {
   constructor(private userManagementService: UserManagementService,
     private userDetailService: UserDetailService,
     private snackBar: MatSnackBar,
-    private router: ActivatedRoute) {
-    router.params
-      .subscribe(x => {
-        this.getUser(x.userName);
-      });
+    private activateRoute: ActivatedRoute,
+    private router: Router) {
+    let currentUrl = router.url;
+    if (!currentUrl.includes('create')) {
+      activateRoute.params
+        .subscribe(x => {
+          this.getUser(x.userName);
+        });
+    }
   }
 
   ngOnInit(): void { }
@@ -137,8 +141,6 @@ export class CreateUpdateUserComponent implements OnInit {
         this.title = this.dataSource == null ? 'Create User' : 'Update User';
         this.buttonTitle = this.dataSource == null ? 'Create' : 'Update';
         this.setFormValue(b.body);
-        console.log(this.imageFile);
-
       });
   }
 
