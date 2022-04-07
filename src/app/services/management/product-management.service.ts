@@ -27,7 +27,7 @@ export class ProductManagementService {
   }
 
   uploadProductImage(formData: FormData, productId: number) {
-    return this.httpClient.put<BaseResponse<string>>(environment.apiUrl + 'ProductManagement/image/' + productId, formData);
+    return this.httpClient.put<BaseResponse<boolean>>(environment.apiUrl + 'ProductManagement/image/' + productId, formData);
   }
 
   getProductById(productId: number) {

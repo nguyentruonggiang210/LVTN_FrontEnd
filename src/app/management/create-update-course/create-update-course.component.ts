@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VideoDialogComponent } from 'src/app/components/video-dialog/video-dialog.component';
 import { CourseTypeDto } from 'src/app/models/admin/CourseTypeDto';
 import { CreateCourseManagementDto } from 'src/app/models/admin/CreateCourseManagementDto';
-import { CreateProductManagementDto } from 'src/app/models/admin/CreateProductManagementDto';
+import { formatDate } from "@angular/common";
 import { ImageDto } from 'src/app/models/ImageDto';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { AuthService } from 'src/app/services/common/auth.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { CourseManagementService } from 'src/app/services/management/course-management.service';
 import { ProductManagementService } from 'src/app/services/management/product-management.service';
+import { CreateUpdateRoomComponent } from 'src/app/components/create-update-room/create-update-room.component';
+import { CreateRoomDto } from 'src/app/models/admin/CreateRoomDto';
 
 @Component({
   selector: 'app-create-update-course',
@@ -22,7 +23,7 @@ import { ProductManagementService } from 'src/app/services/management/product-ma
 export class CreateUpdateCourseComponent implements OnInit {
 
   courseId?: number = null;
-  dataSource: CreateProductManagementDto = null;
+  dataSource: CreateCourseManagementDto = null;
   title: string = 'Create course';
   buttonTitle: string = 'Create';
   buttonImage: string = 'Upload Image';
@@ -36,30 +37,7 @@ export class CreateUpdateCourseComponent implements OnInit {
   tagList: string[] = [];
   bodyFocusList: string[] = [];
   courseTypeList: CourseTypeDto[] = [];
-  genderList: any = [
-    {
-      id: 0,
-      value: 'Female'
-    },
-    {
-      id: 1,
-      value: 'Male'
-    },
-    {
-      id: 2,
-      value: 'Other'
-    }
-  ];
-  statusList: any = [
-    {
-      id: true,
-      value: 'Active'
-    },
-    {
-      id: false,
-      value: 'Disabled'
-    },
-  ];
+  roomDtos: CreateRoomDto[] = null;
 
   managementFormGroup = new FormGroup({
     courseName: new FormControl('', [
@@ -110,7 +88,8 @@ export class CreateUpdateCourseComponent implements OnInit {
     if (!currentUrl.includes('create')) {
       activateRoute.params
         .subscribe(x => {
-          // this.getProduct(x.courseId);
+          this.getCourse(x.courseId);
+          this.loadRoom(x.courseId);
         });
     }
   }
@@ -147,7 +126,7 @@ export class CreateUpdateCourseComponent implements OnInit {
     }
   }
 
-  uploadVideoToServer() { 
+  uploadVideoToServer() {
     let file = this.videoFiles;
     const formData = new FormData();
     formData.append('fileVideo', file[0]);
@@ -157,6 +136,7 @@ export class CreateUpdateCourseComponent implements OnInit {
       .subscribe(x => {
         if (x) {
           this.commonService.displaySnackBar('Upload video success', 'Close');
+          this.videoUrl = x.body;
         }
       });
   }
@@ -167,6 +147,17 @@ export class CreateUpdateCourseComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openCreateOrUpdateRoomDialog(isUpdate: boolean = false, roomId: number = null) {
+    const dialogRef = this.dialog.open(CreateUpdateRoomComponent);
+    let message = this.courseId + '-' + isUpdate;
+    message += roomId != null ? '-' + roomId : '';
+    dialogRef.componentInstance.message = message;
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadRoom(this.courseId);
     });
   }
 
@@ -201,7 +192,7 @@ export class CreateUpdateCourseComponent implements OnInit {
   }
 
   deleteImage(publicId: string) {
-    this.productManagementService.deleteImage(publicId)
+    this.courseManagementService.deleteImage(publicId)
       .subscribe(x => {
         if (x.body == true) {
           this.commonService.displaySnackBar('Delete image success', 'Close');
@@ -210,35 +201,32 @@ export class CreateUpdateCourseComponent implements OnInit {
       });
   }
 
-  private getProduct(productId: number) {
-    this.productManagementService.getProductById(productId)
+  private getCourse(courseId: number) {
+    this.courseManagementService.getCourseById(courseId)
       .subscribe(b => {
         this.dataSource = b.body;
-        this.courseId = b.body.productId;
+        this.courseId = b.body.courseId;
         this.title = this.dataSource == null ? 'Create Course' : 'Update Course';
         this.buttonTitle = this.dataSource == null ? 'Create' : 'Update';
         this.carouselImages = b.body.images;
+        this.videoUrl = b.body.video;
         this.setFormValue(b.body);
       });
   }
 
-  private setFormValue(model: CreateProductManagementDto) {
+  private setFormValue(model: CreateCourseManagementDto) {
     this.managementFormGroup.setValue({
-      productName: model.productName,
-      weight: model.weight,
+      courseName: model.courseName,
+      courseType: model.courseType,
       difficulty: model.difficulty,
-      userMaxWeight: model.userMaxWeight,
-      languageSupport: model.languageSupport,
+      startDate: formatDate(model.startDate, "yyyy-MM-dd", "en"),
+      endDate: formatDate(model.endDate, "yyyy-MM-dd", "en"),
       price: model.price,
-      importDate: model.importDate,
-      importOriginal: model.importOriginal,
-      importQuantity: model.importQuantity,
-      importPrice: model.importPrice,
-      country: model.country,
-      company: model.company,
+      teacherName: model.teacherName,
+      member: model.member,
       description: model.description,
       bodyFocus: model.bodyFocus,
-      tag: model.tag
+      tag: model.tag,
     });
   }
 
@@ -272,35 +260,50 @@ export class CreateUpdateCourseComponent implements OnInit {
 
   private updateEvent() {
     let userid = this.authService.getUserId();
-    let model: CreateProductManagementDto = {
-      productId: this.courseId,
-      productName: this.managementFormGroup.value['productName'],
-      weight: this.managementFormGroup.value['weight'],
-      userMaxWeight: this.managementFormGroup.value['userMaxWeight'],
+    let model: CreateCourseManagementDto = {
+      courseId: this.courseId,
+      courseName: this.managementFormGroup.value['courseName'],
+      startDate: this.managementFormGroup.value['startDate'],
+      endDate: this.managementFormGroup.value['endDate'],
       difficulty: this.managementFormGroup.value['difficulty'],
-      languageSupport: this.managementFormGroup.value['languageSupport'],
+      teacherName: this.managementFormGroup.value['teacherName'],
+      courseType: this.managementFormGroup.value['courseType'],
       price: this.managementFormGroup.value['price'],
       bodyFocus: this.managementFormGroup.value['bodyFocus'],
       tag: this.managementFormGroup.value['tag'],
-      importDate: this.managementFormGroup.value['importDate'],
-      importOriginal: this.managementFormGroup.value['importOriginal'],
-      importQuantity: this.managementFormGroup.value['importQuantity'],
-      importPrice: this.managementFormGroup.value['importPrice'],
-      country: this.managementFormGroup.value['country'],
-      company: this.managementFormGroup.value['company'],
+      member: this.managementFormGroup.value['member'],
       description: this.managementFormGroup.value['description'],
       userId: userid
     };
-    this.productManagementService.updateProduct(model)
+    this.courseManagementService.updateCourse(model)
       .subscribe(b => {
         if (b.body && b.body == true) {
-          this.commonService.displaySnackBar('Update user success', 'Close');
+          this.commonService.displaySnackBar('Update course success', 'Close');
+        }
+      });
+  }
+
+  deleleRoom(roomId: number) {
+    this.courseManagementService.deleteRoom(roomId)
+      .subscribe(x => {
+        if (x && x.body) {
+          this.commonService.displaySnackBar('Delete room success', 'Close');
+          this.loadRoom(this.courseId);
         }
       });
   }
 
   backEvent() {
     window.location.href = 'http://localhost:4200/management/course';
+  }
+
+  private loadRoom(courseId: number) {
+    this.courseManagementService.getRoomByCourseId(courseId)
+      .subscribe(x => {
+        if (x) {
+          this.roomDtos = x.body;
+        }
+      });
   }
 
   private getInitList() {
@@ -315,7 +318,7 @@ export class CreateUpdateCourseComponent implements OnInit {
   }
 
   private getImages() {
-    this.productManagementService.getImages(this.courseId)
+    this.courseManagementService.getImages(this.courseId)
       .subscribe(x => {
         if (x) {
           this.carouselImages = x.body;

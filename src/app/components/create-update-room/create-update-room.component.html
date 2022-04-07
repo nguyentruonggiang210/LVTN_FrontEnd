@@ -1,0 +1,33 @@
+<h1 mat-dialog-title class="text-center">{{ title }}</h1>
+<div class="text-center">
+    <img src="../../../assets/logo.png" style="margin: 10px auto;" height="120" alt="" loading="lazy" />
+</div>
+<div mat-dialog-content class="mb-2">
+    <form [formGroup]="roomFormGroup" (submit)="submitEvent()" class="text-center">
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label class="myform-label">Max Member</mat-label>
+            <input type="number" class="myform-input" matInput formControlName="maxMember">
+            <mat-hint align="start">Required</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-100 mt-4">
+            <mat-label class="myform-label">Start Time</mat-label>
+            <input type="datetime-local" class="myform-input" matInput formControlName="startTime">
+            <mat-hint align="start">Required</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-100 mt-4">
+            <mat-label class="myform-label">End Time</mat-label>
+            <input type="datetime-local" class="myform-input" matInput formControlName="endTime">
+            <mat-hint align="start">Required</mat-hint>
+        </mat-form-field>
+        <mat-form-field *ngIf="isUpdate" class="w-100 mt-4">
+            <mat-label class="myform-label">Member</mat-label>
+            <mat-select class="myform-input" formControlName="userIds" multiple>
+                <mat-option *ngFor="let b of userCourseDtos" [value]="b.userId">{{ b.name }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-stroked-button style="width: 120px;" color="primary" class="mt-4 mr-2 myform-button p-2"
+            type="submit" [disabled]="!roomFormGroup.valid">{{ buttonTitle }}</button>
+        <button mat-stroked-button style="width: 120px;" color="accent" class="mt-4 ml-2 myform-button p-2"
+            type="button" (click)="closeDialog()">Close</button>
+    </form>
+</div>

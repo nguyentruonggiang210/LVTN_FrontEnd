@@ -68,6 +68,7 @@ import { QuillModule } from 'ngx-quill'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { DragScrollModule } from 'ngx-drag-scroll';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 // import { AgmCoreModule } from '@agm/core';
 
@@ -125,6 +126,7 @@ import { CreateUpdateProductComponent } from './management/create-update-product
 import { DateTimePipe } from './pipes/datetime.pipe';
 import { VideoDialogComponent } from './components/video-dialog/video-dialog.component';
 import { SafePipe } from './pipes/safe.pipe';
+import { CreateUpdateRoomComponent } from './components/create-update-room/create-update-room.component';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -220,7 +222,8 @@ const toolbarConfig: any = [
     CreateUpdateCourseComponent,
     CreateUpdateUserComponent,
     CreateUpdateProductComponent,
-    VideoDialogComponent
+    VideoDialogComponent,
+    CreateUpdateRoomComponent
   ],
   imports: [
     BrowserModule,
@@ -300,7 +303,8 @@ const toolbarConfig: any = [
         deps: [HttpClient]
       }
     }),
-    DragScrollModule
+    DragScrollModule,
+    NgSelectModule
     // AgmCoreModule.forRoot({
     //   apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     // })

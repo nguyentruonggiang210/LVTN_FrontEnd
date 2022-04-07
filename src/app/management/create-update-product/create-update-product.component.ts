@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -8,7 +9,6 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { AuthService } from 'src/app/services/common/auth.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { ProductManagementService } from 'src/app/services/management/product-management.service';
-import { UserManagementService } from 'src/app/services/management/user-management.service';
 
 @Component({
   selector: 'app-create-update-product',
@@ -30,20 +30,6 @@ export class CreateUpdateProductComponent implements OnInit {
   difficultyList: number[] = [1, 2, 3, 4, 5];
   tagList: string[] = [];
   bodyFocusList: string[] = [];
-  genderList: any = [
-    {
-      id: 0,
-      value: 'Female'
-    },
-    {
-      id: 1,
-      value: 'Male'
-    },
-    {
-      id: 2,
-      value: 'Other'
-    }
-  ];
   statusList: any = [
     {
       id: true,
@@ -107,7 +93,6 @@ export class CreateUpdateProductComponent implements OnInit {
     private productManagementService: ProductManagementService) {
     let currentUrl = router.url;
     if (!currentUrl.includes('create')) {
-      debugger
       activateRoute.params
         .subscribe(x => {
           this.getProduct(x.productId);
@@ -193,7 +178,7 @@ export class CreateUpdateProductComponent implements OnInit {
       userMaxWeight: model.userMaxWeight,
       languageSupport: model.languageSupport,
       price: model.price,
-      importDate: model.importDate,
+      importDate: formatDate(model.importDate, "yyyy-MM-dd", "en"),
       importOriginal: model.importOriginal,
       importQuantity: model.importQuantity,
       importPrice: model.importPrice,

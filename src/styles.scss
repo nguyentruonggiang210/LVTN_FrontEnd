@@ -35,6 +35,9 @@
 /* Import quill rich textbox editor */
 @import '~quill/dist/quill.bubble.css'; 
 
+/* multi select option */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~@ng-select/ng-select/themes/material.theme.css";
 
 /* Importing google font */
 @import 'https://fonts.googleapis.com/css2?family=Nunito:wght@200;400&display=swap';

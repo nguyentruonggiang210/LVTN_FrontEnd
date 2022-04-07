@@ -71,7 +71,7 @@
                 <div class="col-md-4">
                     <div style="overflow: hidden;">
                         <h2 class="text-left">Course Image</h2>
-                        <ngb-carousel *ngIf="carouselImages != null && imageFiles == null">
+                        <ngb-carousel *ngIf="carouselImages != null && carouselImages != [] && imageFiles == null">
                             <ng-template ngbSlide *ngFor="let img of carouselImages">
                                 <div class="picsum-img-wrapper">
                                     <img style="max-height: 450px;" [src]="img.biggerImageUrl" [alt]="img.imageId">
@@ -92,7 +92,7 @@
                     </div>
                     <div class="mt-2">
                         <h2 class="text-left">Course Video</h2>
-                        <a (click)="openVideoDialog()" *ngIf="videoFiles != null"><i
+                        <a (click)="openVideoDialog()" *ngIf="videoFiles != null || videoUrl != null"><i
                                 class="fa-solid fa-arrow-right"></i> Watch video.........</a>
                         <div class="mt-1">
                             <button mat-raised-button color="primary" (click)="uploadVideoFile.click()">Choose
@@ -105,26 +105,29 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <h2 class="text-left">Rooms <button mat-raised-button class="ml-2" color="primary">Create
+                    <h2 class="text-left">Rooms <button mat-raised-button class="ml-2" color="primary"
+                            [disabled]="courseId == null" (click)="openCreateOrUpdateRoomDialog()">Create
                             Room</button></h2>
-                    <ul class="list-group text-left">
-                        <li class="list-group-item">
+                    <ul *ngIf="roomDtos != null" class="list-group text-left">
+                        <li *ngFor="let room of roomDtos" class="list-group-item">
                             <div class="row">
                                 <div class="col-9">
-                                    <h4>RoomId: <a href="">22</a></h4>
-                                    <h4>Start Time: 2010-10-10 - End Time: 2010-10-10</h4>
-                                    <p>Max Member: 50 - Current member: 20</p>
+                                    <h4>Start Time: {{ room.startTime | datetime: 'dd-MM-yyyy-hh-mi-ss' }}</h4>
+                                    <h4>End Time: {{ room.endTime | datetime: 'dd-MM-yyyy hh-mi-ss' }}</h4>
+                                    <p>Max Member: {{ room.maxMember }} - Current member: {{ room.currentUser }}</p>
                                 </div>
                                 <div class="col-3">
                                     <div class="example-button-container">
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <button mat-mini-fab color="primary" aria-label="Edit room">
+                                                <button (click)="openCreateOrUpdateRoomDialog(true, room.roomId)"
+                                                    mat-mini-fab color="primary" aria-label="Edit room">
                                                     <mat-icon>edit</mat-icon>
                                                 </button>
                                             </div>
                                             <div class="col-lg-6">
-                                                <button mat-mini-fab color="accent" aria-label="Delete room">
+                                                <button (click)="deleleRoom(room.roomId)" mat-mini-fab color="accent"
+                                                    aria-label="Delete room">
                                                     <mat-icon>delete</mat-icon>
                                                 </button>
                                             </div>
@@ -132,34 +135,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-2">
-                                    <img width="50" height="50" style="border-radius: 25px;"
-                                        src="https://cdn.vox-cdn.com/thumbor/X0mSm_q6AOCfWeJOT45kLFZCHlk=/95x601:1280x1460/920x613/filters:focal(538x858:742x1062):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/66699060/mgidarccontentnick.comc008fa9d_d.0.png" />
-                                </div>
-                                <div class="col-7">
-                                    <h4>Start Time: 2010-10-10 - End Time: 2010-10-10</h4>
-                                    <p>Max Member: 50 - Current member: 20</p>
-                                </div>
-                                <div class="col-3">
-                                    <div class="example-button-container">
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <button mat-mini-fab color="primary" aria-label="Edit room">
-                                                    <mat-icon>edit</mat-icon>
-                                                </button>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <button mat-mini-fab color="accent" aria-label="Delete room">
-                                                    <mat-icon>delete</mat-icon>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <mat-divider></mat-divider>
                         </li>
                     </ul>
                 </div>

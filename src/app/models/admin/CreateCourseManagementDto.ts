@@ -1,3 +1,5 @@
+import { ImageDto } from "../ImageDto";
+
 export interface CreateCourseManagementDto {
     courseId?: number,
     courseName: string,
@@ -11,5 +13,7 @@ export interface CreateCourseManagementDto {
     bodyFocus: string[],
     tag: string[],
     description: string,
-    userId: string
+    userId: string,
+    images?: ImageDto[]
+    video?: string
 }
