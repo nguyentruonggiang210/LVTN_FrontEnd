@@ -23,6 +23,7 @@ export class CreateUpdateRoomComponent implements OnInit {
   roomId?: number = null;
   dataSource: CreateRoomDto = null;
   userCourseDtos: UserCourseDto[] = null;
+  userCourseFullDtos: UserCourseDto[] = null;
 
   public message: string;
   roomFormGroup = new FormGroup({
@@ -83,6 +84,7 @@ export class CreateUpdateRoomComponent implements OnInit {
       .subscribe(x => {
         if (x) {
           this.userCourseDtos = x.body;
+          this.userCourseFullDtos = x.body;
         }
       })
   }
@@ -114,6 +116,17 @@ export class CreateUpdateRoomComponent implements OnInit {
           this.closeDialog();
         }
       });
+  }
+
+  changeValue(target) {
+    let value = target.value;
+    if (value == "" || value == null) {
+      this.userCourseDtos = this.userCourseFullDtos;
+    }
+    else {
+      this.userCourseDtos = this.userCourseFullDtos.filter(x => x.name.includes(value));
+    }
+
   }
 
   private updateRoom() {

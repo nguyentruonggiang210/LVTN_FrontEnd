@@ -93,6 +93,7 @@ export class CreateUpdateProductComponent implements OnInit {
     private productManagementService: ProductManagementService) {
     let currentUrl = router.url;
     if (!currentUrl.includes('create')) {
+      commonService.displaySpinner();
       activateRoute.params
         .subscribe(x => {
           this.getProduct(x.productId);
@@ -161,6 +162,7 @@ export class CreateUpdateProductComponent implements OnInit {
   private getProduct(productId: number) {
     this.productManagementService.getProductById(productId)
       .subscribe(b => {
+        this.commonService.distroySpinner();
         this.dataSource = b.body;
         this.productId = b.body.productId;
         this.title = this.dataSource == null ? 'Create Product' : 'Update Product';
@@ -191,7 +193,7 @@ export class CreateUpdateProductComponent implements OnInit {
   }
 
   private createEvent() {
-
+    this.commonService.displaySpinner();
     let userid = this.authService.getUserId();
 
     let model: CreateProductManagementDto = {
@@ -216,6 +218,7 @@ export class CreateUpdateProductComponent implements OnInit {
     this.productManagementService.createProduct(model)
       .subscribe(b => {
         if (b) {
+          this.commonService.distroySpinner();
           this.commonService.displaySnackBar('Create product success', 'Close');
           this.productId = b.body;
         }
@@ -223,6 +226,7 @@ export class CreateUpdateProductComponent implements OnInit {
   }
 
   private updateEvent() {
+    this.commonService.displaySpinner();
     let userid = this.authService.getUserId();
     let model: CreateProductManagementDto = {
       productId: this.productId,
@@ -246,6 +250,7 @@ export class CreateUpdateProductComponent implements OnInit {
     this.productManagementService.updateProduct(model)
       .subscribe(b => {
         if (b.body && b.body == true) {
+          this.commonService.distroySpinner();
           this.commonService.displaySnackBar('Update product success', 'Close');
           this.getProduct(this.productId);
         }

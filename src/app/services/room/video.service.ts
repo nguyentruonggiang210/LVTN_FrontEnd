@@ -12,6 +12,6 @@ export class VideoService {
   constructor(private httpClient: HttpClient) { }
 
   public validateCourse(id: number, userId: string) {
-    return this.httpClient.post<BaseResponse<RoomValidateDto>>(environment.apiUrl + 'Course/validate/' + id + '/' + userId, null);
+    return this.httpClient.post<BaseResponse<RoomValidateDto>>(environment.apiUrl + 'CourseManagement/validate/' + id + '/' + userId, null);
   }
 }

@@ -22,6 +22,7 @@
         <mat-form-field *ngIf="isUpdate" class="w-100 mt-4">
             <mat-label class="myform-label">Member</mat-label>
             <mat-select class="myform-input" formControlName="userIds" multiple>
+                <input type="text" class="w-100" mat-input (input)="changeValue($event.target)">
                 <mat-option *ngFor="let b of userCourseDtos" [value]="b.userId">{{ b.name }}</mat-option>
             </mat-select>
         </mat-form-field>

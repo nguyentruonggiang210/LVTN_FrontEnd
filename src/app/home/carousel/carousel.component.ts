@@ -37,7 +37,7 @@ export class CarouselComponent implements OnInit {
 
   getCarousel()
   {
-    this.carouselService.getCarousel(this.carouselType)
+    this.carouselService.getCarousel(1)
     .subscribe(x => 
       {
         this.carouselImages = x.body;

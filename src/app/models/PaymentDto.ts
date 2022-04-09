@@ -6,4 +6,5 @@ export interface PaymentDto {
     paymentType: number,
     totalAmount: number,
     paymentDetails: PaymentDetailDto[]
+    isCourse?: boolean,
 }

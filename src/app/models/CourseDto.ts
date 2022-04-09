@@ -1,0 +1,18 @@
+import { ProductPromotionDto } from "./ProductPromotionDto"
+
+export interface CourseDto {
+    courseId: number,
+    name: string,
+    difficulty?: number
+    description: string,
+    startDate: Date,
+    endDate: Date,
+    quantity: number,
+    price: number,
+    teacherName: string,
+    bodyFocus: string,
+    tag: string,
+    courseVideo: string,
+    teacherAvatar: string,
+    coursePromotions: ProductPromotionDto[]
+}

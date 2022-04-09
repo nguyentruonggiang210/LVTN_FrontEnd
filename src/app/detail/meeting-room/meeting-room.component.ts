@@ -60,7 +60,7 @@ export class MeetingRoomComponent implements OnInit {
       return;
     }
 
-    if(!this.validateResponse.isStarted){
+    if (!this.validateResponse.isStarted) {
       this.snackBar.open('Waiting for host', 'Close');
       return;
     }
@@ -155,18 +155,14 @@ export class MeetingRoomComponent implements OnInit {
   }
 
 
-  validateRoom() {
+  async validateRoom() {
     let token = this.commonService.getLocalStorage(environment.tokenName);
     let decodeToken = this.authService.getDecodedAccessToken(token)
     let userid = decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
 
     let room = this.conversationFormGroup.value['name'];
-    this.videoService.validateCourse(Number(room), userid)
-      .subscribe(body => {
-        if (body) {
-          this.validateResponse = body.body;
-        }
-      });
+    let result = await this.videoService.validateCourse(Number(room), userid).toPromise();
+    this.validateResponse = result.body;
   }
 }
 

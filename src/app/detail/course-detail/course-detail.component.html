@@ -44,20 +44,23 @@
             <div class="row">
                 <div class="col col-md-7">
                     <h2 class="mb-3">WORKOUT DETAILS</h2>
-                    <p>Duration: 30 Minutes</p>
-                    <p>Calorie Burn: 76-144</p>
-                    <p>Difficulty: 2/5</p>
-                    <p>Equipment: Exercise Band, Mat, Other</p>
-                    <p>Training Type: Low Impact, Strength Training</p>
+                    <p>Name: {{ dataSource.name }}</p>
+                    <p>Price: ${{ dataSource.price | money }}</p>
+                    <p>Start Date: {{ dataSource.startDate | datetime:'dd-MM-yyyy' }}</p>
+                    <p>End Date: {{ dataSource.endDate | datetime:'dd-MM-yyyy' }}</p>
+                    <p>Max Member: {{ dataSource.quantity }}</p>
+                    <p>Body Focus: {{ dataSource.bodyFocus || '-' }}</p>
+                    <p>Tags: {{ dataSource.tag || '-' }}</p>
                 </div>
                 <div class="col col-md-5">
                     <i class="icon -focus-core_lower_body" aria-hidden="true"></i>
                 </div>
             </div>
             <div class="text-center left-0 mt-5">
-                <button type="button" class="btn btn-outline-primary mt-2 w-100">Add to card</button>
-                <button type="button" class="btn btn-outline-primary mt-2 w-100">Buy now</button>
-                <button type="button" class="btn btn-outline-primary mt-2 w-100">Buy installment</button>
+                <button type="button" class="btn btn-outline-primary mt-2 mb-2 w-100"
+                    (click)="addToCart(dataSource.courseId.toString(), dataSource.name, dataSource.price ,2)">Add
+                    to card</button>
+                <ngx-paypal *ngIf="token != null" [config]="payPalConfig"></ngx-paypal>
             </div>
         </div>
     </div>

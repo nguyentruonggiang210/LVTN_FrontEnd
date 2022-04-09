@@ -11,6 +11,8 @@ import { CreateUpdateUserComponent } from './management/create-update-user/creat
 import { ProductComponent } from './management/product/product.component';
 import { CreateUpdateProductComponent } from './management/create-update-product/create-update-product.component';
 import { CreateUpdateCourseComponent } from './management/create-update-course/create-update-course.component';
+import { CourseDetailComponent } from './detail/course-detail/course-detail.component';
+import { PromotionManagementComponent } from './management/promotion-management/promotion-management.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,6 +24,7 @@ const routes: Routes = [
   // { path: 'detail/:type/:id', component: DetailMainComponent },
   { path: 'detail/user', component: UserDetailComponent },
   { path: 'detail/product/:id', component: ProductDetailComponent },
+  { path: 'detail/course/:id', component: CourseDetailComponent },
   // admin
   { path: 'management/user', component: UserComponent },
   { path: 'management/user/update/:userName', component: CreateUpdateUserComponent },
@@ -31,6 +34,7 @@ const routes: Routes = [
   { path: 'management/course/create', component: CreateUpdateCourseComponent },
   { path: 'management/course/update/:courseId', component: CreateUpdateCourseComponent },
   { path: 'management/course', component: TrainerComponent },
+  { path: 'management/promotion', component: PromotionManagementComponent },
   { path: 'management/product', component: ProductComponent },
   // others
   { path: '**', component: HomeComponent }

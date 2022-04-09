@@ -42,7 +42,7 @@ z
                                 <div class="col col-md-3">
                                     <mat-form-field class="user-form-field" appearance="fill">
                                         <mat-label>Date Import</mat-label>
-                                        <input type="date" matInput type="text" [(ngModel)]="dateImport">
+                                        <input type="date" matInput [(ngModel)]="dateImport">
                                     </mat-form-field>
                                 </div>
                                 <div class="col col-md-3">
@@ -65,7 +65,7 @@ z
                             <table class="table">
                                 <thead class=" text-primary">
                                     <th>
-                                        Order
+                                        Id
                                     </th>
                                     <th>
                                         Product Name
@@ -90,12 +90,12 @@ z
                                     </th>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let product of dataSource; let i = index">
+                                    <tr *ngFor="let product of dataSource">
                                         <ng-template #tolTemplate>
                                             <img id="tool-tip" src="https://placehold.jp/200x200.png" />
                                         </ng-template>
                                         <td>
-                                            {{ i + 1 }}
+                                            {{ product.productId }}
                                         </td>
                                         <td>
                                             {{ product.productName }}

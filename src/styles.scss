@@ -33,7 +33,7 @@
 @import '../node_modules/@syncfusion/ej2-angular-schedule/styles/material.css';
 
 /* Import quill rich textbox editor */
-@import '~quill/dist/quill.bubble.css'; 
+@import '~quill/dist/quill.bubble.css';
 
 /* multi select option */
 @import "~@ng-select/ng-select/themes/default.theme.css";
@@ -44,6 +44,18 @@
 //font-family: 'Nunito', sans-serif;
 @import 'https://fonts.googleapis.com/css2?family=Merriweather:wght@300&family=Nunito:wght@200;400&display=swap';
 //font-family: 'Merriweather', serif;
+
+.my-spinner {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    z-index: 101;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
 
 * {
     margin: 0;
@@ -133,10 +145,10 @@ h2 {
     white-space: pre-line !important;
 }
 
-.title{
+.title {
     margin-top: 40px;
     text-align: center;
-    display : block; 
+    display: block;
     line-height: 2 !important;
 }
 

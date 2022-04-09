@@ -33,7 +33,7 @@ export class CourseManagementService {
   }
 
   uploadVideo(formData: FormData, courseId: number) {
-    return this.httpClient.put<BaseResponse<string>>(environment.apiUrl + 'CourseManagement/video/' + courseId, formData);
+    return this.httpClient.put<BaseResponse<boolean>>(environment.apiUrl + 'CourseManagement/video/' + courseId, formData);
   }
 
   getCourseType() {

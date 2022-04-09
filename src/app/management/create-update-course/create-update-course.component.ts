@@ -136,7 +136,6 @@ export class CreateUpdateCourseComponent implements OnInit {
       .subscribe(x => {
         if (x) {
           this.commonService.displaySnackBar('Upload video success', 'Close');
-          this.videoUrl = x.body;
         }
       });
   }

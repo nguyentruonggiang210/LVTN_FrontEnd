@@ -38,7 +38,6 @@ export class ContentComponent implements OnInit {
     private commonService: CommonService,
     private cartService: CartService,
     private snackBar: MatSnackBar) {
-    commonService.displaySpinner();
   }
 
   ngOnInit(): void {
@@ -66,7 +65,7 @@ export class ContentComponent implements OnInit {
   }
 
   navigateToDetail(id: string) {
-    this.route.navigate([`/detail/product/${id}`]);
+    this.route.navigate([`/detail/${this.categoryType}/${id}`]);
   }
 
   getListPageIndex() {

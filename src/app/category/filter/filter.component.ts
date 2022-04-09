@@ -46,12 +46,14 @@ export class FilterComponent implements OnInit {
     private odataService: OdataService,
     private commonService: CommonService,
     private activeRoute: ActivatedRoute,
-    private categoryService: CategoryService) { }
+    private categoryService: CategoryService) {
+    commonService.displaySpinner();
+  }
 
   ngOnInit(): void {
     this.getInitFilter();
     this.activeRoute.params.subscribe(p => {
-      if (p && p['pageIndex']) {
+      if (p && p['pageIndex'] && p['type']) {
         this.page = p['pageIndex'];
       }
       else {
@@ -92,6 +94,7 @@ export class FilterComponent implements OnInit {
       this.odataService.categoryQueryOjbect(model)
         .subscribe(body => {
           if (body) {
+            this.commonService.distroySpinner();
             this.emitNewItem(body);
           }
         });
@@ -328,9 +331,6 @@ export class FilterComponent implements OnInit {
         break;
       case SearchType.Course:
         this.searchTypeString = 'course';
-        break;
-      case SearchType.Trainer:
-        this.searchTypeString = 'trainer';
         break;
       default:
         this.searchTypeString = 'product';

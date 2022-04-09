@@ -20,6 +20,7 @@ import { PaymentType } from 'src/app/enums/PaymentType';
 import { PayPalItem } from 'src/app/models/PayPalItem';
 import { UnitAmount } from 'src/app/models/UnitAmount';
 import { PaymentService } from 'src/app/services/payment/payment.service';
+import { CommonService } from 'src/app/services/common/common.service';
 
 const NewQuantity = 1;
 const CartMessage = "Add successfully";
@@ -50,12 +51,14 @@ export class ProductDetailComponent implements OnInit {
   commentDto: CommentDto[];
 
   constructor(private detailService: DetailService,
+    private commonService: CommonService,
     private router: ActivatedRoute,
     private cartService: CartService,
     private snackBar: MatSnackBar,
     private route: Router,
     private authService: AuthService,
     private paymentService: PaymentService) {
+    commonService.displaySpinner();
     this.token = authService.getDecodedAccessToken();
   }
 
@@ -70,6 +73,7 @@ export class ProductDetailComponent implements OnInit {
     this.detailService.getProductDetail(this.productId)
       .subscribe(x => {
         if (x) {
+          this.commonService.distroySpinner();
           let data = <BaseResponse<ProductDto>>x;
           if (!data.hasError) {
             let body = data.body;

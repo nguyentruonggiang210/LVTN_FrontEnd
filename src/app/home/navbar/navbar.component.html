@@ -1,3 +1,6 @@
+<div class="my-spinner">
+    <mat-spinner class="my-spinner"></mat-spinner>
+</div>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <!-- Container wrapper -->
@@ -35,8 +38,17 @@
                 <li class="nav-item my-nav-item">
                     <a class="nav-link" href="#">{{ 'Community' | translate }}</a>
                 </li>
-                <li class="nav-item my-nav-item">
-                    <a class="nav-link" routerLink="management/user">{{ 'ManagementTitle' | translate }}</a>
+                <li class="nav-item dropdown my-nav-item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-navbar-listhaspopup="true" aria-expanded="false">
+                        {{ 'ManagementTitle' | translate }}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" routerLink="/management/product">{{ 'Product' | translate }}</a>
+                        <a class="dropdown-item" routerLink="/management/course">{{ 'Course' | translate }}</a>
+                        <!-- <div class="dropdown-divider">T</div> -->
+                        <a class="dropdown-item" routerLink="/management/user">{{ 'Trainer' | translate }}</a>
+                    </div>
                 </li>
                 <li class="nav-item dropdown my-nav-item">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -53,7 +65,7 @@
             <!-- Left links -->
 
             <!-- Search form -->
-            <div class="input-group row">
+            <div class="input-group row" style="width: 70%;">
                 <mat-form-field class="col-md-2 m-0">
                     <mat-label>{{ 'Type' | translate }}</mat-label>
                     <mat-select required (selectionChange)="changeSelectOption($event)" [(ngModel)]="defaultSelect">
@@ -86,92 +98,6 @@
                         </a>
                     </li>
                     <li class="nav-item me-3 me-lg-1">
-                        <a class="nav-link" [mdePopoverTriggerFor]="chatPopOver" mdePopoverTriggerOn="click"
-                            #popoverTrigger="mdePopoverTrigger">
-                            <span><i class="fas fa-comments fa-lg"></i></span>
-                        </a>
-                        <mde-popover #chatPopOver="mdePopover" [mdePopoverOverlapTrigger]="false">
-                            <div class="scrollbar scrollbar-primary"
-                                style="width: 400px; max-width: 400px; min-width: 300px; min-height: 100px; max-height: 400px;">
-                                <div class="force-overflow">
-                                    <mat-list role="list">
-                                        <mat-list-item role="listitem" class="pt-3 pb-3">
-                                            <img src="../../../assets/logo.png" height="60" alt="" loading="lazy"
-                                                style="float: left;" />
-                                            <p style="
-                                            overflow: hidden;
-                                            white-space: nowrap;
-                                            text-overflow: ellipsis;">
-                                                sdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsddddddddddddddddd
-                                            </p>
-                                        </mat-list-item>
-                                        <mat-list-item role="listitem" class="pt-3 pb-3">
-                                            <img src="../../../assets/logo.png" height="60" alt="" loading="lazy"
-                                                style="float: left;" />
-                                            <p style="
-                                            overflow: hidden;
-                                            white-space: nowrap;
-                                            text-overflow: ellipsis;">
-                                                sdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsddddddddddddddddd
-                                            </p>
-                                        </mat-list-item>
-                                        <mat-list-item role="listitem" class="pt-3 pb-3">
-                                            <img src="../../../assets/logo.png" height="60" alt="" loading="lazy"
-                                                style="float: left;" />
-                                            <p style="
-                                            overflow: hidden;
-                                            white-space: nowrap;
-                                            text-overflow: ellipsis;">
-                                                sdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsddddddddddddddddd
-                                            </p>
-                                        </mat-list-item>
-                                        <mat-list-item role="listitem" class="pt-3 pb-3">
-                                            <img src="../../../assets/logo.png" height="60" alt="" loading="lazy"
-                                                style="float: left;" />
-                                            <p style="
-                                            overflow: hidden;
-                                            white-space: nowrap;
-                                            text-overflow: ellipsis;">
-                                                sdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsddddddddddddddddd
-                                            </p>
-                                        </mat-list-item>
-                                        <mat-list-item role="listitem" class="pt-3 pb-3">
-                                            <img src="../../../assets/logo.png" height="60" alt="" loading="lazy"
-                                                style="float: left;" />
-                                            <p style="
-                                            overflow: hidden;
-                                            white-space: nowrap;
-                                            text-overflow: ellipsis;">
-                                                sdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsddddddddddddddddd
-                                            </p>
-                                        </mat-list-item>
-                                        <mat-list-item role="listitem" class="pt-3 pb-3">
-                                            <img src="../../../assets/logo.png" height="60" alt="" loading="lazy"
-                                                style="float: left;" />
-                                            <p style="
-                                            overflow: hidden;
-                                            white-space: nowrap;
-                                            text-overflow: ellipsis;">
-                                                sdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsddddddddddddddddd
-                                            </p>
-                                        </mat-list-item>
-                                        <mat-list-item role="listitem" class="pt-3 pb-3">
-                                            <img src="../../../assets/logo.png" height="60" alt="" loading="lazy"
-                                                style="float: left;" />
-                                            <p style="
-                                            overflow: hidden;
-                                            white-space: nowrap;
-                                            text-overflow: ellipsis;">
-                                                sdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsdddddddddddddddddsdssdsdsddddddddddddddddd
-                                            </p>
-                                        </mat-list-item>
-                                    </mat-list>
-                                </div>
-                            </div>
-                        </mde-popover>
-                    </li>
-
-                    <li class="nav-item me-3 me-lg-1">
                         <a class="nav-link" (click)="calendarEvent()">
                             <span><i class="fas fa-calendar-alt fa-lg"></i></span>
                         </a>
@@ -199,25 +125,26 @@
                             </div>
                         </mde-popover>
                     </li>
-
-                    <li class="nav-item me-3 me-lg-1 dropdown" mdbDropdown>
-                        <a class="nav-link dropdown-toggle" href="#" id="userMenuDropDownLink" role="button"
-                            mdbDropdownToggle aria-expanded="false">
+                    <li class="nav-item dropdown my-nav-item">
+                        <a class="nav-link" [mdePopoverTriggerFor]="userPopover" mdePopoverTriggerOn="click"
+                            #popoverTrigger="mdePopoverTrigger">
                             <span><i class="fas fa-users fa-lg"></i></span>
-                            <span class="badge rounded-pill badge-notification bg-danger">0</span>
                         </a>
-                        <ul mdbDropdownMenu class="dropdown-menu my-nav-item-list"
-                            aria-labelledby="userMenuDropDownLink">
-                            <li>
-                                <a class="dropdown-item" (click)="openLoginDialog()">User Information</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Invitation</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" (click)="logOutEvent()">Logout</a>
-                            </li>
-                        </ul>
+                        <mde-popover #userPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
+                            <div class="scrollbar scrollbar-primary"
+                                style="width: 200px; max-width: 400px; max-height: 220px; height: 100px;">
+                                <div>
+                                    <mat-list role="list">
+                                        <mat-list-item role="listitem"> <a class="dropdown-item"
+                                                (click)="openLoginDialog()">User Information</a>
+                                        </mat-list-item>
+                                        <mat-list-item role="listitem"> <a class="dropdown-item"
+                                                (click)="logOutEvent()">Logout</a></mat-list-item>
+                                    </mat-list>
+                                </div>
+                            </div>
+                        </mde-popover>
+
                     </li>
                 </ul>
             </div>

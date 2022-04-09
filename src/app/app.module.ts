@@ -127,6 +127,7 @@ import { DateTimePipe } from './pipes/datetime.pipe';
 import { VideoDialogComponent } from './components/video-dialog/video-dialog.component';
 import { SafePipe } from './pipes/safe.pipe';
 import { CreateUpdateRoomComponent } from './components/create-update-room/create-update-room.component';
+import { PromotionManagementComponent } from './management/promotion-management/promotion-management.component';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -223,7 +224,8 @@ const toolbarConfig: any = [
     CreateUpdateUserComponent,
     CreateUpdateProductComponent,
     VideoDialogComponent,
-    CreateUpdateRoomComponent
+    CreateUpdateRoomComponent,
+    PromotionManagementComponent
   ],
   imports: [
     BrowserModule,

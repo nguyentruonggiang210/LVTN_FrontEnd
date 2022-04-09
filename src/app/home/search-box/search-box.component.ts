@@ -7,18 +7,18 @@ import { SearchDto } from 'src/app/models/SearchDto';
   styleUrls: ['./search-box.component.scss']
 })
 export class SearchBoxComponent implements OnInit {
-  @Input() dataSource: SearchDto[]; 
-  
+  @Input() dataSource: SearchDto[];
+
   displayedColumns: string[] = ['name'];
 
   constructor() { }
 
   ngOnInit(): void {
-   
+
   }
 
-  navigateToCategory(name: string){
-    
+  navigateDetail(type: string, id: number) {
+    window.location.href = `detail/${type}/${id}`;
   }
 }
 

@@ -99,16 +99,8 @@ export class TrainerComponent implements OnInit {
     this.getCourseList();
   };
 
-  navigateCreateUser() {
-    const dialogRef = this.dialog.open(UserCreateDialogComponent, {
-      width: '50%',
-      maxWidth: '800px',
-      minWidth: '350px',
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The UserCreateDialogComponent was closed');
-      console.log(result);
-    });
+  navigateCreatePage() {
+    this.router.navigate(['/management/course/create']);
   }
 
   public handlerStatus(status) {
@@ -129,7 +121,7 @@ export class TrainerComponent implements OnInit {
   }
 
   navigateUpdatePage(userName) {
-    this.router.navigate(['detail/user'], {
+    this.router.navigate(['management/course/update/' + userName], {
       state: {
         userNameState: userName
       }
@@ -170,7 +162,7 @@ export class TrainerComponent implements OnInit {
     filter = this.odataService.adjustUrl(filter);
     filter = this.odataService.removeFilter(filter);
 
-    // filter += this.sortByQuery();
+    filter += this.sortByQuery();
 
     // console.log(filter);
 
@@ -230,7 +222,6 @@ export class TrainerComponent implements OnInit {
   }
 
   sortByQuery() {
-    console.log(this.sortBy);
     switch (this.sortBy) {
       case 1:
         return this.odataService.sortBy('courseName', false);
