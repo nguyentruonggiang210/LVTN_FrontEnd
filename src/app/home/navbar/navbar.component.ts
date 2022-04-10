@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CalendarComponent } from 'src/app/components/calendar/calendar.component';
 import { LoginDialogComponent } from 'src/app/components/login-dialog/login-dialog.component';
 import { RegisterDialogComponent } from 'src/app/components/register-dialog/register-dialog.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app/services/home/cart.service';
 import { CartDialogComponent } from 'src/app/components/cart-dialog/cart-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -51,8 +51,10 @@ export class NavbarComponent implements OnInit {
     private commonService: CommonService,
     public dialog: MatDialog,
     private router: Router,
+    private activeRouter: ActivatedRoute,
     private cartService: CartService,
     public translateService: TranslateService) {
+    this.handlerParamForCategory();
     this.foucusOutEvent();
     this.searchForm = this.formBuilder.group({
       searchResult: '',
@@ -218,6 +220,12 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  navigateCategory(type: string) {
+    window.location.href = 'category/' + type;
+    let value = type == 'product' ? 1 : 2;
+    this.commonService.setLocalStorage('searchType', value)
+  }
+
   searchTypeClassify() {
     let searchType = this.commonService.getLocalStorage('searchType');
     switch (searchType) {
@@ -233,6 +241,20 @@ export class NavbarComponent implements OnInit {
       default:
         this.searchTypeString = 'product';
     }
+  }
+
+  private handlerParamForCategory() {
+    let currentUrl = this.router.url;
+    if (currentUrl.includes('category')) {
+      this.activeRouter.params.subscribe(x => {
+        debugger
+        if (x && x['type']) {
+          let value = x['type'] == 'product' ? 1 : 2;
+          this.commonService.setLocalStorage('searchType', value);
+        }
+      });
+    }
+
   }
 }
 

@@ -35,4 +35,12 @@ export class DetailService {
   getCourseDetail(courseId: number) {
     return this.httpClient.get<BaseResponse<CourseDto>>(environment.apiUrl + "Detail/course/" + courseId);
   }
+
+  getCourseComment(courseId: number) {
+    return this.httpClient.get<BaseResponse<CommentDto[]>>(environment.apiUrl + "Detail/course/comment/" + courseId);
+  }
+
+  sendCourseComment(model: SendCommentDto) {
+    return this.httpClient.post<BaseResponse<boolean>>(environment.apiUrl + "Detail/course/comment", model);
+  }
 }

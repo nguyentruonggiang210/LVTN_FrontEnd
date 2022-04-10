@@ -45,6 +45,7 @@ export class ContentComponent implements OnInit {
   }
 
   addToCart(id: string, image: string, price: number, name: string, cartType: CartType) {
+    debugger
     let model: CartDto = {
       id: Number(id),
       name: name,
@@ -83,10 +84,10 @@ export class ContentComponent implements OnInit {
   }
 
   nextPage() {
-
     this.setCurrentPageIndex();
-
-    if (this.currentPageIndex == (this.dataSource.count >= pageSize ? (this.dataSource.count / pageSize) : (this.dataSource.count / pageSize) + 1)) {
+    let value = parseInt(((this.dataSource.count / pageSize)).toString());
+    value += this.dataSource.count <= pageSize ? 0 : 1;
+    if (this.currentPageIndex == value) {
       return;
     }
 
@@ -105,12 +106,21 @@ export class ContentComponent implements OnInit {
 
   firstPage() {
     const FirstPage = 1;
+    if (this.currentPageIndex == FirstPage) {
+      return;
+    }
     window.location.href = `/category/${this.categoryType}/${FirstPage}`;
   }
 
   lastPage() {
-    const LastPage = this.dataSource.count >= pageSize ? (this.dataSource.count / pageSize) : (this.dataSource.count / pageSize) + 1;
-    window.location.href = `/category/${this.categoryType}/${LastPage}`;
+    debugger
+    let value = parseInt(((this.dataSource.count / pageSize)).toString()) ;
+    value += this.dataSource.count <= pageSize ? 0 : 1;
+
+    if (this.currentPageIndex == value) {
+      return;
+    }
+    window.location.href = `/category/${this.categoryType}/${value}`;
   }
 
   private setCurrentPageIndex() {

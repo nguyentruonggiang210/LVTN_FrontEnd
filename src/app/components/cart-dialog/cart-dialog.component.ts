@@ -14,6 +14,7 @@ import { BillType } from 'src/app/enums/BillType';
 import { PaymentType } from 'src/app/enums/PaymentType';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/common/auth.service';
+import { CommonService } from 'src/app/services/common/common.service';
 
 const ProductString = "Product";
 const CourseString = "Course";
@@ -28,6 +29,9 @@ const ActionString = "Close";
 export class CartDialogComponent implements OnInit {
 
   public payPalConfig?: IPayPalConfig;
+  defaultCourseImage: string = "assets/img/default-course-image.png";
+  defaultProductImage: string = "assets/img/default-product-image.png";
+
   token: any = null;
   cartArray: CartDto[] = [];
   productArray: CartDto[] = [];
@@ -39,7 +43,8 @@ export class CartDialogComponent implements OnInit {
   constructor(private cartService: CartService,
     private paymentService: PaymentService,
     private snackBar: MatSnackBar,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private commonService: CommonService) {
     this.token = authService.getDecodedAccessToken();
   }
 
@@ -135,13 +140,14 @@ export class CartDialogComponent implements OnInit {
               amount: d.price,
               quantity: d.quantity,
               productId: d.id,
-              productDetailId: 1
+              courseId: d.id,
+              type: d.type
             };
             detailArray.push(tempData);
           }
 
           let payment: PaymentDto = {
-            userId: this.token['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'].toString(),
+            userId: this.authService.getUserId(),
             billType: BillType.EWallet,
             paymentType: PaymentType.FullPaid,
             totalAmount: this.getTotalAmount(),
@@ -150,21 +156,13 @@ export class CartDialogComponent implements OnInit {
           this.paymentService.uploadPayment(payment)
             .subscribe(x => {
               if (x) {
-                clearTimeout(this.snackBarTimeout);
-
-                this.snackBar.open(CartMessage, ActionString);
-
-                this.snackBarTimeout = setTimeout(() => {
-                  this.snackBar.dismiss();
-                }, 3000);
+                this.commonService.displaySnackBar(CartMessage, ActionString);
               }
             });
 
           this.clearCart();
         }
         console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
-        /// call api to update into database
-
       },
       onCancel: (data, actions) => {
         console.log('OnCancel', data, actions);

@@ -3,7 +3,8 @@
     <h2 class="text-left ml-2">Product</h2>
     <mat-list role="list">
         <mat-list-item role="listitem" *ngFor="let item of productArray" class="p-2" style="height: 100px;">
-            <img [src]="item.image" matListAvatar alt="image" style="height: 80px; width: 80px;">
+            <img src="{{ item.image || defaultProductImage }}" matListAvatar alt="image"
+                style="height: 80px; width: 80px;">
             <div class="m-2" style="overflow: hidden; text-overflow: ellipsis; font-weight: bold;" matLine>
                 <span tyle="float: left;">
                     {{ item.name }}
@@ -31,7 +32,8 @@
     <h2 class="text-left ml-2">Course</h2>
     <mat-list role="list">
         <mat-list-item role="listitem" *ngFor="let item of courseArray" class="p-2" style="height: 100px;">
-            <img [src]="item.image" matListAvatar alt="image" style="height: 80px; width: 80px;">
+            <img src="{{ item.image || defaultCourseImage }}" matListAvatar alt="image"
+                style="height: 80px; width: 80px;">
             <div class="m-2" style="overflow: hidden; text-overflow: ellipsis; font-weight: bold;" matLine>
                 <span tyle="float: left;">
                     {{ item.name }}

@@ -52,15 +52,6 @@ export class FilterComponent implements OnInit {
 
   ngOnInit(): void {
     this.getInitFilter();
-    this.activeRoute.params.subscribe(p => {
-      if (p && p['pageIndex'] && p['type']) {
-        this.page = p['pageIndex'];
-      }
-      else {
-        this.page = 1;
-      }
-    })
-
     this.searchTypeClassify();
     this.queryData(true);
   }
@@ -350,6 +341,20 @@ export class FilterComponent implements OnInit {
         if (x) {
           this.bodyFocuses = x.body;
         }
-      })
+      });
+
+    this.activeRoute.params.subscribe(p => {
+      if (p && p['type']) {
+        this.searchTypeString = p['type'];
+      }
+
+      if (p && p['pageIndex'] && p['type']) {
+        this.page = p['pageIndex'];
+      }
+      else {
+        this.page = 1;
+      }
+    })
+
   }
 }

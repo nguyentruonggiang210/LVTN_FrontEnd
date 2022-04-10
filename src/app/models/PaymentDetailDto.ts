@@ -1,9 +1,11 @@
+import { CartType } from "../enums/CartType"
+
 export interface PaymentDetailDto {
     amount: number,
     quantity: number,
     productId?: number,
-    productDetailId?: number
     courseId?: number,
-    userId?: string
+    userId?: string,
+    type: number
 }
 

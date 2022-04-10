@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CartType } from 'src/app/enums/CartType';
 import { CartDto } from 'src/app/models/CartDto';
 import { CommonService } from '../common/common.service';
 
@@ -15,23 +16,20 @@ export class CartService {
 
   getCart(): CartDto[] {
     var obj = this.commonService.getLocalStorage(CartName);
-
     if (obj !== null && obj != undefined) {
       return <CartDto[]>obj;
     }
-
     let cartArray: CartDto[] = [];
-
     return cartArray;
   }
 
   setCart(cart: CartDto) {
     var obj = this.getCart();
-
-    var tempObj = obj.find(x => x.id == cart.id);
-
+    var tempObj = obj.find(c => c.id == cart.id && c.type == cart.type);
     if (tempObj) {
-      this.plusObject(cart);
+      if (cart.type == CartType.product) {
+        this.plusObject(cart);
+      }
     }
     else {
       obj.push(cart);
@@ -42,7 +40,7 @@ export class CartService {
   plusObject(cart: CartDto) {
     var listObj = this.getCart();
 
-    var result = listObj.find(c => c.id == cart.id);
+    var result = listObj.find(c => c.id == cart.id && c.type == cart.type);
 
     if (result && result.quantity < MaxQuantity) {
       result.quantity += 1;

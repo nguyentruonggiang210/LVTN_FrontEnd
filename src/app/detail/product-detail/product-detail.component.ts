@@ -35,7 +35,6 @@ export class ProductDetailComponent implements OnInit {
 
   public payPalConfig?: IPayPalConfig;
   moneyCode = 'USD';
-  commentContent: string = null;
   defaultAvatar: string = "assets/img/default-avatar.png";
   detailIndex: number = 0;
   imageSource: string;
@@ -48,6 +47,7 @@ export class ProductDetailComponent implements OnInit {
   recommendationProducts: CategoryDto[] = [];
   productCart = CartType.product;
   snackBarTimeout: any;
+  commentContent: string = null;
   commentDto: CommentDto[];
 
   constructor(private detailService: DetailService,
@@ -89,12 +89,10 @@ export class ProductDetailComponent implements OnInit {
       });
 
     //get recommendation product
-    this.detailService.getProductRecommendation(this.getUserId(), this.productId)
+    this.detailService.getProductRecommendation(this.authService.getUserId(), this.productId)
       .subscribe(x => {
         if (x) {
           this.recommendationProducts = x.body;
-          console.log(x);
-
         }
       });
     // get commentss
@@ -126,6 +124,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addToCart(id: string, image: string, price: number, name: string, cartType: CartType) {
+    debugger
     let model: CartDto = {
       id: Number(id),
       name: name,
@@ -136,13 +135,7 @@ export class ProductDetailComponent implements OnInit {
     }
     this.cartService.setCart(model);
 
-    clearTimeout(this.snackBarTimeout);
-
-    this.snackBar.open(CartMessage, ActionString);
-
-    this.snackBarTimeout = setTimeout(() => {
-      this.snackBar.dismiss();
-    }, 3000);
+    this.commonService.displaySnackBar(CartMessage, ActionString);
   }
 
   navigateToDetail(id: string) {
@@ -155,11 +148,8 @@ export class ProductDetailComponent implements OnInit {
       return;
     }
 
-    let tokenObj = this.authService.getDecodedAccessToken();
-    let userId = tokenObj['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'].toString();
-
     let model: SendCommentDto = {
-      userId: userId,
+      userId: this.authService.getUserId(),
       productId: this.dataSource.productId,
       parentCommentId: null,
       content: this.commentContent,
@@ -184,10 +174,8 @@ export class ProductDetailComponent implements OnInit {
       return;
     }
 
-    let userId = this.getUserId();
-
     let model: SendCommentDto = {
-      userId: userId,
+      userId: this.authService.getUserId(),
       productId: this.dataSource.productId,
       parentCommentId: parentId,
       content: subComment.value,
@@ -213,10 +201,6 @@ export class ProductDetailComponent implements OnInit {
       })
   }
 
-  private getUserId() {
-    let tokenObj = this.authService.getDecodedAccessToken();
-    return tokenObj['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'].toString();
-  }
 
   // init paypal
   private initConfig(): void {
@@ -259,15 +243,16 @@ export class ProductDetailComponent implements OnInit {
           let detailArray: PaymentDetailDto[] = [];
           let tempData: PaymentDetailDto = {
             amount: this.dataSource.productDetails[0].price,
-            quantity: this.dataSource.productDetails[0].quantity,
+            quantity: 1,
             productId: this.dataSource.productId,
-            productDetailId: this.dataSource.productDetails[0].productDetailId,
+            courseId: this.dataSource.productId,
+            type: CartType.product
           };
 
           detailArray.push(tempData);
 
           let payment: PaymentDto = {
-            userId: this.token['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'].toString(),
+            userId: this.authService.getUserId(),
             billType: BillType.EWallet,
             paymentType: PaymentType.FullPaid,
             totalAmount: this.dataSource.productDetails[0].price,
@@ -276,13 +261,7 @@ export class ProductDetailComponent implements OnInit {
           this.paymentService.uploadPayment(payment)
             .subscribe(x => {
               if (x) {
-                clearTimeout(this.snackBarTimeout);
-
-                this.snackBar.open(CartMessage, ActionString);
-
-                this.snackBarTimeout = setTimeout(() => {
-                  this.snackBar.dismiss();
-                }, 3000);
+                this.commonService.displaySnackBar(CartMessage, ActionString);
               }
             });
         }
@@ -291,13 +270,14 @@ export class ProductDetailComponent implements OnInit {
 
       },
       onCancel: (data, actions) => {
-        console.log('OnCancel', data, actions);
+        console.log('Cancel payment: ', data, actions);
       },
       onError: err => {
-        console.log('OnError', err);
+        console.log('Payment error: ', err);
       },
       onClick: (data, actions) => {
         console.log('onClick', data, actions);
+        return;
       },
     };
   }

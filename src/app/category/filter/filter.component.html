@@ -47,13 +47,13 @@
                     <label class="my-form-label">From Price</label>
                     <div>
                         <mat-slider class="w-100" thumbLabel [displayWith]="formatLabel" tickInterval="100" step="100"
-                            min="0" max="20000" aria-label="units" color="primary" (input)="fromPriceChange($event)">
+                            min="0" max="20000" aria-label="units" color="primary" (change)="fromPriceChange($event)">
                         </mat-slider>
                     </div>
                     <label class="my-form-label">To Price</label>
                     <div>
                         <mat-slider class="w-100" thumbLabel [displayWith]="formatLabel" tickInterval="100" step="100"
-                            min="0" max="20000" aria-label="units" color="primary" (input)="toPriceChange($event)">
+                            min="0" max="20000" aria-label="units" color="primary" (change)="toPriceChange($event)">
                         </mat-slider>
                     </div>
                 </div>
