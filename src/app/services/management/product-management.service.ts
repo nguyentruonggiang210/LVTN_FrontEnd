@@ -6,13 +6,19 @@ import { ImageDto } from 'src/app/models/ImageDto';
 import { OdataResponse } from 'src/app/models/OdataResponse';
 import { ProductManagementDto } from 'src/app/models/ProductManagementDto';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../common/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductManagementService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,
+    private authService: AuthService) { }
+
+  checkShopExist() {
+    return this.httpClient.get<BaseResponse<boolean>>(environment.apiUrl + "ProductManagement/" + 'shop-exist/' + this.authService.getUserId());
+  }
 
   getAllProduct(filter: string) {
     return this.httpClient.get<OdataResponse<ProductManagementDto[]>>(environment.apiUrl + "ProductManagement/" + filter);

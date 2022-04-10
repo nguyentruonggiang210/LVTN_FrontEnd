@@ -10,8 +10,9 @@ z
                                 <h2 class="card-title" style="float: left;">Product Management</h2>
                             </div>
                             <div class="col col-md-1">
-                                <button (click)="navigateProductCreate()" class="ml-3 mr-3 user-button"
-                                    mat-stroked-button color="primary">Create product</button>
+                                <button [disabled]="!isShopExist" (click)="navigateProductCreate()"
+                                    class="ml-3 mr-3 user-button" mat-stroked-button color="primary">Create
+                                    product</button>
                             </div>
                             <div class="col col-md-1">
                                 <button (click)="printEvent()" class="ml-3 mr-3 user-button" mat-stroked-button
@@ -26,6 +27,11 @@ z
                             <div class="col col-md-1">
                                 <button (click)="deleteEvent(null)" class="ml-3 mr-3 user-button" aria-expanded="false"
                                     aria-controls="adminCollapse" mat-stroked-button color="warn">Delete All</button>
+                            </div>
+                            <div class="col col-md-1">
+                                <button (click)="navigateShop()" class="ml-3 mr-3 user-button" aria-expanded="false"
+                                    aria-controls="adminCollapse" mat-stroked-button color="primary">{{ shopTitle
+                                    }}</button>
                             </div>
                         </div>
 

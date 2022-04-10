@@ -23,6 +23,8 @@ const DeleteMessageSuccess = "Delete Success";
 })
 export class ProductComponent implements OnInit {
   // variables
+  isShopExist: boolean = false;
+  shopTitle: string = "Create shop";
   searchValue: string;
   productName: string;
   dateImport: string;
@@ -97,6 +99,11 @@ export class ProductComponent implements OnInit {
 
   ngOnInit() {
     this.getProductList();
+    this.productManagementService.checkShopExist()
+      .subscribe(x => {
+        this.isShopExist = x.body;
+        this.shopTitle = x.body ? "Update shop" : "Create shop";
+      })
   };
 
   navigateProductCreate() {
@@ -215,7 +222,12 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  deleteEvent(productId?: number) {debugger
+  navigateShop() {
+    this.router.navigate(["management/shop"]);
+  }
+
+  deleteEvent(productId?: number) {
+    debugger
     if (productId) {
       // delete one record
       this.productManagementService.deleteProduct(new Array<number>(productId));

@@ -10,6 +10,10 @@
                                 <h2 class="card-title" style="float: left;">Promotion Management
                                 </h2>
                             </div>
+                            <div class="col col-md-4">
+                                <button mat-raised-button color="primary" (click)="triggerCreate()">Create
+                                    promotion</button>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body mb-3">
@@ -34,11 +38,15 @@
                                                 Quantity
                                             </th>
                                             <th>
+                                                Remain
+                                            </th>
+                                            <th>
                                                 Amount
                                             </th>
                                         </thead>
                                         <tbody>
-                                            <tr *ngFor="let promotion of dataSource">
+                                            <tr *ngFor="let promotion of dataSource" class="promotion-row"
+                                                (dblclick)="changeFormValue(promotion.promotionId)">
                                                 <td>
                                                     {{ promotion.promotionName }}
                                                 </td>
@@ -46,13 +54,16 @@
                                                     {{ promotion.unit }}
                                                 </td>
                                                 <td>
-                                                    {{ promotion.appliedDate || '-' }}
+                                                    {{ promotion.appliedDate | datetime: 'dd-MM-yyyy' }}
                                                 </td>
                                                 <td>
-                                                    {{ promotion.dueDate || '-' }}
+                                                    {{ promotion.dueDate | datetime: 'dd-MM-yyyy' }}
                                                 </td>
                                                 <td>
                                                     {{ promotion.quantity || '-' }}
+                                                </td>
+                                                <td>
+                                                    {{ promotion.remain || '-' }}
                                                 </td>
                                                 <td>
                                                     {{ promotion.amount || '-' }}
@@ -63,41 +74,71 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <!-- <form class="text-center">
+                                <form [formGroup]="promotionFormGroup" class="text-center" (submit)="submitForm()">
                                     <h2 class="text-center">Promotion Information</h2>
                                     <mat-form-field appearance="fill" class="w-100">
-                                        <mat-label class="myform-label">Max Member</mat-label>
-                                        <input type="number" class="myform-input" matInput formControlName="maxMember">
+                                        <mat-label class="myform-label">Name</mat-label>
+                                        <input class="myform-input" matInput formControlName="promotionName">
                                         <mat-hint align="start">Required</mat-hint>
                                     </mat-form-field>
-                                    <mat-form-field appearance="fill" class="w-100 mt-4">
-                                        <mat-label class="myform-label">Start Time</mat-label>
-                                        <input type="datetime-local" class="myform-input" matInput
-                                            formControlName="startTime">
+                                    <mat-form-field appearance="fill" class="w-100">
+                                        <mat-label class="myform-label">Quantity</mat-label>
+                                        <input type='number' min="1" class="myform-input" matInput
+                                            formControlName="quantity">
                                         <mat-hint align="start">Required</mat-hint>
                                     </mat-form-field>
-                                    <mat-form-field appearance="fill" class="w-100 mt-4">
-                                        <mat-label class="myform-label">End Time</mat-label>
-                                        <input type="datetime-local" class="myform-input" matInput
-                                            formControlName="endTime">
-                                        <mat-hint align="start">Required</mat-hint>
-                                    </mat-form-field> 
-                                    <mat-form-field *ngIf="isUpdate" class="w-100 mt-4">
-                                        <mat-label class="myform-label">Member</mat-label>
-                                        <mat-select class="myform-input" formControlName="userIds" multiple>
-                                            <input type="text" class="w-100" mat-input
-                                                (input)="changeValue($event.target)">
-                                            <mat-option *ngFor="let b of userCourseDtos" [value]="b.userId">{{ b.name }}
+                                    <mat-form-field appearance="fill" class="w-100">
+                                        <mat-label class="myform-label">Unit</mat-label>
+                                        <mat-select class="myform-input" formControlName="unit">
+                                            <mat-option *ngFor="let u of unitList" [value]="u.id">
+                                                {{ u.value }}
                                             </mat-option>
+                                        </mat-select>
+                                        <mat-hint align="start">Required</mat-hint>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="fill" class="w-100">
+                                        <mat-label class="myform-label">Amount</mat-label>
+                                        <input type="number" class="myform-input" matInput formControlName="amount">
+                                        <mat-hint align="start">Required</mat-hint>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="fill" class="w-100">
+                                        <mat-label class="myform-label">Applied Date</mat-label>
+                                        <input type="datetime-local" class="myform-input" matInput
+                                            formControlName="appliedDate">
+                                        <mat-hint align="start">Required</mat-hint>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="fill" class="w-100">
+                                        <mat-label class="myform-label">Due Date</mat-label>
+                                        <input type="datetime-local" class="myform-input" matInput
+                                            formControlName="dueDate">
+                                        <mat-hint align="start">Required</mat-hint>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="fill" class="w-100">
+                                        <mat-label>Description</mat-label>
+                                        <textarea matInput formControlName="description"></textarea>
+                                    </mat-form-field>
+                                    <mat-form-field *ngIf="!isCreate && productPromotionList.length > 0"
+                                        class="w-100 mt-4">
+                                        <mat-label class="myform-label">Products</mat-label>
+                                        <mat-select class="myform-input" formControlName="productPromotion" multiple>
+                                            <mat-option *ngFor="let p of productPromotionList" [value]="p.objectId">{{
+                                                p.name }}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <mat-form-field *ngIf="!isCreate && coursePromotionList.length > 0"
+                                        class="w-100 mt-4">
+                                        <mat-label class="myform-label">Courses</mat-label>
+                                        <mat-select class="myform-input" formControlName="coursePromotion" multiple>
+                                            <mat-option *ngFor="let p of coursePromotionList" [value]="p.objectId">{{
+                                                p.name }}</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                     <button mat-stroked-button style="width: 120px;" color="primary"
-                                        class="mt-4 mr-2 myform-button p-2" type="submit"
-                                        [disabled]="!roomFormGroup.valid">{{ buttonTitle }}</button>
-                                    <button mat-stroked-button style="width: 120px;" color="accent"
-                                        class="mt-4 ml-2 myform-button p-2" type="button"
-                                        (click)="closeDialog()">Close</button> 
-                                </form> -->
+                                        class="mt-4 mr-2 myform-button p-2" type="submit">{{ buttonTitle }}</button>
+                                    <button *ngIf="!isCreate && currentPromotionId != null" mat-stroked-button
+                                        style="width: 120px;" color="accent" class="mt-4 mr-2 myform-button p-2"
+                                        (click)="deletePromotion()" type="button">Delete</button>
+                                </form>
                             </div>
                         </div>
                     </div>

@@ -13,6 +13,7 @@ import { CreateUpdateProductComponent } from './management/create-update-product
 import { CreateUpdateCourseComponent } from './management/create-update-course/create-update-course.component';
 import { CourseDetailComponent } from './detail/course-detail/course-detail.component';
 import { PromotionManagementComponent } from './management/promotion-management/promotion-management.component';
+import { ShopComponent } from './management/shop/shop.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'management/course', component: TrainerComponent },
   { path: 'management/promotion', component: PromotionManagementComponent },
   { path: 'management/product', component: ProductComponent },
+  { path: 'management/shop', component: ShopComponent },
   // others
   { path: '**', component: HomeComponent }
 ];
