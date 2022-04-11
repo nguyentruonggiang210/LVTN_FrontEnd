@@ -81,11 +81,11 @@
             <div class="col-md-4">
                 <img [src]="dataSource != null && dataSource.avatar != '' && dataSource.avatar != null ? dataSource.avatar : imageUrl"
                     class="my-user-image" />
-                <div *ngIf="dataSource != null" class="mt-3">
+                <div *ngIf="userName != null" class="mt-3">
                     <button (click)="uploadFile.click()" class="m-1" mat-raised-button color="primary"
                         style="width: 120px">Choose Image</button>
                     <input #uploadFile (change)="upload($event.target)" type='file' style="display:none" />
-                    <button *ngIf="imageFile != null" (click)="uploadImage()" class="m-1" mat-raised-button
+                    <button *ngIf="imageFile != null && userName != null" (click)="uploadImage()" class="m-1" mat-raised-button
                         color="primary" style="width: 120px">Upload Image</button>
                 </div>
             </div>

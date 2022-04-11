@@ -21,6 +21,8 @@ import { PayPalItem } from 'src/app/models/PayPalItem';
 import { UnitAmount } from 'src/app/models/UnitAmount';
 import { PaymentService } from 'src/app/services/payment/payment.service';
 import { CommonService } from 'src/app/services/common/common.service';
+import { MoneyPipe } from 'src/app/pipes/money.pipe';
+import { ValidPromotion } from 'src/app/models/ValidPromotion';
 
 const NewQuantity = 1;
 const CartMessage = "Add successfully";
@@ -49,7 +51,8 @@ export class ProductDetailComponent implements OnInit {
   snackBarTimeout: any;
   commentContent: string = null;
   commentDto: CommentDto[];
-
+  promotionId?: number = null;
+  originPrice: number;
   constructor(private detailService: DetailService,
     private commonService: CommonService,
     private router: ActivatedRoute,
@@ -57,7 +60,8 @@ export class ProductDetailComponent implements OnInit {
     private snackBar: MatSnackBar,
     private route: Router,
     private authService: AuthService,
-    private paymentService: PaymentService) {
+    private paymentService: PaymentService,
+    private moneyPipe: MoneyPipe) {
     commonService.displaySpinner();
     this.token = authService.getDecodedAccessToken();
   }
@@ -84,6 +88,13 @@ export class ProductDetailComponent implements OnInit {
               image: d,
               name: index.toString()
             });
+
+            this.originPrice = body.productDetails[this.detailIndex].price;
+
+            if (body.productPromotions != null && body.productPromotions.length > 0) {
+              this.promotionId = body.productPromotions[0].promotionId;
+              this.changePricePromotion();
+            }
           }
         }
       });
@@ -192,6 +203,36 @@ export class ProductDetailComponent implements OnInit {
       });
   }
 
+  promotionChange(event: any) {
+    this.promotionId = this.dataSource.productPromotions[event.index].promotionId;
+    this.changePricePromotion();
+  }
+
+  private changePricePromotion() {
+    let promotion = this.dataSource.productPromotions.find(x => x.promotionId == this.promotionId);
+    if (promotion.lkPromotionUnitId == 1) {
+      this.dataSource.productDetails[0].price = this.originPrice - promotion.amount;
+      if (this.dataSource.productDetails[0].price < 0) {
+        this.dataSource.productDetails[0].price = 0;
+      }
+    }
+    else if (promotion.lkPromotionUnitId == 2) {
+      this.dataSource.productDetails[0].price = this.originPrice - (this.dataSource.productDetails[0].price * promotion.amount / 100);
+    }
+    else {
+      this.dataSource.productDetails[0].price = this.originPrice;
+    }
+  }
+
+  displayPrice() {
+    if (this.originPrice == this.dataSource.productDetails[0].price) {
+      return this.moneyPipe.transform(this.dataSource.productDetails[0].price, 'money');
+    }
+    else {
+      return this.moneyPipe.transform(this.originPrice, 'money') + ' Sale ' + this.moneyPipe.transform(this.dataSource.productDetails[0].price, 'money')
+    }
+  }
+
   private getComment() {
     this.detailService.getProductComment(this.productId)
       .subscribe(x => {
@@ -276,8 +317,22 @@ export class ProductDetailComponent implements OnInit {
         console.log('Payment error: ', err);
       },
       onClick: (data, actions) => {
-        console.log('onClick', data, actions);
-        return;
+        if (this.promotionId != null) {
+          let validPromotion: ValidPromotion = {
+            promotionId: this.promotionId,
+            quantity: 1
+          };
+          let arrayValidPromotion: ValidPromotion[] = [validPromotion];
+          this.paymentService.validatePromotionPayment(arrayValidPromotion)
+            .subscribe(x => {
+              if (x && x.body == false) {
+                this.commonService.displaySnackBar(x.error, 'Close');
+                setTimeout(() => {
+                  window.location.reload();
+                }, 3000);
+              }
+            });
+        }
       },
     };
   }

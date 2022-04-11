@@ -6,10 +6,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteNotifyComponent } from 'src/app/components/delete-notify/delete-notify.component';
 import { PageEvent } from '@angular/material/paginator';
 import { OdataService } from 'src/app/services/common/odata.service';
-import { UserCreateDialogComponent } from 'src/app/components/user-create-dialog/user-create-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CourseManagementDto } from 'src/app/models/admin/CourseManagementDto';
 import { CourseManagementService } from 'src/app/services/management/course-management.service';
+import { CommonService } from 'src/app/services/common/common.service';
+import { AuthService } from 'src/app/services/common/auth.service';
 
 const blankSpace = ' ';
 const contentDelete = "Are you sure to delete course ";
@@ -92,7 +93,8 @@ export class TrainerComponent implements OnInit {
     public dialog: MatDialog,
     private courseManagementService: CourseManagementService,
     private odataService: OdataService,
-    private snackBar: MatSnackBar) {
+    private commonSerivce: CommonService,
+    private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -140,14 +142,15 @@ export class TrainerComponent implements OnInit {
     }
     else {
       let userNames = <number[]>id.toString();
-      dialogRef.componentInstance.data = contentDelete + userNames + contentDelete1;
+      dialogRef.componentInstance.data = "Are you sure to delete all item !.";
 
     }
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == 'Y') {
         if (typeof (id) == "number") {
-          this.deleteEvent(id);
+          debugger
+          this.courseManagementService.deleteOneCourse(id);
         }
         else {
           this.deleteEvent(null);
@@ -157,7 +160,7 @@ export class TrainerComponent implements OnInit {
   }
 
   private getCourseList(otherFilter: string = '') {
-    let filter = `?$top=${this.take}&$skip=${this.skip}&$filter=` + otherFilter;
+    let filter = `?$top=${this.take}&$skip=${this.skip}&$filter=` + this.odataService.addFilterEqual('trainerUsername', this.authService.getUserName(), true) + otherFilter;
 
     filter = this.odataService.adjustUrl(filter);
     filter = this.odataService.removeFilter(filter);
@@ -251,7 +254,7 @@ export class TrainerComponent implements OnInit {
       this.courseManagementService.deleteCourse(courseIds)
         .subscribe(x => {
           if (x && x.body == true) {
-            this.snackBar.open(DeleteMessageSuccess, Action);
+            this.commonSerivce.displaySnackBar(DeleteMessageSuccess, Action);
           }
         });
     }

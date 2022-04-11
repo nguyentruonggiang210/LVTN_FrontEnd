@@ -9,6 +9,8 @@ import { OdataService } from 'src/app/services/common/odata.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductManagementService } from 'src/app/services/management/product-management.service';
 import { ProductManagementDto } from 'src/app/models/ProductManagementDto';
+import { AuthService } from 'src/app/services/common/auth.service';
+import { CommonService } from 'src/app/services/common/common.service';
 
 const blankSpace = ' ';
 const contentDelete = "Are you sure to delete user ";
@@ -93,8 +95,9 @@ export class ProductComponent implements OnInit {
   constructor(private router: Router,
     public dialog: MatDialog,
     private productManagementService: ProductManagementService,
+    private authService: AuthService,
     private odataService: OdataService,
-    private snackBar: MatSnackBar) {
+    private commonService: CommonService) {
   }
 
   ngOnInit() {
@@ -159,7 +162,7 @@ export class ProductComponent implements OnInit {
   }
 
   private getProductList(otherFilter: string = '') {
-    let filter = `?$top=${this.take}&$skip=${this.skip}&$filter=` + otherFilter;
+    let filter = `?$top=${this.take}&$skip=${this.skip}&$filter=` + this.odataService.addFilterEqual('userName', this.authService.getUserName(), true) + otherFilter;
 
     filter = this.odataService.adjustUrl(filter);
 
@@ -238,7 +241,7 @@ export class ProductComponent implements OnInit {
       this.productManagementService.deleteProduct(productIds)
         .subscribe(x => {
           if (x && x.body == true) {
-            this.snackBar.open(DeleteMessageSuccess, Action);
+            this.commonService.displaySnackBar(DeleteMessageSuccess, Action);
           }
         });
     }

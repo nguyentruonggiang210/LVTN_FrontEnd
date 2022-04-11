@@ -69,6 +69,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { DragScrollModule } from 'ngx-drag-scroll';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { MatTabsModule } from '@angular/material/tabs';
 
 // import { AgmCoreModule } from '@agm/core';
 
@@ -308,12 +309,14 @@ const toolbarConfig: any = [
       }
     }),
     DragScrollModule,
-    NgSelectModule
+    NgSelectModule,
+    MatTabsModule
     // AgmCoreModule.forRoot({
     //   apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     // })
   ],
   providers: [
+    MoneyPipe,
     errorInterceptor,
     authInterceptor,
     externalLoginConfig,

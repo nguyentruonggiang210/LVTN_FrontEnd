@@ -30,5 +30,7 @@
     "Status": "Trạng thái",
     "CreateUserTitle": "Tạo User",
     "UpdateUserTitle": "Cập nhật User",
-    "Back": "Trở về"
+    "Back": "Trở về",
+    "User": "Người dùng",
+    "Promotion": "Khuyến mãi"
 }

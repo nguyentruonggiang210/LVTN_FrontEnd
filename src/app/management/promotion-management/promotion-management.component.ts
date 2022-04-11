@@ -99,6 +99,7 @@ export class PromotionManagementComponent implements OnInit {
     this.buttonTitle = "Create";
     this.isCreate = true;
     this.currentPromotionId = null;
+    this.promotionFormGroup.reset();
   }
 
   submitForm() {

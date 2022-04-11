@@ -45,7 +45,7 @@
                 <div class="col col-md-7">
                     <h2 class="mb-3">WORKOUT DETAILS</h2>
                     <p>Name: {{ dataSource.name }}</p>
-                    <p>Price: ${{ dataSource.price | money }}</p>
+                    <p>Price: ${{ displayPrice() }}</p>
                     <p>Start Date: {{ dataSource.startDate | datetime:'dd-MM-yyyy' }}</p>
                     <p>End Date: {{ dataSource.endDate | datetime:'dd-MM-yyyy' }}</p>
                     <p>Max Member: {{ dataSource.quantity }}</p>
@@ -60,9 +60,22 @@
                 <button type="button" class="btn btn-outline-primary mt-2 mb-2 w-100"
                     (click)="addToCart(dataSource.courseId.toString(), dataSource.name, dataSource.price ,2)">Add
                     to card</button>
-                <ngx-paypal *ngIf="token != null" [config]="payPalConfig"></ngx-paypal>
+                <button *ngIf="dataSource.isOutOfStock" type="button"
+                    class="btn btn-outline-warning mt-2 mb-2 w-100">Out of stock</button>
+                <ngx-paypal *ngIf="token != null && !dataSource.isOutOfStock" [config]="payPalConfig"></ngx-paypal>
+
             </div>
         </div>
+    </div>
+    <div  *ngIf="promotionId != null" class="promotion">
+        <h1 class="mt-4">Promotion</h1>
+        <mat-tab-group (focusChange)="promotionChange($event)">
+            <mat-tab *ngFor="let promotion of dataSource.coursePromotions" [label]="promotion.promotionName">
+                <p class="mt-1">Unit: {{ promotion.promotionUnit }}</p>
+                <p class="mt-1">Amount: {{ promotion.amount || '-' }}</p>
+                <p class="mt-1">Description: {{ promotion.promotionDescription }}</p>
+            </mat-tab>
+        </mat-tab-group>
     </div>
     <div class="description">
         <h1 class="mt-4">Description</h1>
@@ -76,18 +89,7 @@
                         <i class="fas fa-chevron-right ml-1"></i></span>
                 </div>
             </div>
-            <!-- <div class="col col-md-3">
-                <a *ngIf="dataSource.facebook != null" class="ml-2 mr-2" [href]="dataSource.facebook">
-                    <span><i class="fab fa-facebook fa-2x"></i></span>
-                </a>
-                <a *ngIf="dataSource.youtube != null" class="ml-2 mr-3 text-danger" [href]="dataSource.youtube">
-                    <span><i class="fab fa-youtube fa-2x"></i></span>
-                </a>
-            </div> -->
         </div>
-        <qr-code [value]="'http://localhost:4200/detail/course/' + dataSource.courseId" size="150"
-            errorCorrectionLevel="M" centerImageSrc="undefined" centerImageSize="undefined" [margin]="4">
-        </qr-code>
         <div style="font-size: 20px; line-height: 25px;" [innerHtml]="dataSource.description | safe: 'html'">
         </div>
     </div>

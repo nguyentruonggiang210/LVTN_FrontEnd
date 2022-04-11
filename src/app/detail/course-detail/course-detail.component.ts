@@ -13,6 +13,8 @@ import { PaymentDto } from 'src/app/models/PaymentDto';
 import { PayPalItem } from 'src/app/models/PayPalItem';
 import { SendCommentDto } from 'src/app/models/SendCommentDto';
 import { UnitAmount } from 'src/app/models/UnitAmount';
+import { ValidPromotion } from 'src/app/models/ValidPromotion';
+import { MoneyPipe } from 'src/app/pipes/money.pipe';
 import { AuthService } from 'src/app/services/common/auth.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { DetailService } from 'src/app/services/detail/detail.service';
@@ -35,16 +37,19 @@ export class CourseDetailComponent implements OnInit {
   token: string = null;
   defaultAvatar: string = "assets/img/default-avatar.png";
   dataSource: CourseDto = null;
+  originPrice: number;
   courseId: number;
   commentDto: CommentDto[];
   commentContent: string = null;
+  promotionId?: number = null;
 
   constructor(private detailService: DetailService,
     private router: ActivatedRoute,
     private cartService: CartService,
     private authService: AuthService,
     private commonService: CommonService,
-    private paymentService: PaymentService) {
+    private paymentService: PaymentService,
+    private moneyPipe: MoneyPipe) {
     this.token = authService.getDecodedAccessToken();
   }
 
@@ -69,6 +74,11 @@ export class CourseDetailComponent implements OnInit {
       .subscribe(x => {
         if (x) {
           this.dataSource = x.body;
+          this.originPrice = x.body.price;
+          if (x.body.coursePromotions != null && x.body.coursePromotions.length > 0) {
+            this.promotionId = x.body.coursePromotions[0].promotionId;
+            this.changePricePromotion();
+          }
         }
       });
 
@@ -162,6 +172,36 @@ export class CourseDetailComponent implements OnInit {
       });
   }
 
+  promotionChange(event: any) {
+    this.promotionId = this.dataSource.coursePromotions[event.index].promotionId;
+    this.changePricePromotion();
+  }
+
+  private changePricePromotion() {
+    let promotion = this.dataSource.coursePromotions.find(x => x.promotionId == this.promotionId);
+    if (promotion.lkPromotionUnitId == 1) {
+      this.dataSource.price = this.originPrice - promotion.amount;
+      if (this.dataSource.price < 0) {
+        this.dataSource.price = 0;
+      }
+    }
+    else if (promotion.lkPromotionUnitId == 2) {
+      this.dataSource.price = this.originPrice - (this.dataSource.price * promotion.amount / 100);
+    }
+    else {
+      this.dataSource.price = this.originPrice;
+    }
+  }
+
+  displayPrice() {
+    if (this.originPrice == this.dataSource.price) {
+      return this.moneyPipe.transform(this.dataSource.price, 'money');
+    }
+    else {
+      return this.moneyPipe.transform(this.originPrice, 'money') + ' Sale ' + this.moneyPipe.transform(this.dataSource.price, 'money')
+    }
+  }
+
   private initConfig(): void {
     this.payPalConfig = {
       currency: this.moneyCode,
@@ -205,7 +245,8 @@ export class CourseDetailComponent implements OnInit {
             quantity: 1,
             courseId: this.courseId,
             productId: this.courseId,
-            type: CartType.course
+            type: CartType.course,
+            promotionId: this.promotionId
           };
 
           detailArray.push(tempData);
@@ -235,7 +276,22 @@ export class CourseDetailComponent implements OnInit {
         console.log('OnError', err);
       },
       onClick: (data, actions) => {
-        console.log('onClick', data, actions);
+        if (this.promotionId != null) {
+          let validPromotion: ValidPromotion = {
+            promotionId: this.promotionId,
+            quantity: 1
+          };
+          let arrayValidPromotion: ValidPromotion[] = [validPromotion];
+          this.paymentService.validatePromotionPayment(arrayValidPromotion)
+            .subscribe(x => {
+              if (x && x.body == false) {
+                this.commonService.displaySnackBar(x.error, 'Close');
+                setTimeout(() => {
+                  window.location.reload();
+                }, 3000);
+              }
+            });
+        }
       },
     };
   }

@@ -148,7 +148,7 @@
             <h2 class="col-12">Statistics</h2>
             <div class="row">
                 <!-- Bar Chart -->
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="card card-chart">
                         <div class="card-header">
                             <h4 class="card-title">New Account / Year</h4>
@@ -184,7 +184,7 @@
                     </div>
                 </div>
                 <!-- Pie Chart -->
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="card card-chart">
                         <div class="card-header">
                             <h4 class="card-title">Type Account</h4>
@@ -219,42 +219,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div class="card card-chart">
-                        <div class="card-header">
-                            <h4 class="card-title">New Account / Year</h4>
-                            <div ngbDropdown>
-                                <button type="button"
-                                    class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret"
-                                    ngbDropdownToggle>
-                                    <i class="now-ui-icons loader_gear"></i>
-                                </button>
-                                <div ngbDropdownMenu class="dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                    <a class="dropdown-item text-danger" href="#">Remove Data</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-area">
-                                <div style="display: block;">
-                                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels"
-                                        [options]="barChartOptions" [plugins]="barChartPlugins"
-                                        [legend]="barChartLegend" [chartType]="barChartType">
-                                    </canvas>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
         </div>

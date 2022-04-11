@@ -5,6 +5,7 @@ import { MenuDto } from 'src/app/models/MenuDto';
 import { TeacherDto } from 'src/app/models/TeacherDto';
 import { BaseResponse } from 'src/app/models/BaseResponse';
 import { SearchDto } from 'src/app/models/SearchDto';
+import { CarouselDto } from 'src/app/models/CarouselDto';
 
 const maxSize = 10;
 
@@ -27,6 +28,14 @@ export class CarouselService {
     });
     
     return this.http.get<SearchDto[]>(environment.apiUrl + "Menu/search", { params: params });
+  }
+
+  getNewProduct(){
+    return this.http.get<BaseResponse<CarouselDto[]>>(environment.apiUrl + "Menu/product");
+  }
+
+  getNewCourse(){
+    return this.http.get<BaseResponse<CarouselDto[]>>(environment.apiUrl + "Menu/course");
   }
 }
 

@@ -29,7 +29,7 @@ export class UserManagementService {
   }
 
   createUser(model: CreateUserManagementDto) {
-    return this.httpClient.post<BaseResponse<boolean>>(`${environment.apiUrl}UserManagement`, model);
+    return this.httpClient.post<BaseResponse<string>>(`${environment.apiUrl}UserManagement`, model);
   }
 
   getUserByUserName(userName: string) {
@@ -39,4 +39,6 @@ export class UserManagementService {
   updateUser(model: CreateUserManagementDto) {
     return this.httpClient.put<BaseResponse<boolean>>(`${environment.apiUrl}UserManagement`, model);
   }
+
+  // getUserByMonth(model: )
 }

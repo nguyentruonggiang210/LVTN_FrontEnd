@@ -13,6 +13,7 @@ export interface ProductDto {
     tag: string,
     shopName: string,
     facebook: string,
+    isOutOfStock?: boolean,
     youtube: string,
     shopImage: string,
     productImages: string[],

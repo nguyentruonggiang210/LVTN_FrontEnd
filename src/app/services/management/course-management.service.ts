@@ -9,12 +9,14 @@ import { BaseResponse } from 'src/app/models/BaseResponse';
 import { ImageDto } from 'src/app/models/ImageDto';
 import { environment } from 'src/environments/environment';
 import { OdataResponse } from '../../models/OdataResponse';
+import { AuthService } from '../common/auth.service';
 @Injectable({
   providedIn: 'root'
 })
 export class CourseManagementService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,
+    private authService: AuthService) { }
 
   getAllCourse(filter: string) {
     return this.httpClient.get<OdataResponse<CourseManagementDto[]>>(environment.apiUrl + 'CourseManagement/' + filter);
@@ -75,6 +77,10 @@ export class CourseManagementService {
 
   getUserInCourse(courseId: number) {
     return this.httpClient.get<BaseResponse<UserCourseDto[]>>(environment.apiUrl + 'CourseManagement/user-room/' + courseId);
+  }
+
+  deleteOneCourse(courseId: number){
+    return this.httpClient.delete<BaseResponse<boolean>>(environment.apiUrl + 'CourseManagement/' + courseId);
   }
 
   deleteCourse(courseIds: number[]) {

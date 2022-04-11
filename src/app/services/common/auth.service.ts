@@ -64,4 +64,8 @@ export class AuthService {
   public getUserId() {
     return this.getDecodedAccessToken()['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
   }
+
+  public getUserName() {
+    return this.getDecodedAccessToken()['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+  }
 }

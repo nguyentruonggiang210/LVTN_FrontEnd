@@ -4,6 +4,7 @@ import { BaseResponse } from 'src/app/models/BaseResponse';
 import { CategoryDto } from 'src/app/models/CategoryDto';
 import { PaymentDto } from 'src/app/models/PaymentDto';
 import { ProductDto } from 'src/app/models/ProductDto';
+import { ValidPromotion } from 'src/app/models/ValidPromotion';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -15,5 +16,9 @@ export class PaymentService {
 
   uploadPayment(model: PaymentDto) {
     return this.httpClient.post<BaseResponse<boolean>>(`${environment.apiUrl}Payment`, model);
+  }
+
+  validatePromotionPayment(model: ValidPromotion[]) {
+    return this.httpClient.post<BaseResponse<boolean>>(`${environment.apiUrl}Payment/validate-promotion/`, model);
   }
 }

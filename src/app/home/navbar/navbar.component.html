@@ -26,7 +26,8 @@
                         {{ 'CategoryTitle' | translate }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" (click)="navigateCategory('product')" routerLink="/category/product">{{ 'Product' | translate }}</a>
+                        <a class="dropdown-item" (click)="navigateCategory('product')" routerLink="/category/product">{{
+                            'Product' | translate }}</a>
                         <mat-divider></mat-divider>
                         <a class="dropdown-item" (click)="navigateCategory('course')">{{ 'Course' | translate }}</a>
                     </div>
@@ -44,9 +45,12 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" routerLink="/management/product">{{ 'Product' | translate }}</a>
+                        <mat-divider></mat-divider>
                         <a class="dropdown-item" routerLink="/management/course">{{ 'Course' | translate }}</a>
-                        <!-- <div class="dropdown-divider">T</div> -->
-                        <a class="dropdown-item" routerLink="/management/user">{{ 'Trainer' | translate }}</a>
+                        <mat-divider></mat-divider>
+                        <a class="dropdown-item" routerLink="/management/user">{{ 'User' | translate }}</a>
+                        <mat-divider></mat-divider>
+                        <a class="dropdown-item" routerLink="/management/promotion">{{ 'Promotion' | translate }}</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown my-nav-item">

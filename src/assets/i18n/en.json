@@ -30,5 +30,8 @@
     "Status": "Status",
     "CreateUserTitle": "Create User",
     "UpdateUserTitle": "Update User",
-    "Back": "Back"
+    "Back": "Back",
+    "User": "User",
+    "Promotion": "Promotion"
+    
 }

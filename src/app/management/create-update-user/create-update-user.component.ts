@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators }
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CreateUserManagementDto } from 'src/app/models/admin/CreateUserManagementDto';
+import { CommonService } from 'src/app/services/common/common.service';
 import { UserDetailService } from 'src/app/services/detail/user-detail.service';
 import { UserManagementService } from 'src/app/services/management/user-management.service';
 
@@ -14,6 +15,7 @@ import { UserManagementService } from 'src/app/services/management/user-manageme
 export class CreateUpdateUserComponent implements OnInit {
 
   dataSource: CreateUserManagementDto = null;
+  userName?: string = null;
   title: string = 'Create User';
   buttonTitle: string = 'Create';
   buttonImage: string = 'Upload Image';
@@ -75,7 +77,7 @@ export class CreateUpdateUserComponent implements OnInit {
 
   constructor(private userManagementService: UserManagementService,
     private userDetailService: UserDetailService,
-    private snackBar: MatSnackBar,
+    private commonService: CommonService,
     private activateRoute: ActivatedRoute,
     private router: Router) {
     let currentUrl = router.url;
@@ -129,6 +131,7 @@ export class CreateUpdateUserComponent implements OnInit {
         if (x) {
           let body = x.body;
           this.dataSource.avatar = body;
+          this.commonService.displaySnackBar('Upload image success','Close');
         }
       });
   }
@@ -140,6 +143,7 @@ export class CreateUpdateUserComponent implements OnInit {
         this.imageFile = b.body.avatar != null && b.body.avatar != '' ? b.body.avatar : this.defaultAvatar;
         this.title = this.dataSource == null ? 'Create User' : 'Update User';
         this.buttonTitle = this.dataSource == null ? 'Create' : 'Update';
+        this.userName = b.body.userName;
         this.setFormValue(b.body);
       });
   }
@@ -177,7 +181,8 @@ export class CreateUpdateUserComponent implements OnInit {
     this.userManagementService.createUser(model)
       .subscribe(body => {
         if (body) {
-          this.snackBar.open('Create user success', 'Close');
+          this.commonService.displaySnackBar('Create user success', 'Close');
+          this.userName = body.body;
         }
       });
   }
@@ -199,7 +204,7 @@ export class CreateUpdateUserComponent implements OnInit {
     this.userManagementService.updateUser(model)
       .subscribe(b => {
         if (b.body && b.body == true) {
-          this.snackBar.open('Update user success', 'Close');
+          this.commonService.displaySnackBar('Update user success', 'Close');
         }
       });
   }

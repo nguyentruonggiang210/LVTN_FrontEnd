@@ -6,5 +6,6 @@ export interface ProductManagementDto {
     remainQuantity?: number,
     price: number,
     image: string,
-    status: boolean
+    status: boolean,
+    userName: string,
 }

@@ -12,6 +12,7 @@ export interface CourseDto {
     teacherName: string,
     bodyFocus: string,
     tag: string,
+    isOutOfStock?: boolean,
     courseVideo: string,
     teacherAvatar: string,
     coursePromotions: ProductPromotionDto[]
