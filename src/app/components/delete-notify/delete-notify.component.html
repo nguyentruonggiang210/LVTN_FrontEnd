@@ -3,10 +3,10 @@
 <div class="row text-center mt-3">
     <div class="col col-md-6">
         <button class="ml-auto mr-auto" mat-stroked-button color="accent"
-            (click)="closeDialogEvent(signalYes)">Delete</button>
+            (click)="closeDialogEvent(true)">Delete</button>
     </div>
     <div class="col col-md-6">
-        <button (click)="closeDialogEvent(signalNo)" class="ml-auto mr-auto" mat-stroked-button
+        <button (click)="closeDialogEvent(false)" class="ml-auto mr-auto" mat-stroked-button
             color="primary">Cancel</button>
     </div>
 </div>

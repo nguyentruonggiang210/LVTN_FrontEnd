@@ -4,6 +4,7 @@ import { CourseManagementDto } from 'src/app/models/admin/CourseManagementDto';
 import { CourseTypeDto } from 'src/app/models/admin/CourseTypeDto';
 import { CreateCourseManagementDto } from 'src/app/models/admin/CreateCourseManagementDto';
 import { CreateRoomDto } from 'src/app/models/admin/CreateRoomDto';
+import { StatisticUserDto } from 'src/app/models/admin/StatisticUserDto';
 import { UserCourseDto } from 'src/app/models/admin/UserCourseDto';
 import { BaseResponse } from 'src/app/models/BaseResponse';
 import { ImageDto } from 'src/app/models/ImageDto';
@@ -79,7 +80,19 @@ export class CourseManagementService {
     return this.httpClient.get<BaseResponse<UserCourseDto[]>>(environment.apiUrl + 'CourseManagement/user-room/' + courseId);
   }
 
-  deleteOneCourse(courseId: number){
+  getBoughtCourseByMonth() {
+    return this.httpClient.get<BaseResponse<StatisticUserDto[]>>(environment.apiUrl + 'CourseManagement/bought-by-month/' + this.authService.getUserName());
+  }
+
+  getCreateCourseByMonth() {
+    return this.httpClient.get<BaseResponse<StatisticUserDto[]>>(environment.apiUrl + 'CourseManagement/create-by-month/' + this.authService.getUserName());
+  }
+
+  getTurnOverCourseByMonth() {
+    return this.httpClient.get<BaseResponse<StatisticUserDto[]>>(environment.apiUrl + 'CourseManagement/turnover-by-month/' + this.authService.getUserName());
+  }
+
+  deleteOneCourse(courseId: number) {
     return this.httpClient.delete<BaseResponse<boolean>>(environment.apiUrl + 'CourseManagement/' + courseId);
   }
 

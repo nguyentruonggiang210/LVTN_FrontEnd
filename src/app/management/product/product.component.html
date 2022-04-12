@@ -155,20 +155,24 @@ z
                 <div class="col-lg-4">
                     <div class="card card-chart">
                         <div class="card-header">
-                            <h4 class="card-title">New Account / Year</h4>
-                            <div ngbDropdown>
-                                <button type="button"
-                                    class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret"
-                                    ngbDropdownToggle>
-                                    <i class="now-ui-icons loader_gear"></i>
-                                </button>
-                                <div ngbDropdownMenu class="dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                    <a class="dropdown-item text-danger" href="#">Remove Data</a>
+                            <h4 class="card-title">Turn over</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-area">
+                                <div style="display: block;">
+                                    <canvas baseChart [datasets]="turnOverBarChartData" [labels]="barChartLabels"
+                                        [options]="barChartOptions" [plugins]="barChartPlugins"
+                                        [legend]="barChartLegend" [chartType]="barChartType">
+                                    </canvas>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card card-chart">
+                        <div class="card-header">
+                            <h4 class="card-title">Bought Product</h4>
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
@@ -180,86 +184,25 @@ z
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <div class="stats">
-                                <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Pie Chart -->
-                <div class="col-lg-4">
-                    <div class="card card-chart">
-                        <div class="card-header">
-                            <h4 class="card-title">Type Account</h4>
-                            <div ngbDropdown>
-                                <button type="button"
-                                    class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret"
-                                    ngbDropdownToggle>
-                                    <i class="now-ui-icons loader_gear"></i>
-                                </button>
-                                <div ngbDropdownMenu class="dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                    <a class="dropdown-item text-danger" href="#">Remove Data</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart-area">
-                                <div style="display: block;">
-                                    <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels"
-                                        [chartType]="pieChartType" [options]="pieChartOptions"
-                                        [plugins]="pieChartPlugins" [legend]="pieChartLegend">
-                                    </canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <div class="stats">
-                                <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="card card-chart">
                         <div class="card-header">
-                            <h4 class="card-title">New Account / Year</h4>
-                            <div ngbDropdown>
-                                <button type="button"
-                                    class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret"
-                                    ngbDropdownToggle>
-                                    <i class="now-ui-icons loader_gear"></i>
-                                </button>
-                                <div ngbDropdownMenu class="dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                    <a class="dropdown-item text-danger" href="#">Remove Data</a>
-                                </div>
-                            </div>
+                            <h4 class="card-title">Import Product</h4>
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
                                 <div style="display: block;">
-                                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels"
+                                    <canvas baseChart [datasets]="importBarChartData" [labels]="barChartLabels"
                                         [options]="barChartOptions" [plugins]="barChartPlugins"
                                         [legend]="barChartLegend" [chartType]="barChartType">
                                     </canvas>
                                 </div>
                             </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>

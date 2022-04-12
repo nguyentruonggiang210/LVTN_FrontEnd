@@ -70,19 +70,18 @@ export class TrainerComponent implements OnInit {
   public barChartPlugins = [];
 
   public barChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40, 50, 60, 45, 15, 65], label: 'Blocked Account' },
-    { data: [28, 48, 40, 19, 86, 27, 90, 58, 56, 96, 58, 15], label: 'New Account' }
+    { data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], label: 'Bought Course' },
   ];
 
-  // pie chart
-  public pieChartOptions: ChartOptions = {
-    responsive: true,
-  };
-  public pieChartLabels: Label[] = ['Member', 'Trainer', 'Business Man', 'Admin'];
-  public pieChartData: SingleDataSet = [3000, 500, 100, 100];
-  public pieChartType: ChartType = 'pie';
-  public pieChartLegend = true;
-  public pieChartPlugins = [];
+
+
+  public createCourseChartData: ChartDataSets[] = [
+    { data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], label: 'Create Course' },
+  ];
+
+  public turnOverCourseChartData: ChartDataSets[] = [
+    { data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], label: 'Turn Over' },
+  ];
 
   total: number;
   dataSource: CourseManagementDto[] = [];
@@ -99,6 +98,7 @@ export class TrainerComponent implements OnInit {
 
   ngOnInit() {
     this.getCourseList();
+    this.getInitStatistic();
   };
 
   navigateCreatePage() {
@@ -260,4 +260,24 @@ export class TrainerComponent implements OnInit {
     }
   }
 
+  private getInitStatistic() {
+    this.courseManagementService.getBoughtCourseByMonth()
+      .subscribe(x => {
+        let dataArray = x.body.map(x => x.number);
+        let tmpObj = { data: dataArray, label: 'Bought Course' };
+        this.barChartData = [tmpObj];
+      });
+    this.courseManagementService.getCreateCourseByMonth()
+      .subscribe(x => {
+        let dataArray = x.body.map(x => x.number);
+        let tmpObj = { data: dataArray, label: 'Create Course' };
+        this.createCourseChartData = [tmpObj];
+      });
+    this.courseManagementService.getTurnOverCourseByMonth()
+      .subscribe(x => {
+        let dataArray = x.body.map(x => x.amount);
+        let tmpObj = { data: dataArray, label: 'Turn Over' };
+        this.turnOverCourseChartData = [tmpObj];
+      })
+  }
 }

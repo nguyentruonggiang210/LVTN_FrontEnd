@@ -9,6 +9,7 @@ import { UserManagementDto } from 'src/app/models/admin/UserManagementDto';
 import { PageEvent } from '@angular/material/paginator';
 import { OdataService } from 'src/app/services/common/odata.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommonService } from 'src/app/services/common/common.service';
 
 const blankSpace = ' ';
 const contentDelete = "Are you sure to delete user ";
@@ -45,6 +46,14 @@ export class UserComponent implements OnInit {
       value: 4,
       display: 'Status Disabled'
     },
+    {
+      value: 5,
+      display: 'Date Create Increase'
+    },
+    {
+      value: 6,
+      display: 'Date Create Descrease'
+    },
   ];
 
   sortBy: number = 1;
@@ -58,17 +67,14 @@ export class UserComponent implements OnInit {
   public barChartLegend = true;
   public barChartPlugins = [];
 
-  public barChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40, 50, 60, 45, 15, 65], label: 'Blocked Account' },
-    { data: [28, 48, 40, 19, 86, 27, 90, 58, 56, 96, 58, 15], label: 'New Account' }
-  ];
+  public barChartData: ChartDataSets[] = [{ data: [6, 5, 6, 3, 2, 1, 5, 0, 1, 5], label: 'New Account' }];
 
   // pie chart
   public pieChartOptions: ChartOptions = {
     responsive: true,
   };
-  public pieChartLabels: Label[] = ['Member', 'Trainer', 'Business Man', 'Admin'];
-  public pieChartData: SingleDataSet = [3000, 500, 100, 100];
+  public pieChartLabels: Label[] = ['Admin', 'Member', 'Business Man', 'Trainer'];
+  public pieChartData: SingleDataSet = [5, 4, 3, 2, 1];
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
   public pieChartPlugins = [];
@@ -85,11 +91,12 @@ export class UserComponent implements OnInit {
     public dialog: MatDialog,
     private userManagementService: UserManagementService,
     private odataService: OdataService,
-    private snackBar: MatSnackBar) {
+    private commonService: CommonService) {
   }
 
   ngOnInit() {
-    this.getProductList();
+    this.getUserList();
+    this.getInitStatistic();
   };
 
   navigateCreateUser() {
@@ -107,36 +114,36 @@ export class UserComponent implements OnInit {
 
   printEvent() {
     document.getElementById("hiden-component").style.display = "none";
+    document.getElementById("my-footer").style.display = "none";
 
     window.print();
 
     document.getElementById("hiden-component").style.display = "block";
+    document.getElementById("my-footer").style.display = "block";
   }
 
   navigateUpdatePage(userName) {
     this.router.navigate(['management/user/update/' + userName]);
   }
 
-  confirmDelete(id: any) {
+  confirmDelete(userName: any) {
     const dialogRef = this.dialog.open(DeleteNotifyComponent, {
       width: '400px',
       maxWidth: '800px',
       minWidth: '350px',
     });
 
-    if (typeof (id) == "string") {
-      dialogRef.componentInstance.data = contentDelete + id + contentDelete1;
+    if (typeof (userName) == "string") {
+      dialogRef.componentInstance.data = contentDelete + userName + contentDelete1;
     }
     else {
-      let userNames = <string[]>id.toString();
-      dialogRef.componentInstance.data = contentDelete + userNames + contentDelete1;
-
+      dialogRef.componentInstance.data = "Are you sure to delete all user on this page";
     }
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result == 'Y') {
-        if (typeof (id) == "string") {
-          this.deleteEvent(id);
+      if (result) {
+        if (typeof (userName) == "string") {
+          this.deleteEvent(userName);
         }
         else {
           this.deleteEvent(null);
@@ -145,15 +152,14 @@ export class UserComponent implements OnInit {
     });
   }
 
-  private getProductList(otherFilter: string = '') {
+  private getUserList(otherFilter: string = '') {
     let filter = `?$top=${this.take}&$skip=${this.skip}&$filter=` + otherFilter;
 
     filter = this.odataService.adjustUrl(filter);
+
     filter = this.odataService.removeFilter(filter);
 
     filter += this.sortByQuery();
-
-    console.log(filter);
 
     this.userManagementService.getAllUser(filter)
       .subscribe(x => {
@@ -166,7 +172,7 @@ export class UserComponent implements OnInit {
 
   getPaginatorData(event?: PageEvent) {
     this.skip = event.pageIndex * this.take;
-    this.getProductList();
+    this.getUserList();
   }
 
   applyFilter() {
@@ -174,7 +180,7 @@ export class UserComponent implements OnInit {
     filter += this.nameQuery();
     filter += this.addressQuery();
     filter += this.dateCreateQuery();
-    this.getProductList(filter);
+    this.getUserList(filter);
   }
 
   userNameQuery() {
@@ -210,7 +216,6 @@ export class UserComponent implements OnInit {
   }
 
   sortByQuery() {
-    console.log(this.sortBy);
     switch (this.sortBy) {
       case 1:
         return this.odataService.sortBy('userName', false);
@@ -220,25 +225,55 @@ export class UserComponent implements OnInit {
         return this.odataService.sortBy('status', false);
       case 4:
         return this.odataService.sortBy('status', true);
+      case 5:
+        return this.odataService.sortBy('createDate', false);
+      case 6:
+        return this.odataService.sortBy('createDate', true);
       default:
         return this.odataService.sortBy('userName', false);
     }
   }
 
-  deleteEvent(id: string) {
-    if (id) {
+  deleteEvent(userName?: string) {
+    if (userName) {
       // delete one record
-      this.userManagementService.deleteUser(new Array<string>(id));
+      this.userManagementService.deleteOneUse(userName)
+        .subscribe(x => {
+          if (x && x.body) {
+            this.commonService.displaySnackBar(DeleteMessageSuccess, Action);
+            this.getUserList();
+          }
+        });
     }
     else {
       // delete all
       let userNames = this.dataSource.map(x => x.userName);
       this.userManagementService.deleteUser(userNames)
         .subscribe(x => {
-          if (x && x.body == true) {
-            this.snackBar.open(DeleteMessageSuccess, Action);
+          if (x && x.body) {
+            this.commonService.displaySnackBar(DeleteMessageSuccess, Action);
+            this.getUserList();
           }
         });
     }
+  }
+
+  private getInitStatistic() {
+    this.userManagementService.getUserByMonth()
+      .subscribe(x => {
+        let dataArray = x.body.map(x => x.number);
+        let tmpObj = { data: dataArray, label: 'New Account' };
+        this.barChartData = [tmpObj];
+        this.barChartLegend = false;
+        this.barChartType = 'bar';
+      });
+
+    this.userManagementService.getUserByRole()
+      .subscribe(x => {
+        let dataArray = x.body.map(x => x.number);
+        this.pieChartData = dataArray;
+        this.pieChartType = 'pie';
+        this.pieChartLegend = true;
+      });
   }
 }

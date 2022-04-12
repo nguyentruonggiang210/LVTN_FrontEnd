@@ -23,7 +23,7 @@
                                     color="primary">Filter</button>
                             </div>
                             <div class="col col-md-1">
-                                <button (click)="deleteEvent(null)" class="ml-3 mr-3 user-button" aria-expanded="false"
+                                <button (click)="confirmDelete(null)" class="ml-3 mr-3 user-button" aria-expanded="false"
                                     aria-controls="adminCollapse" mat-stroked-button color="warn">Delete All</button>
                             </div>
                         </div>
@@ -152,19 +152,6 @@
                     <div class="card card-chart">
                         <div class="card-header">
                             <h4 class="card-title">New Account / Year</h4>
-                            <div ngbDropdown>
-                                <button type="button"
-                                    class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret"
-                                    ngbDropdownToggle>
-                                    <i class="now-ui-icons loader_gear"></i>
-                                </button>
-                                <div ngbDropdownMenu class="dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                    <a class="dropdown-item text-danger" href="#">Remove Data</a>
-                                </div>
-                            </div>
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
@@ -176,11 +163,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer">
-                            <div class="stats">
-                                <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <!-- Pie Chart -->
@@ -188,19 +171,6 @@
                     <div class="card card-chart">
                         <div class="card-header">
                             <h4 class="card-title">Type Account</h4>
-                            <div ngbDropdown>
-                                <button type="button"
-                                    class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret"
-                                    ngbDropdownToggle>
-                                    <i class="now-ui-icons loader_gear"></i>
-                                </button>
-                                <div ngbDropdownMenu class="dropdown-menu-right">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                    <a class="dropdown-item text-danger" href="#">Remove Data</a>
-                                </div>
-                            </div>
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
@@ -210,11 +180,6 @@
                                         [plugins]="pieChartPlugins" [legend]="pieChartLegend">
                                     </canvas>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <div class="stats">
-                                <i class="now-ui-icons arrows-1_refresh-69"></i> Just Updated
                             </div>
                         </div>
                     </div>

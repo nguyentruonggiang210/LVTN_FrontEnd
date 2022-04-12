@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CreateUserManagementDto } from 'src/app/models/admin/CreateUserManagementDto';
+import { StatisticUserDto } from 'src/app/models/admin/StatisticUserDto';
 import { UserManagementDto } from 'src/app/models/admin/UserManagementDto';
 import { BaseResponse } from 'src/app/models/BaseResponse';
 import { UserInfoDto } from 'src/app/models/UserInfoDto';
@@ -18,6 +19,7 @@ export class UserManagementService {
   }
 
   deleteUser(userNames: string[]) {
+    debugger
     return this.httpClient.delete<BaseResponse<boolean>>(environment.apiUrl + 'UserManagement', {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -40,5 +42,15 @@ export class UserManagementService {
     return this.httpClient.put<BaseResponse<boolean>>(`${environment.apiUrl}UserManagement`, model);
   }
 
-  // getUserByMonth(model: )
+  deleteOneUse(username: string) {
+    return this.httpClient.delete<BaseResponse<boolean>>(environment.apiUrl + 'UserManagement/' + username)
+  }
+
+  getUserByMonth() {
+    return this.httpClient.get<BaseResponse<StatisticUserDto[]>>(environment.apiUrl + 'UserManagement/user-by-month');
+  }
+
+  getUserByRole() {
+    return this.httpClient.get<BaseResponse<StatisticUserDto[]>>(environment.apiUrl + 'UserManagement/user-by-role');
+  }
 }

@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CreateProductManagementDto } from 'src/app/models/admin/CreateProductManagementDto';
+import { StatisticUserDto } from 'src/app/models/admin/StatisticUserDto';
 import { BaseResponse } from 'src/app/models/BaseResponse';
 import { ImageDto } from 'src/app/models/ImageDto';
 import { OdataResponse } from 'src/app/models/OdataResponse';
@@ -47,6 +48,18 @@ export class ProductManagementService {
 
   getImages(productId: number) {
     return this.httpClient.get<BaseResponse<ImageDto[]>>(environment.apiUrl + 'ProductManagement/image/' + productId);
+  }
+
+  getBoughtProductByMonth(){
+    return this.httpClient.get<BaseResponse<StatisticUserDto[]>>(environment.apiUrl + 'ProductManagement/bought-by-month/' + this.authService.getUserName());
+  }
+
+  getProductImportByMonth(){
+    return this.httpClient.get<BaseResponse<StatisticUserDto[]>>(environment.apiUrl + 'ProductManagement/import-by-month/' + this.authService.getUserName());
+  }
+
+  getProductTurnOverByMonth(){
+    return this.httpClient.get<BaseResponse<StatisticUserDto[]>>(environment.apiUrl + 'ProductManagement/turnover-by-month/' + this.authService.getUserName());
   }
 
   deleteProduct(productIds: number[]) {

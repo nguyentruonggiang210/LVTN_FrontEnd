@@ -70,19 +70,18 @@ export class ProductComponent implements OnInit {
   public barChartPlugins = [];
 
   public barChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40, 50, 60, 45, 15, 65], label: 'Blocked Account' },
-    { data: [28, 48, 40, 19, 86, 27, 90, 58, 56, 96, 58, 15], label: 'New Account' }
+    { data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], label: 'Bought Product' }
   ];
 
-  // pie chart
-  public pieChartOptions: ChartOptions = {
-    responsive: true,
-  };
-  public pieChartLabels: Label[] = ['Member', 'Trainer', 'Business Man', 'Admin'];
-  public pieChartData: SingleDataSet = [3000, 500, 100, 100];
-  public pieChartType: ChartType = 'pie';
-  public pieChartLegend = true;
-  public pieChartPlugins = [];
+  // import product bar chart
+  public importBarChartData: ChartDataSets[] = [
+    { data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], label: 'Import Product' }
+  ];
+
+  // turnover product bar chart
+  public turnOverBarChartData: ChartDataSets[] = [
+    { data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], label: 'Turn Over' }
+  ];
 
   // user list
   userList: Array<any> = [];
@@ -102,6 +101,7 @@ export class ProductComponent implements OnInit {
 
   ngOnInit() {
     this.getProductList();
+    this.getInitStatistic();
     this.productManagementService.checkShopExist()
       .subscribe(x => {
         this.isShopExist = x.body;
@@ -247,4 +247,26 @@ export class ProductComponent implements OnInit {
     }
   }
 
+  private getInitStatistic() {
+    this.productManagementService.getBoughtProductByMonth()
+      .subscribe(x => {
+        let dataArray = x.body.map(x => x.number);
+        let tmpObj = { data: dataArray, label: 'Bought Product' };
+        this.barChartData = [tmpObj];
+      });
+
+    this.productManagementService.getProductImportByMonth()
+      .subscribe(x => {
+        let dataArray = x.body.map(x => x.number);
+        let tmpObj = { data: dataArray, label: 'Import Product' };
+        this.importBarChartData = [tmpObj];
+      });
+
+    this.productManagementService.getProductTurnOverByMonth()
+      .subscribe(x => {
+        let dataArray = x.body.map(x => x.amount);
+        let tmpObj = { data: dataArray, label: 'Turn Over' };
+        this.turnOverBarChartData = [tmpObj];
+      })
+  }
 }
