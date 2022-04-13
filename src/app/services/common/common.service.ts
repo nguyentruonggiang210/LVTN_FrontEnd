@@ -12,15 +12,18 @@ export class CommonService {
   constructor(private snackBar: MatSnackBar) { }
 
   spinner = document.getElementsByClassName("my-spinner");
+  container = document.getElementsByClassName("my-spinner-container");
 
   distroySpinner(): void {
     this.spinner[0]?.setAttribute("style", "display: none;");
     this.spinner[1]?.setAttribute("style", "display: none;");
+    this.container[0]?.setAttribute("style", "display: none;");
   }
 
   displaySpinner(): void {
     this.spinner[0]?.setAttribute("style", "display: block;");
     this.spinner[1]?.setAttribute("style", "display: block;");
+    this.container[0]?.setAttribute("style", "display: block;");
   }
 
   setLocalStorage(key, value): void {

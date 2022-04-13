@@ -129,19 +129,25 @@ export class CreateUpdateProductComponent implements OnInit {
   }
 
   uploadImage() {
+    this.commonService.displaySpinner();
+
     let file = this.imageFiles;
+
     const formData = new FormData();
+
     for (const imageData of file) {
       formData.append('fileImages', imageData);
     }
 
     formData.append('userId', this.authService.getUserId());
+
     this.productManagementService.uploadProductImage(formData, this.productId)
       .subscribe(x => {
         if (x) {
+          this.commonService.distroySpinner();
           this.commonService.displaySnackBar('Upload image success', 'Close');
           if (this.dataSource != null) {
-            this.getImages();
+            this.getProduct(this.productId);
             this.imageFiles = null;
             this.imageUrl = null;
           }
@@ -150,11 +156,13 @@ export class CreateUpdateProductComponent implements OnInit {
   }
 
   deleteImage(publicId: string) {
+    this.commonService.displaySpinner();
     this.productManagementService.deleteImage(publicId)
       .subscribe(x => {
         if (x.body == true) {
           this.commonService.displaySnackBar('Delete image success', 'Close');
-          this.getImages();
+          this.getProduct(this.productId);
+          this.commonService.distroySpinner();
         }
       });
   }
@@ -267,14 +275,5 @@ export class CreateUpdateProductComponent implements OnInit {
 
     this.categoryService.getAllBodyFocus()
       .subscribe(b => this.bodyFocusList = b.body);
-  }
-
-  private getImages() {
-    this.productManagementService.getImages(this.productId)
-      .subscribe(x => {
-        if (x) {
-          this.carouselImages = x.body;
-        }
-      });
   }
 }

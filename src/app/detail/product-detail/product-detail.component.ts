@@ -23,6 +23,9 @@ import { PaymentService } from 'src/app/services/payment/payment.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { MoneyPipe } from 'src/app/pipes/money.pipe';
 import { ValidPromotion } from 'src/app/models/ValidPromotion';
+import { PromotionDto } from 'src/app/models/admin/PromotionDto';
+import { ProductPromotionDto } from 'src/app/models/ProductPromotionDto';
+import { PromotionService } from 'src/app/services/management/promotion.service';
 
 const NewQuantity = 1;
 const CartMessage = "Add successfully";
@@ -53,6 +56,8 @@ export class ProductDetailComponent implements OnInit {
   commentDto: CommentDto[];
   promotionId?: number = null;
   originPrice: number;
+  isPromotionRemain: boolean = true;
+
   constructor(private detailService: DetailService,
     private commonService: CommonService,
     private router: ActivatedRoute,
@@ -61,7 +66,8 @@ export class ProductDetailComponent implements OnInit {
     private route: Router,
     private authService: AuthService,
     private paymentService: PaymentService,
-    private moneyPipe: MoneyPipe) {
+    private moneyPipe: MoneyPipe,
+    private promotionService: PromotionService) {
     commonService.displaySpinner();
     this.token = authService.getDecodedAccessToken();
   }
@@ -92,7 +98,13 @@ export class ProductDetailComponent implements OnInit {
             this.originPrice = body.productDetails[this.detailIndex].price;
 
             if (body.productPromotions != null && body.productPromotions.length > 0) {
-              this.promotionId = body.productPromotions[0].promotionId;
+              let productPromotionDto: ProductPromotionDto = {
+                promotionId: null,
+                promotionName: 'None'
+              };
+
+              body.productPromotions = [productPromotionDto].concat(body.productPromotions);
+
               this.changePricePromotion();
             }
           }
@@ -205,7 +217,15 @@ export class ProductDetailComponent implements OnInit {
 
   promotionChange(event: any) {
     this.promotionId = this.dataSource.productPromotions[event.index].promotionId;
-    this.changePricePromotion();
+    if (this.promotionId != null) {
+      this.changePricePromotion();
+      this.promotionService.isPromotionRemain(this.promotionId)
+        .subscribe(x => this.isPromotionRemain = x.body);
+    }
+    else {
+      this.isPromotionRemain = true;
+      this.dataSource.productDetails[0].price = this.originPrice;
+    }
   }
 
   private changePricePromotion() {
@@ -225,11 +245,11 @@ export class ProductDetailComponent implements OnInit {
   }
 
   displayPrice() {
-    if (this.originPrice == this.dataSource.productDetails[0].price) {
-      return this.moneyPipe.transform(this.dataSource.productDetails[0].price, 'money');
+    if (this.originPrice == this.dataSource?.productDetails[0]?.price) {
+      return this.moneyPipe.transform(this.dataSource?.productDetails[0]?.price, 'money');
     }
     else {
-      return this.moneyPipe.transform(this.originPrice, 'money') + ' Sale ' + this.moneyPipe.transform(this.dataSource.productDetails[0].price, 'money')
+      return this.moneyPipe.transform(this.originPrice, 'money') + ' Sale ' + this.moneyPipe.transform(this.dataSource?.productDetails[0]?.price, 'money')
     }
   }
 
@@ -239,9 +259,8 @@ export class ProductDetailComponent implements OnInit {
         if (x) {
           this.commentDto = x.body;
         }
-      })
+      });
   }
-
 
   // init paypal
   private initConfig(): void {

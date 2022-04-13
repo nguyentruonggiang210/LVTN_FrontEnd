@@ -122,6 +122,8 @@ export class CreateUpdateUserComponent implements OnInit {
   }
 
   uploadImage() {
+    debugger
+    this.commonService.displaySpinner();
     let file = this.imageFile;
     const formData = new FormData();
     formData.append('file', file, file.name);
@@ -131,7 +133,9 @@ export class CreateUpdateUserComponent implements OnInit {
         if (x) {
           let body = x.body;
           this.dataSource.avatar = body;
-          this.commonService.displaySnackBar('Upload image success','Close');
+          this.commonService.displaySnackBar('Upload image success', 'Close');
+          this.commonService.distroySpinner();
+          this.imageFile = null;
         }
       });
   }
@@ -140,7 +144,6 @@ export class CreateUpdateUserComponent implements OnInit {
     this.userManagementService.getUserByUserName(userName)
       .subscribe(b => {
         this.dataSource = b.body;
-        this.imageFile = b.body.avatar != null && b.body.avatar != '' ? b.body.avatar : this.defaultAvatar;
         this.title = this.dataSource == null ? 'Create User' : 'Update User';
         this.buttonTitle = this.dataSource == null ? 'Create' : 'Update';
         this.userName = b.body.userName;

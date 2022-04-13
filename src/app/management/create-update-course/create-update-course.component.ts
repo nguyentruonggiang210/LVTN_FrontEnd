@@ -84,10 +84,13 @@ export class CreateUpdateCourseComponent implements OnInit {
     private courseManagementService: CourseManagementService,
     private productManagementService: ProductManagementService,
     public dialog: MatDialog) {
+
     let currentUrl = router.url;
+
     if (!currentUrl.includes('create')) {
       activateRoute.params
         .subscribe(x => {
+          commonService.displaySpinner();
           this.getCourse(x.courseId);
           this.loadRoom(x.courseId);
         });
@@ -127,15 +130,21 @@ export class CreateUpdateCourseComponent implements OnInit {
   }
 
   uploadVideoToServer() {
+    this.commonService.displaySpinner();
+
     let file = this.videoFiles;
+
     const formData = new FormData();
+    
     formData.append('fileVideo', file[0]);
 
     formData.append('userId', this.authService.getUserId());
+
     this.courseManagementService.uploadVideo(formData, this.courseId)
       .subscribe(x => {
         if (x) {
           this.commonService.displaySnackBar('Upload video success', 'Close');
+          this.commonService.distroySpinner();
         }
       });
   }
@@ -170,19 +179,26 @@ export class CreateUpdateCourseComponent implements OnInit {
   }
 
   uploadImage() {
+
+    this.commonService.displaySpinner();
+
     let file = this.imageFiles;
+
     const formData = new FormData();
+
     for (const imageData of file) {
       formData.append('fileImages', imageData);
     }
 
     formData.append('userId', this.authService.getUserId());
+
     this.courseManagementService.uploadCourseImage(formData, this.courseId)
       .subscribe(x => {
         if (x) {
+          this.commonService.distroySpinner();
           this.commonService.displaySnackBar('Upload image success', 'Close');
           if (this.dataSource != null) {
-            this.getImages();
+            this.getCourse(this.courseId);
             this.imageFiles = null;
             this.imageUrl = null;
           }
@@ -195,7 +211,7 @@ export class CreateUpdateCourseComponent implements OnInit {
       .subscribe(x => {
         if (x.body == true) {
           this.commonService.displaySnackBar('Delete image success', 'Close');
-          this.getImages();
+          this.getCourse(this.courseId);
         }
       });
   }
@@ -210,6 +226,7 @@ export class CreateUpdateCourseComponent implements OnInit {
         this.carouselImages = b.body.images;
         this.videoUrl = b.body.video;
         this.setFormValue(b.body);
+        this.commonService.distroySpinner();
       });
   }
 
@@ -314,14 +331,5 @@ export class CreateUpdateCourseComponent implements OnInit {
 
     this.courseManagementService.getCourseType()
       .subscribe(b => this.courseTypeList = b.body);
-  }
-
-  private getImages() {
-    this.courseManagementService.getImages(this.courseId)
-      .subscribe(x => {
-        if (x) {
-          this.carouselImages = x.body;
-        }
-      });
   }
 }

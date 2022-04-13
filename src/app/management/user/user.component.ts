@@ -153,6 +153,8 @@ export class UserComponent implements OnInit {
   }
 
   private getUserList(otherFilter: string = '') {
+    this.commonService.displaySpinner();
+
     let filter = `?$top=${this.take}&$skip=${this.skip}&$filter=` + otherFilter;
 
     filter = this.odataService.adjustUrl(filter);
@@ -164,7 +166,10 @@ export class UserComponent implements OnInit {
     this.userManagementService.getAllUser(filter)
       .subscribe(x => {
         if (x) {
+          this.commonService.distroySpinner();
+
           this.dataSource = x.items;
+
           this.total = x.count;
         }
       })

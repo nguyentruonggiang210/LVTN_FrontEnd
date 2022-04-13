@@ -46,9 +46,7 @@ export class FilterComponent implements OnInit {
     private odataService: OdataService,
     private commonService: CommonService,
     private activeRoute: ActivatedRoute,
-    private categoryService: CategoryService) {
-    commonService.displaySpinner();
-  }
+    private categoryService: CategoryService) { }
 
   ngOnInit(): void {
     this.getInitFilter();
@@ -61,6 +59,7 @@ export class FilterComponent implements OnInit {
   }
 
   public queryData(isFirstTime: boolean = false) {
+    this.commonService.displaySpinner();
     setTimeout(() => {
       // search type classify
       this.searchTypeClassify()

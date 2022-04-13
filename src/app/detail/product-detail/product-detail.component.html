@@ -16,33 +16,36 @@
         <div class="col col-md-6 p-4 bg-dark text-light m-0">
             <div class="row">
                 <div class="col col-md-12">
-                    <h2 class="mb-3">{{ dataSource.productName }}</h2>
+                    <h2 class="mb-3">{{ dataSource?.productName }}</h2>
                     <p>Price: $ {{ displayPrice() }}</p>
-                    <p>Languages: {{ dataSource.languageSupport || '-' }}</p>
-                    <p>Difficulty: {{ dataSource.difficulty || '-' }}/5</p>
-                    <p>Weight: {{ dataSource.weight || '-' }} Kilograms</p>
-                    <p>Max User Weight: {{ dataSource.maxUserWeight || '-' }} Kilograms</p>
-                    <p>Body Focus: {{ dataSource.bodyFocus || '-' }}</p>
-                    <p>Tags: {{ dataSource.tag || '-' }}</p>
+                    <p>Languages: {{ dataSource?.languageSupport || '-' }}</p>
+                    <p>Difficulty: {{ dataSource?.difficulty || '-' }}/5</p>
+                    <p>Weight: {{ dataSource?.weight || '-' }} Kilograms</p>
+                    <p>Max User Weight: {{ dataSource?.maxUserWeight || '-' }} Kilograms</p>
+                    <p>Body Focus: {{ dataSource?.bodyFocus || '-' }}</p>
+                    <p>Tags: {{ dataSource?.tag || '-' }}</p>
                 </div>
             </div>
             <div class="text-center left-0 mt-5">
                 <button type="button" class="btn btn-outline-primary mt-2 mb-2 w-100"
-                    (click)="addToCart(dataSource.productId.toString(), dataSource.productDetails[0].productDetailImages[0], dataSource.productDetails[0].price, dataSource.productName, 1)">Add
+                    (click)="addToCart(dataSource?.productId.toString(), dataSource?.productDetails[0]?.productDetailImages[0], dataSource?.productDetails[0]?.price, dataSource?.productName, 1)">Add
                     to card</button>
-                <button *ngIf="dataSource.isOutOfStock" type="button" disabled
+                <button *ngIf="dataSource?.isOutOfStock || !isPromotionRemain" type="button" disabled
                     class="btn btn-outline-warning mt-2 mb-2 w-100">Out of stock</button>
-                <ngx-paypal *ngIf="token != null && !dataSource.isOutOfStock" [config]="payPalConfig"></ngx-paypal>
+                <ngx-paypal *ngIf="token != null && !dataSource?.isOutOfStock && isPromotionRemain"
+                    [config]="payPalConfig"></ngx-paypal>
             </div>
         </div>
     </div>
-    <div *ngIf="promotionId != null" class="promotion">
+    <div class="promotion">
         <h1 class="mt-4">Promotion</h1>
         <mat-tab-group (focusChange)="promotionChange($event)">
-            <mat-tab *ngFor="let promotion of dataSource.productPromotions" [label]="promotion.promotionName">
-                <p class="mt-1">Unit: {{ promotion.promotionUnit }}</p>
-                <p class="mt-1">Amount: {{ promotion.amount || '-' }}</p>
-                <p class="mt-1">Description: {{ promotion.promotionDescription }}</p>
+            <mat-tab *ngFor="let promotion of dataSource?.productPromotions" [label]="promotion?.promotionName">
+                <div *ngIf="promotion?.promotionId != null">
+                    <p class="mt-1">Unit: {{ promotion?.promotionUnit }}</p>
+                    <p class="mt-1">Amount: {{ promotion?.amount || '-' }}</p>
+                    <p class="mt-1">Description: {{ promotion?.promotionDescription }}</p>
+                </div>
             </mat-tab>
         </mat-tab-group>
     </div>
@@ -53,29 +56,29 @@
                 <div style="font-size: 20px; width: fit-content; border-radius: 8px;"
                     class="bg-light p-3 text-center my-avatar-btn">
                     <img alt="avatar" style="border-radius: 15px; display: inline-block;" width="30" height="30"
-                        [src]="dataSource.shopImage" />
-                    <span class="ml-2 align-middle" style="display: inline-block;">{{ dataSource.shopName }}
+                        [src]="dataSource?.shopImage" />
+                    <span class="ml-2 align-middle" style="display: inline-block;">{{ dataSource?.shopName }}
                         <i class="fas fa-chevron-right ml-1"></i></span>
                 </div>
             </div>
             <div class="col col-md-3">
-                <a *ngIf="dataSource.facebook != null" class="ml-2 mr-2" [href]="dataSource.facebook">
+                <a *ngIf="dataSource?.facebook != null" class="ml-2 mr-2" [href]="dataSource?.facebook">
                     <span><i class="fab fa-facebook fa-2x"></i></span>
                 </a>
-                <a *ngIf="dataSource.youtube != null" class="ml-2 mr-3 text-danger" [href]="dataSource.youtube">
+                <a *ngIf="dataSource?.youtube != null" class="ml-2 mr-3 text-danger" [href]="dataSource?.youtube">
                     <span><i class="fab fa-youtube fa-2x"></i></span>
                 </a>
             </div>
         </div>
-        <qr-code [value]="'http://localhost:4200/detail/product/' + dataSource.productId" size="150"
+        <qr-code [value]="'http://localhost:4200/detail/product/' + dataSource?.productId" size="150"
             errorCorrectionLevel="M" centerImageSrc="undefined" centerImageSize="undefined" [margin]="4">
         </qr-code>
-        <div style="font-size: 20px; line-height: 25px;" [innerHtml]="dataSource.description | safe: 'html'">
+        <div style="font-size: 20px; line-height: 25px;" [innerHtml]="dataSource?.description | safe: 'html'">
         </div>
         <div class="recommendation-slider">
             <h1 class="mt-4">Recommendation</h1>
             <drag-scroll
-                *ngIf="recommendationProducts != null && recommendationProducts.length > 0; else recommendationElseBlock"
+                *ngIf="recommendationProducts != null && recommendationProducts?.length > 0; else recommendationElseBlock"
                 class="demo-one" [drag-scroll-y-disabled]="true" [scrollbar-hidden]="true" #nav>
 
                 <div drag-scroll-item *ngFor="let product of recommendationProducts">
@@ -91,7 +94,7 @@
             </ng-template>
         </div>
         <div class="comment mt-5">
-            <h1 class="mt-2">{{ commentDto.length }} Comments</h1>
+            <h1 class="mt-2">{{ commentDto?.length }} Comments</h1>
             <hr>
             <div class="p-4 text-center">
                 <button *ngIf="token == null; else elseBlock" class="btn btn-primary w-75 m-auto"
@@ -114,19 +117,19 @@
                 <div class="row mt-2 mb-3" *ngFor="let cmt of commentDto">
                     <div class="col col-md-1">
                         <img alt="avatar" style="border-radius: 35px;" width="70" height="70"
-                            [src]="cmt.avatar != null && cmt.avatar != '' ? cmt.avatar : defaultAvatar" />
+                            [src]="cmt?.avatar != null && cmt?.avatar != '' ? cmt?.avatar : defaultAvatar" />
                     </div>
                     <div class="col col-md-11">
-                        <h3>{{ cmt.name }} - {{ cmt.createDate | datetime : 'dd-MM-yyyy' }}</h3>
-                        <p>{{ cmt.commentContent }}</p>
-                        <div class="sub-comment row ml-2" *ngFor="let sub of cmt.subComments">
+                        <h3>{{ cmt?.name }} - {{ cmt?.createDate | datetime : 'dd-MM-yyyy' }}</h3>
+                        <p>{{ cmt?.commentContent }}</p>
+                        <div class="sub-comment row ml-2" *ngFor="let sub of cmt?.subComments">
                             <div class="col col-md-1">
                                 <img alt="avatar" style="border-radius: 35px;" width="70" height="70"
-                                    [src]="sub.avatar != null && sub.avatar != '' ? sub.avatar : defaultAvatar" />
+                                    [src]="sub?.avatar != null && sub?.avatar != '' ? sub?.avatar : defaultAvatar" />
                             </div>
                             <div class="col col-md-11">
-                                <h3>{{ sub.name }} - {{ sub.createDate | datetime : 'dd-MM-yyyy' }}</h3>
-                                <p>{{ sub.commentContent }}</p>
+                                <h3>{{ sub?.name }} - {{ sub?.createDate | datetime : 'dd-MM-yyyy' }}</h3>
+                                <p>{{ sub?.commentContent }}</p>
                             </div>
                         </div>
                         <div class="comment-input mt-2 text-right">
@@ -135,7 +138,7 @@
                                     class="form-control" rows="5" style="height: 100px;" aria-label="With textarea"
                                     placeholder="Enter something ...."></textarea>
                             </div>
-                            <button type="button" (click)="sendSubComment(cmt.commentId)" mat-raised-button
+                            <button type="button" (click)="sendSubComment(cmt?.commentId)" mat-raised-button
                                 color="primary" class="mt-2">Send
                                 Comment</button>
                         </div>

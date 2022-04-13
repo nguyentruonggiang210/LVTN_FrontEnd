@@ -23,7 +23,7 @@ const ActionString = "Close";
 export class ContentComponent implements OnInit {
   @Input() dataSource: OdataResponse<CategoryDto[]>;
 
-  currentPageIndex: number;
+  currentPageIndex: number = 1;
   dataType: number;
   snackBarTimeout: any;
   productCart = CartType.product;
@@ -114,7 +114,7 @@ export class ContentComponent implements OnInit {
 
   lastPage() {
     debugger
-    let value = parseInt(((this.dataSource.count / pageSize)).toString()) ;
+    let value = parseInt(((this.dataSource.count / pageSize)).toString());
     value += this.dataSource.count <= pageSize ? 0 : 1;
 
     if (this.currentPageIndex == value) {

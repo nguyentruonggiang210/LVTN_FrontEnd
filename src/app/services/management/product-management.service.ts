@@ -50,16 +50,20 @@ export class ProductManagementService {
     return this.httpClient.get<BaseResponse<ImageDto[]>>(environment.apiUrl + 'ProductManagement/image/' + productId);
   }
 
-  getBoughtProductByMonth(){
+  getBoughtProductByMonth() {
     return this.httpClient.get<BaseResponse<StatisticUserDto[]>>(environment.apiUrl + 'ProductManagement/bought-by-month/' + this.authService.getUserName());
   }
 
-  getProductImportByMonth(){
+  getProductImportByMonth() {
     return this.httpClient.get<BaseResponse<StatisticUserDto[]>>(environment.apiUrl + 'ProductManagement/import-by-month/' + this.authService.getUserName());
   }
 
-  getProductTurnOverByMonth(){
+  getProductTurnOverByMonth() {
     return this.httpClient.get<BaseResponse<StatisticUserDto[]>>(environment.apiUrl + 'ProductManagement/turnover-by-month/' + this.authService.getUserName());
+  }
+
+  deleteOneProduct(productId: number) {
+    return this.httpClient.delete<BaseResponse<boolean[]>>(environment.apiUrl + 'ProductManagement/' + productId);
   }
 
   deleteProduct(productIds: number[]) {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
-import { SingleDataSet, Label } from 'ng2-charts';
+import { Label } from 'ng2-charts';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteNotifyComponent } from 'src/app/components/delete-notify/delete-notify.component';
@@ -13,8 +13,8 @@ import { AuthService } from 'src/app/services/common/auth.service';
 import { CommonService } from 'src/app/services/common/common.service';
 
 const blankSpace = ' ';
-const contentDelete = "Are you sure to delete user ";
-const contentDelete1 = "!. You can't restore this account after that!";
+const contentDelete = "Are you sure to delete product ";
+const contentDelete1 = "!.";
 const Action = "Close";
 const DeleteMessageSuccess = "Delete Success";
 
@@ -145,12 +145,11 @@ export class ProductComponent implements OnInit {
       dialogRef.componentInstance.data = contentDelete + id + contentDelete1;
     }
     else {
-      let userNames = <string[]>id.toString();
-      dialogRef.componentInstance.data = contentDelete + userNames + contentDelete1;
+      dialogRef.componentInstance.data = 'Are you sure to delete all products in this page.';
     }
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result == 'Y') {
+      if (result) {
         if (typeof (id) == "number") {
           this.deleteEvent(id);
         }
@@ -162,6 +161,8 @@ export class ProductComponent implements OnInit {
   }
 
   private getProductList(otherFilter: string = '') {
+    this.commonService.displaySpinner();
+
     let filter = `?$top=${this.take}&$skip=${this.skip}&$filter=` + this.odataService.addFilterEqual('userName', this.authService.getUserName(), true) + otherFilter;
 
     filter = this.odataService.adjustUrl(filter);
@@ -170,9 +171,13 @@ export class ProductComponent implements OnInit {
 
     filter += this.sortByQuery();
 
+    console.log(filter);
+
+
     this.productManagementService.getAllProduct(filter)
       .subscribe(x => {
         if (x) {
+          this.commonService.distroySpinner();
           this.dataSource = x.items;
           this.total = x.count;
         }
@@ -233,7 +238,11 @@ export class ProductComponent implements OnInit {
     debugger
     if (productId) {
       // delete one record
-      this.productManagementService.deleteProduct(new Array<number>(productId));
+      this.productManagementService.deleteOneProduct(productId)
+        .subscribe(x => {
+          this.commonService.displaySnackBar(DeleteMessageSuccess, Action);
+          this.getProductList();
+        });
     }
     else {
       // delete all
@@ -242,6 +251,7 @@ export class ProductComponent implements OnInit {
         .subscribe(x => {
           if (x && x.body == true) {
             this.commonService.displaySnackBar(DeleteMessageSuccess, Action);
+            this.getProductList();
           }
         });
     }

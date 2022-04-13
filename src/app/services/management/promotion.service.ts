@@ -37,4 +37,8 @@ export class PromotionService {
   getProductPromotion() {
     return this.httpClient.get<BaseResponse<DisplayPromotion[]>>(environment.apiUrl + "Promotion/product/" + this.authService.getUserId());
   }
+
+  isPromotionRemain(promotionId: number) {
+    return this.httpClient.get<BaseResponse<boolean>>(environment.apiUrl + "Promotion/is-remain/" + promotionId);
+  }
 }

@@ -92,7 +92,7 @@ export class TrainerComponent implements OnInit {
     public dialog: MatDialog,
     private courseManagementService: CourseManagementService,
     private odataService: OdataService,
-    private commonSerivce: CommonService,
+    private commonService: CommonService,
     private authService: AuthService) {
   }
 
@@ -141,16 +141,14 @@ export class TrainerComponent implements OnInit {
       dialogRef.componentInstance.data = contentDelete + id + contentDelete1;
     }
     else {
-      let userNames = <number[]>id.toString();
-      dialogRef.componentInstance.data = "Are you sure to delete all item !.";
+      dialogRef.componentInstance.data = "Are you sure to delete all courses !.";
 
     }
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result == 'Y') {
+      if (result) {
         if (typeof (id) == "number") {
-          debugger
-          this.courseManagementService.deleteOneCourse(id);
+          this.deleteEvent(id);
         }
         else {
           this.deleteEvent(null);
@@ -160,9 +158,12 @@ export class TrainerComponent implements OnInit {
   }
 
   private getCourseList(otherFilter: string = '') {
+    this.commonService.displaySpinner();
+
     let filter = `?$top=${this.take}&$skip=${this.skip}&$filter=` + this.odataService.addFilterEqual('trainerUsername', this.authService.getUserName(), true) + otherFilter;
 
     filter = this.odataService.adjustUrl(filter);
+
     filter = this.odataService.removeFilter(filter);
 
     filter += this.sortByQuery();
@@ -172,6 +173,7 @@ export class TrainerComponent implements OnInit {
     this.courseManagementService.getAllCourse(filter)
       .subscribe(x => {
         if (x) {
+          this.commonService.distroySpinner();
           this.dataSource = x.items;
           this.total = x.count;
         }
@@ -246,7 +248,13 @@ export class TrainerComponent implements OnInit {
   deleteEvent(id: number) {
     if (id) {
       // delete one record
-      this.courseManagementService.deleteCourse(new Array<number>(id));
+      this.courseManagementService.deleteOneCourse(id)
+        .subscribe(x => {
+          if (x && x.body == true) {
+            this.commonService.displaySnackBar(DeleteMessageSuccess, Action);
+            this.getCourseList();
+          }
+        });
     }
     else {
       // delete all
@@ -254,7 +262,8 @@ export class TrainerComponent implements OnInit {
       this.courseManagementService.deleteCourse(courseIds)
         .subscribe(x => {
           if (x && x.body == true) {
-            this.commonSerivce.displaySnackBar(DeleteMessageSuccess, Action);
+            this.commonService.displaySnackBar(DeleteMessageSuccess, Action);
+            this.getCourseList();
           }
         });
     }

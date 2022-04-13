@@ -171,10 +171,13 @@ export class PromotionManagementComponent implements OnInit {
   }
 
   private getPromotionList() {
+    this.commonService.displaySpinner();
+
     this.promotionService.getPromotions()
       .subscribe(x => {
+        this.commonService.distroySpinner();
         this.dataSource = x.body
-      })
+      });
   }
 
   private getInitPromotionCourseProducts() {

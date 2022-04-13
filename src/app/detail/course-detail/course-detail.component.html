@@ -60,20 +60,22 @@
                 <button type="button" class="btn btn-outline-primary mt-2 mb-2 w-100"
                     (click)="addToCart(dataSource.courseId.toString(), dataSource.name, dataSource.price ,2)">Add
                     to card</button>
-                <button *ngIf="dataSource.isOutOfStock" type="button"
+                <button *ngIf="dataSource.isOutOfStock || !isPromotionRemain" type="button" disabled
                     class="btn btn-outline-warning mt-2 mb-2 w-100">Out of stock</button>
-                <ngx-paypal *ngIf="token != null && !dataSource.isOutOfStock" [config]="payPalConfig"></ngx-paypal>
-
+                <ngx-paypal *ngIf="token != null && !dataSource.isOutOfStock && isPromotionRemain"
+                    [config]="payPalConfig"></ngx-paypal>
             </div>
         </div>
     </div>
-    <div  *ngIf="promotionId != null" class="promotion">
+    <div class="promotion">
         <h1 class="mt-4">Promotion</h1>
         <mat-tab-group (focusChange)="promotionChange($event)">
             <mat-tab *ngFor="let promotion of dataSource.coursePromotions" [label]="promotion.promotionName">
-                <p class="mt-1">Unit: {{ promotion.promotionUnit }}</p>
-                <p class="mt-1">Amount: {{ promotion.amount || '-' }}</p>
-                <p class="mt-1">Description: {{ promotion.promotionDescription }}</p>
+                <div *ngIf="promotion.promotionId != null">
+                    <p class="mt-1">Unit: {{ promotion.promotionUnit }}</p>
+                    <p class="mt-1">Amount: {{ promotion.amount || '-' }}</p>
+                    <p class="mt-1">Description: {{ promotion.promotionDescription }}</p>
+                </div>
             </mat-tab>
         </mat-tab-group>
     </div>
@@ -110,7 +112,6 @@
                         Comment</button>
                 </div>
             </ng-template>
-
         </div>
         <hr>
         <div class="comment-list">

@@ -11,6 +11,7 @@ import { CourseDto } from 'src/app/models/CourseDto';
 import { PaymentDetailDto } from 'src/app/models/PaymentDetailDto';
 import { PaymentDto } from 'src/app/models/PaymentDto';
 import { PayPalItem } from 'src/app/models/PayPalItem';
+import { ProductPromotionDto } from 'src/app/models/ProductPromotionDto';
 import { SendCommentDto } from 'src/app/models/SendCommentDto';
 import { UnitAmount } from 'src/app/models/UnitAmount';
 import { ValidPromotion } from 'src/app/models/ValidPromotion';
@@ -19,6 +20,7 @@ import { AuthService } from 'src/app/services/common/auth.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { DetailService } from 'src/app/services/detail/detail.service';
 import { CartService } from 'src/app/services/home/cart.service';
+import { PromotionService } from 'src/app/services/management/promotion.service';
 import { PaymentService } from 'src/app/services/payment/payment.service';
 import { environment } from 'src/environments/environment';
 
@@ -42,6 +44,7 @@ export class CourseDetailComponent implements OnInit {
   commentDto: CommentDto[];
   commentContent: string = null;
   promotionId?: number = null;
+  isPromotionRemain: boolean = true;
 
   constructor(private detailService: DetailService,
     private router: ActivatedRoute,
@@ -49,7 +52,9 @@ export class CourseDetailComponent implements OnInit {
     private authService: AuthService,
     private commonService: CommonService,
     private paymentService: PaymentService,
-    private moneyPipe: MoneyPipe) {
+    private moneyPipe: MoneyPipe,
+    private promotionService: PromotionService) {
+      commonService.displaySpinner();
     this.token = authService.getDecodedAccessToken();
   }
 
@@ -73,10 +78,19 @@ export class CourseDetailComponent implements OnInit {
     this.detailService.getCourseDetail(this.courseId)
       .subscribe(x => {
         if (x) {
+          this.commonService.distroySpinner();
+
           this.dataSource = x.body;
+
           this.originPrice = x.body.price;
           if (x.body.coursePromotions != null && x.body.coursePromotions.length > 0) {
-            this.promotionId = x.body.coursePromotions[0].promotionId;
+            let productPromotionDto: ProductPromotionDto = {
+              promotionId: null,
+              promotionName: 'None'
+            };
+
+            x.body.coursePromotions = [productPromotionDto].concat(x.body.coursePromotions);
+            
             this.changePricePromotion();
           }
         }
@@ -174,7 +188,15 @@ export class CourseDetailComponent implements OnInit {
 
   promotionChange(event: any) {
     this.promotionId = this.dataSource.coursePromotions[event.index].promotionId;
-    this.changePricePromotion();
+    if (this.promotionId != null) {
+      this.changePricePromotion();
+      this.promotionService.isPromotionRemain(this.promotionId)
+        .subscribe(x => this.isPromotionRemain = x.body);
+    }
+    else {
+      this.isPromotionRemain = true;
+      this.dataSource.price = this.originPrice;
+    }
   }
 
   private changePricePromotion() {
