@@ -1,56 +1,22 @@
 <div class="container-fluid w-75">
     <div class="row">
-        <div class="col col-md-8 m-0">
-            <vg-player>
-                <vg-overlay-play></vg-overlay-play>
-                <vg-buffering></vg-buffering>
-
-                <vg-scrub-bar>
-                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-                    <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
-                </vg-scrub-bar>
-
-                <vg-controls>
-                    <vg-play-pause></vg-play-pause>
-                    <vg-playback-button></vg-playback-button>
-
-                    <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
-
-                    <vg-scrub-bar style="pointer-events: none;"></vg-scrub-bar>
-
-                    <vg-time-display vgProperty="left" vgFormat="mm:ss"></vg-time-display>
-                    <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
-
-                    <vg-track-selector></vg-track-selector>
-                    <vg-mute></vg-mute>
-                    <vg-volume></vg-volume>
-
-                    <vg-fullscreen></vg-fullscreen>
-                </vg-controls>
-
-                <video [vgMedia]="$any(media)" #media id="singleVideo" preload="auto" crossorigin>
-                    <source src="http://static.videogular.com/assets/videos/videogular.mp4" type="video/mp4">
-                    <source src="http://static.videogular.com/assets/videos/videogular.ogg" type="video/ogg">
-                    <source src="http://static.videogular.com/assets/videos/videogular.webm" type="video/webm">
-
-                    <track kind="subtitles" label="English"
-                        src="http://static.videogular.com/assets/subs/pale-blue-dot.vtt" srclang="en" default>
-                    <track kind="subtitles" label="Español"
-                        src="http://static.videogular.com/assets/subs/pale-blue-dot-es.vtt" srclang="es">
-                </video>
-            </vg-player>
+        <div class="col col-lg-8 m-0">
+            <video id="my_video_1" class="video-js vjs-default-skin" style="width: 100%;" controls preload="none"
+                data-setup='{ "aspectRatio":"640:267", "playbackRates": [1, 1.5, 2] }'>
+                <source [src]="dataSource?.courseVideo" type='video/mp4' />
+            </video>
         </div>
-        <div class="col col-md-4 p-4 bg-dark text-light m-0">
+        <div class="col col-lg-4 p-4 bg-dark text-light m-0">
             <div class="row">
                 <div class="col col-md-7">
                     <h2 class="mb-3">WORKOUT DETAILS</h2>
-                    <p>Name: {{ dataSource.name }}</p>
+                    <p>Name: {{ dataSource?.name }}</p>
                     <p>Price: ${{ displayPrice() }}</p>
-                    <p>Start Date: {{ dataSource.startDate | datetime:'dd-MM-yyyy' }}</p>
-                    <p>End Date: {{ dataSource.endDate | datetime:'dd-MM-yyyy' }}</p>
-                    <p>Max Member: {{ dataSource.quantity }}</p>
-                    <p>Body Focus: {{ dataSource.bodyFocus || '-' }}</p>
-                    <p>Tags: {{ dataSource.tag || '-' }}</p>
+                    <p>Start Date: {{ dataSource?.startDate | datetime:'dd-MM-yyyy' }}</p>
+                    <p>End Date: {{ dataSource?.endDate | datetime:'dd-MM-yyyy' }}</p>
+                    <p>Max Member: {{ dataSource?.quantity }}</p>
+                    <p>Body Focus: {{ dataSource?.bodyFocus || '-' }}</p>
+                    <p>Tags: {{ dataSource?.tag || '-' }}</p>
                 </div>
                 <div class="col col-md-5">
                     <i class="icon -focus-core_lower_body" aria-hidden="true"></i>
@@ -58,11 +24,11 @@
             </div>
             <div class="text-center left-0 mt-5">
                 <button type="button" class="btn btn-outline-primary mt-2 mb-2 w-100"
-                    (click)="addToCart(dataSource.courseId.toString(), dataSource.name, dataSource.price ,2)">Add
+                    (click)="addToCart(dataSource?.courseId.toString(), dataSource?.name, dataSource?.price ,2)">Add
                     to card</button>
-                <button *ngIf="dataSource.isOutOfStock || !isPromotionRemain" type="button" disabled
+                <button *ngIf="dataSource?.isOutOfStock || !isPromotionRemain" type="button" disabled
                     class="btn btn-outline-warning mt-2 mb-2 w-100">Out of stock</button>
-                <ngx-paypal *ngIf="token != null && !dataSource.isOutOfStock && isPromotionRemain"
+                <ngx-paypal *ngIf="token != null && !dataSource?.isOutOfStock && isPromotionRemain"
                     [config]="payPalConfig"></ngx-paypal>
             </div>
         </div>
@@ -70,11 +36,11 @@
     <div class="promotion">
         <h1 class="mt-4">Promotion</h1>
         <mat-tab-group (focusChange)="promotionChange($event)">
-            <mat-tab *ngFor="let promotion of dataSource.coursePromotions" [label]="promotion.promotionName">
-                <div *ngIf="promotion.promotionId != null">
-                    <p class="mt-1">Unit: {{ promotion.promotionUnit }}</p>
-                    <p class="mt-1">Amount: {{ promotion.amount || '-' }}</p>
-                    <p class="mt-1">Description: {{ promotion.promotionDescription }}</p>
+            <mat-tab *ngFor="let promotion of dataSource?.coursePromotions" [label]="promotion?.promotionName">
+                <div *ngIf="promotion?.promotionId != null">
+                    <p class="mt-1">Unit: {{ promotion?.promotionUnit }}</p>
+                    <p class="mt-1">Amount: {{ promotion?.amount || '-' }}</p>
+                    <p class="mt-1">Description: {{ promotion?.promotionDescription }}</p>
                 </div>
             </mat-tab>
         </mat-tab-group>
@@ -86,17 +52,17 @@
                 <div style="font-size: 20px; width: fit-content; border-radius: 8px;"
                     class="bg-light p-3 text-center my-avatar-btn">
                     <img alt="avatar" style="border-radius: 15px; display: inline-block;" width="30" height="30"
-                        src="{{ dataSource.teacherAvatar || defaultAvatar }}" />
-                    <span class="ml-2 align-middle" style="display: inline-block;">{{ dataSource.teacherName }}
+                        src="{{ dataSource?.teacherAvatar || defaultAvatar }}" />
+                    <span class="ml-2 align-middle" style="display: inline-block;">{{ dataSource?.teacherName }}
                         <i class="fas fa-chevron-right ml-1"></i></span>
                 </div>
             </div>
         </div>
-        <div style="font-size: 20px; line-height: 25px;" [innerHtml]="dataSource.description | safe: 'html'">
+        <div style="font-size: 20px; line-height: 25px;" [innerHtml]="dataSource?.description | safe: 'html'">
         </div>
     </div>
     <div class="comment mt-5">
-        <h1 class="mt-2">{{ commentDto.length }} Comments</h1>
+        <h1 class="mt-2">{{ commentDto?.length }} Comments</h1>
         <hr>
         <div class="p-4 text-center">
             <button *ngIf="token == null; else elseBlock" class="btn btn-primary w-75 m-auto"
@@ -118,19 +84,19 @@
             <div class="row mt-2 mb-3" *ngFor="let cmt of commentDto">
                 <div class="col col-md-1">
                     <img alt="avatar" style="border-radius: 35px;" width="70" height="70"
-                        [src]="cmt.avatar != null && cmt.avatar != '' ? cmt.avatar : defaultAvatar" />
+                        [src]="cmt?.avatar != null && cmt?.avatar != '' ? cmt?.avatar : defaultAvatar" />
                 </div>
                 <div class="col col-md-11">
-                    <h3>{{ cmt.name }} - {{ cmt.createDate | datetime : 'dd-MM-yyyy' }}</h3>
-                    <p>{{ cmt.commentContent }}</p>
-                    <div class="sub-comment row ml-2" *ngFor="let sub of cmt.subComments">
+                    <h3>{{ cmt?.name }} - {{ cmt?.createDate | datetime : 'dd-MM-yyyy' }}</h3>
+                    <p>{{ cmt?.commentContent }}</p>
+                    <div class="sub-comment row ml-2" *ngFor="let sub of cmt?.subComments">
                         <div class="col col-md-1">
                             <img alt="avatar" style="border-radius: 35px;" width="70" height="70"
-                                [src]="sub.avatar != null && sub.avatar != '' ? sub.avatar : defaultAvatar" />
+                                [src]="sub?.avatar != null && sub?.avatar != '' ? sub?.avatar : defaultAvatar" />
                         </div>
                         <div class="col col-md-11">
-                            <h3>{{ sub.name }} - {{ sub.createDate | datetime : 'dd-MM-yyyy' }}</h3>
-                            <p>{{ sub.commentContent }}</p>
+                            <h3>{{ sub?.name }} - {{ sub.createDate | datetime : 'dd-MM-yyyy' }}</h3>
+                            <p>{{ sub?.commentContent }}</p>
                         </div>
                     </div>
                     <div *ngIf="token != null" class="comment-input mt-2 text-right">

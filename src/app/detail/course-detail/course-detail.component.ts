@@ -54,7 +54,7 @@ export class CourseDetailComponent implements OnInit {
     private paymentService: PaymentService,
     private moneyPipe: MoneyPipe,
     private promotionService: PromotionService) {
-      commonService.displaySpinner();
+    commonService.displaySpinner();
     this.token = authService.getDecodedAccessToken();
   }
 
@@ -90,7 +90,7 @@ export class CourseDetailComponent implements OnInit {
             };
 
             x.body.coursePromotions = [productPromotionDto].concat(x.body.coursePromotions);
-            
+
             this.changePricePromotion();
           }
         }
@@ -216,11 +216,11 @@ export class CourseDetailComponent implements OnInit {
   }
 
   displayPrice() {
-    if (this.originPrice == this.dataSource.price) {
-      return this.moneyPipe.transform(this.dataSource.price, 'money');
+    if (this.originPrice == this.dataSource?.price) {
+      return this.moneyPipe.transform(this.dataSource?.price, 'money');
     }
     else {
-      return this.moneyPipe.transform(this.originPrice, 'money') + ' Sale ' + this.moneyPipe.transform(this.dataSource.price, 'money')
+      return this.moneyPipe.transform(this.originPrice, 'money') + ' Sale ' + this.moneyPipe.transform(this.dataSource?.price, 'money')
     }
   }
 
