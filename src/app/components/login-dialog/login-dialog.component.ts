@@ -126,7 +126,8 @@ export class LoginDialogComponent implements OnInit {
   private setToken(x: any) {
     let obj = <BaseResponse<LoginResponse>>x;
     let token = obj?.body?.token;
-    this.commonService.setLocalStorage(environment.tokenName, token)
+    this.commonService.setLocalStorage(environment.tokenName, token);
+    this.commonService.displaySnackBar('Login success', 'Close');
     window.location.reload();
   }
 }

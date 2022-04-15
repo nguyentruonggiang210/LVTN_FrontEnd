@@ -32,7 +32,7 @@ export class CartDialogComponent implements OnInit {
   defaultCourseImage: string = "assets/img/default-course-image.png";
   defaultProductImage: string = "assets/img/default-product-image.png";
 
-  token: any = null;
+  token?: string = null;
   cartArray: CartDto[] = [];
   productArray: CartDto[] = [];
   courseArray: CartDto[] = [];
@@ -45,7 +45,7 @@ export class CartDialogComponent implements OnInit {
     private snackBar: MatSnackBar,
     private authService: AuthService,
     private commonService: CommonService) {
-    this.token = authService.getDecodedAccessToken();
+    this.token = authService.getUserId();
   }
 
   ngOnInit(): void {

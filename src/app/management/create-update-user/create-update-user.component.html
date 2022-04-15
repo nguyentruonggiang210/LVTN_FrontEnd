@@ -6,7 +6,7 @@
                 <form class="text-center" [formGroup]="managementFormGroup" (submit)="submitEvent()">
                     <mat-form-field class="w-100">
                         <mat-label class="myform-label">{{ 'UserName' | translate }}</mat-label>
-                        <input class="myform-input" [readonly]="dataSource != null" matInput formControlName="userName"
+                        <input (change)="validateUserName()" class="myform-input" [readonly]="dataSource != null" matInput formControlName="userName"
                             autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>

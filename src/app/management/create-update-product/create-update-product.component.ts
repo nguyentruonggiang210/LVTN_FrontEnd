@@ -19,6 +19,7 @@ export class CreateUpdateProductComponent implements OnInit {
 
   permitImage: boolean = false;
   productId?: number = null;
+  originalProductName: string;
   dataSource: CreateProductManagementDto = null;
   title: string = 'Create product';
   buttonTitle: string = 'Create';
@@ -172,6 +173,7 @@ export class CreateUpdateProductComponent implements OnInit {
       .subscribe(b => {
         this.commonService.distroySpinner();
         this.dataSource = b.body;
+        this.originalProductName = b.body.productName;
         this.productId = b.body.productId;
         this.title = this.dataSource == null ? 'Create Product' : 'Update Product';
         this.buttonTitle = this.dataSource == null ? 'Create' : 'Update';
@@ -267,6 +269,21 @@ export class CreateUpdateProductComponent implements OnInit {
 
   backEvent() {
     window.location.href = 'http://localhost:4200/management/product';
+  }
+
+  validateProductName() {
+    let value = this.managementFormGroup.value['productName'];
+    if (value == '' || value == null || value == this.originalProductName) {
+      return;
+    }
+    this.productManagementService.checkProductExist(value)
+      .subscribe(x => {
+        if (x.body) {
+          debugger
+          this.commonService.displaySnackBar('Product name exist', 'Close');
+          this.managementFormGroup.controls['productName'].setErrors({ serverValidationError: true });
+        }
+      });
   }
 
   private getInitList() {

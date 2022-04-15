@@ -15,6 +15,10 @@ export class ErrorInterceptor implements HttpInterceptor {
 
         return next.handle(req)
             .pipe(catchError((error, caught) => {
+                if (error.status === 401 || error.status === 403 || error.statusText === 'Unauthorized') {
+                    window.location.href = '/denied';
+                }
+
                 if (error.error.body) {
                     this.toastService.error(error.error.error)
                     this.commonService.distroySpinner();
@@ -29,9 +33,4 @@ export class ErrorInterceptor implements HttpInterceptor {
                 return Observable.throw(error);
             })) as any;
     }
-
-    instanceOf<A>(object: any): object is A {
-        return 'member' in object;
-    }
-
 }

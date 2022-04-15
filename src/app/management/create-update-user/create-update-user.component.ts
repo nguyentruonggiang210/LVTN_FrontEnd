@@ -212,6 +212,20 @@ export class CreateUpdateUserComponent implements OnInit {
       });
   }
 
+  validateUserName() {
+    let value = this.managementFormGroup.value['userName'];
+    if (value == '' || value == null) {
+      return;
+    }
+    this.userDetailService.checkUserNametExist(value)
+      .subscribe(x => {
+        if (x.body) {
+          this.commonService.displaySnackBar('UserName exist', 'Close');
+          this.managementFormGroup.controls['userName'].setErrors({ serverValidationError: true });
+        }
+      });
+  }
+
   backEvent() {
     window.location.href = 'http://localhost:4200/management/user';
   }

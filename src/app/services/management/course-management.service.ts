@@ -92,6 +92,10 @@ export class CourseManagementService {
     return this.httpClient.get<BaseResponse<StatisticUserDto[]>>(environment.apiUrl + 'CourseManagement/turnover-by-month/' + this.authService.getUserName());
   }
 
+  checkCourseExist(courseName: string) {
+    return this.httpClient.get<BaseResponse<boolean>>(environment.apiUrl + 'CourseManagement/name-exist/' + courseName);
+  }
+
   deleteOneCourse(courseId: number) {
     return this.httpClient.delete<BaseResponse<boolean>>(environment.apiUrl + 'CourseManagement/' + courseId);
   }

@@ -18,6 +18,7 @@ export class ShopComponent implements OnInit {
   shopId?: number = null;
   imageFile: any = null;
   imageUrl: any;
+  originalShopName: string;
   shopFormGroup = new FormGroup({
     shopName: new FormControl('', [
       Validators.required
@@ -91,6 +92,20 @@ export class ShopComponent implements OnInit {
       });
   }
 
+  validateShopName() {
+    let value = this.shopFormGroup.value['shopName'];
+    if (value == '' || value == null || value == this.originalShopName) {
+      return;
+    }
+    this.shopManagementService.checkShopNameExist(value)
+      .subscribe(x => {
+        if (x.body) {
+          this.commonService.displaySnackBar('Shop name exist', 'Close');
+          this.shopFormGroup.controls['shopName'].setErrors({ serverValidationError: true });
+        }
+      });
+  }
+
   private createShop() {
     let model: ShopDto = {
       userId: this.authService.getUserId(),
@@ -121,6 +136,7 @@ export class ShopComponent implements OnInit {
     this.shopManagementService.updateShop(model)
       .subscribe(x => {
         this.commonService.displaySnackBar('Update success', 'Close');
+        this.getShopDetail();
       });
   }
 
@@ -128,6 +144,7 @@ export class ShopComponent implements OnInit {
     this.shopManagementService.getShopInfo()
       .subscribe(x => {
         this.dataSource = x.body
+        this.originalShopName = x.body.shopName;
         this.shopId = x.body.shopId;
         this.imageUrl = x.body.image;
         this.setFormValue(x.body);

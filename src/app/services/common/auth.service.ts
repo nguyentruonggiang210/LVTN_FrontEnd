@@ -62,10 +62,20 @@ export class AuthService {
   }
 
   public getUserId() {
-    return this.getDecodedAccessToken()['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+    try {
+      return this.getDecodedAccessToken()['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+    }
+    catch {
+      return null;
+    }
   }
 
   public getUserName() {
-    return this.getDecodedAccessToken()['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+    try {
+      return this.getDecodedAccessToken()['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+    }
+    catch {
+      return null;
+    }
   }
 }

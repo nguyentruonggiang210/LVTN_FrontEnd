@@ -6,7 +6,8 @@
   <form [formGroup]="registerFormGroup" (ngSubmit)="registerEvent()" class="text-center">
     <mat-form-field appearance="fill" class="w-100">
       <mat-label class="myform-label">User Name</mat-label>
-      <input class="myform-input" matInput formControlName="userName">
+      <input (change)="validateUserName()" class="myform-input" matInput formControlName="userName"
+        autocomplete="new-password">
       <mat-hint align="start">Required</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="fill" class="w-100 mt-4">
@@ -16,7 +17,7 @@
     </mat-form-field>
     <mat-form-field appearance="fill" class="w-100 mt-4">
       <mat-label class="myform-label">Password</mat-label>
-      <input class="myform-input" matInput type="password" formControlName="password">
+      <input autocomplete="new-password" class="myform-input" matInput type="password" formControlName="password">
       <mat-hint align="start">Required</mat-hint>
       <i class="fa-solid fa-circle-question fa-2x myform-tooltip" matTooltipClass="my-tooltip" matTooltip="Password must:
       Has at least 1 digit.

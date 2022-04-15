@@ -26,6 +26,8 @@ import { ValidPromotion } from 'src/app/models/ValidPromotion';
 import { PromotionDto } from 'src/app/models/admin/PromotionDto';
 import { ProductPromotionDto } from 'src/app/models/ProductPromotionDto';
 import { PromotionService } from 'src/app/services/management/promotion.service';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginDialogComponent } from 'src/app/components/login-dialog/login-dialog.component';
 
 const NewQuantity = 1;
 const CartMessage = "Add successfully";
@@ -44,7 +46,7 @@ export class ProductDetailComponent implements OnInit {
   detailIndex: number = 0;
   imageSource: string;
   fullImageSource: string;
-  token: any = null;
+  token: string = null;
   dataSource: ProductDto = null;
   productId: number;
   responsiveOptions: any;
@@ -67,9 +69,10 @@ export class ProductDetailComponent implements OnInit {
     private authService: AuthService,
     private paymentService: PaymentService,
     private moneyPipe: MoneyPipe,
-    private promotionService: PromotionService) {
+    private promotionService: PromotionService,
+    private dialog: MatDialog) {
     commonService.displaySpinner();
-    this.token = authService.getDecodedAccessToken();
+    this.token = authService.getUserId();
   }
 
   ngOnInit(): void {
@@ -226,6 +229,19 @@ export class ProductDetailComponent implements OnInit {
       this.isPromotionRemain = true;
       this.dataSource.productDetails[0].price = this.originPrice;
     }
+  }
+
+  openLoginDialog() {
+    const dialogRef = this.dialog.open(LoginDialogComponent, {
+      width: '50%',
+      maxWidth: '800px',
+      minWidth: '350px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result);
+    });
   }
 
   private changePricePromotion() {

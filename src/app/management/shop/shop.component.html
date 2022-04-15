@@ -6,7 +6,7 @@
                 <form class="text-center" [formGroup]="shopFormGroup" (submit)="submitEvent()">
                     <mat-form-field class="w-100">
                         <mat-label class="myform-label">Shop Name</mat-label>
-                        <input class="myform-input" [readonly]="dataSource != null" matInput formControlName="shopName"
+                        <input (change)="validateShopName()" class="myform-input" matInput formControlName="shopName"
                             autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>

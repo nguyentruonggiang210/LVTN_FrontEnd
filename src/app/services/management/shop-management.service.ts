@@ -32,4 +32,8 @@ export class ShopManagementService {
   public uploadShopImage(formData: FormData, shopId: number) {
     return this.httpClient.put<BaseResponse<boolean>>(environment.apiUrl + 'Shop/image/' + shopId, formData);
   }
+
+  checkShopNameExist(name: string) {
+    return this.httpClient.get<BaseResponse<boolean>>(environment.apiUrl + 'Shop/name-exist/' + name);
+  }
 }

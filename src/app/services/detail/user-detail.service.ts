@@ -15,11 +15,15 @@ export class UserDetailService {
     return this.httpClient.get<BaseResponse<UserInfoDto>>(environment.apiUrl + 'User/' + userName);
   }
 
-  updateUserInf(model: UserInfoDto){
+  updateUserInf(model: UserInfoDto) {
     return this.httpClient.put<BaseResponse<boolean>>(environment.apiUrl + 'User/', model);
   }
 
   uploadImage(formData: FormData) {
     return this.httpClient.put<BaseResponse<string>>(environment.apiUrl + 'User/image', formData);
+  }
+
+  checkUserNametExist(name: string) {
+    return this.httpClient.get<BaseResponse<boolean>>(environment.apiUrl + 'User/name-exist/' + name);
   }
 }

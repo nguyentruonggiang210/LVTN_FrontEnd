@@ -130,6 +130,8 @@ import { SafePipe } from './pipes/safe.pipe';
 import { CreateUpdateRoomComponent } from './components/create-update-room/create-update-room.component';
 import { PromotionManagementComponent } from './management/promotion-management/promotion-management.component';
 import { ShopComponent } from './management/shop/shop.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { PermissionComponent } from './components/permission/permission.component';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -228,7 +230,9 @@ const toolbarConfig: any = [
     VideoDialogComponent,
     CreateUpdateRoomComponent,
     PromotionManagementComponent,
-    ShopComponent
+    ShopComponent,
+    NotFoundComponent,
+    PermissionComponent
   ],
   imports: [
     BrowserModule,

@@ -53,7 +53,7 @@
     </mat-list>
 </div>
 
-<div *ngIf="(courseArray != [] && courseArray.length != 0 && courseArray !== undefined) || (productArray != [] && productArray.length != 0 && productArray !== undefined)"
+<div *ngIf="token != null && (courseArray != [] && courseArray.length != 0 && courseArray !== undefined) || (productArray != [] && productArray.length != 0 && productArray !== undefined)"
     class="text-center mt-5">
     <ngx-paypal *ngIf="token != null" [config]="payPalConfig"></ngx-paypal>
 </div>

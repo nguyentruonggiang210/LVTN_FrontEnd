@@ -7,6 +7,7 @@ import { UserInfoDto } from 'src/app/models/UserInfoDto';
 import { UserDetailService } from 'src/app/services/detail/user-detail.service';
 import { Location } from '@angular/common';
 import { CommonService } from 'src/app/services/common/common.service';
+import { AuthService } from 'src/app/services/common/auth.service';
 
 const DialogMessage = "Update successfull";
 const ActionString = "Close";
@@ -42,36 +43,15 @@ export class UserDetailComponent implements OnInit {
     description: new FormControl(),
     gender: new FormControl(),
   });
-  userNameState: string = 'nguyentruonggiang210@gmail.com';
 
   constructor(private userDetailService: UserDetailService,
     private snackBar: MatSnackBar,
     private location: Location,
-    private commonService: CommonService) { }
+    private commonService: CommonService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.handlerUserNameState();
-
-    this.userDetailService.getUserInf(this.userNameState)
-      .subscribe(user => {
-        if (user) {
-          // set value 
-          let body = user.body;
-          this.dataSource = body;
-          this.userForm.setValue({
-            userId: body.userId,
-            userName: body.userName,
-            name: body.name,
-            email: body.email,
-            age: body.age,
-            address: body.address,
-            description: body.description,
-            gender: body.gender
-          });
-          // disable user name
-          this.userForm.get('userName').disable();
-        }
-      })
+    this.getUserDetail();
   }
 
   updateUserInfo(): void {
@@ -109,22 +89,35 @@ export class UserDetailComponent implements OnInit {
         if (x) {
           let body = x.body;
           this.dataSource.avatar = body;
+          this.commonService.displaySnackBar('Upload image success', 'Close');
         }
       });
-    console.log(file);
-
   }
 
   handlerDisplayImage() {
     return this.dataSource.avatar == null || this.dataSource.avatar === '' ? DefaultAvatar : this.dataSource.avatar;
   }
 
-  private handlerUserNameState() {
-    let state = this.location.getState()['userNameState'];
-    console.log(state);
-
-    if (state !== '' && state !== undefined && state !== null) {
-      this.userNameState = state;
-    }
+  private getUserDetail() {
+    this.userDetailService.getUserInf(this.authService.getUserName())
+      .subscribe(user => {
+        if (user) {
+          // set value 
+          let body = user.body;
+          this.dataSource = body;
+          this.userForm.setValue({
+            userId: body.userId,
+            userName: body.userName,
+            name: body.name,
+            email: body.email,
+            age: body.age,
+            address: body.address,
+            description: body.description,
+            gender: body.gender
+          });
+          // disable user name
+          this.userForm.get('userName').disable();
+        }
+      })
   }
 }

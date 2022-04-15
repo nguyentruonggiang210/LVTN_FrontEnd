@@ -65,7 +65,7 @@
         <h1 class="mt-2">{{ commentDto?.length }} Comments</h1>
         <hr>
         <div class="p-4 text-center">
-            <button *ngIf="token == null; else elseBlock" class="btn btn-primary w-75 m-auto"
+            <button (click)="openLoginDialog()" *ngIf="token == null; else elseBlock" class="btn btn-primary w-75 m-auto"
                 style="height: 50px; font-size: 22px; font-weight: 450;">SIGN IN
                 TO REPLY</button>
             <ng-template #elseBlock>

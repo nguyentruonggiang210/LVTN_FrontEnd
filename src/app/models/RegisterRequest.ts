@@ -1,6 +1,6 @@
-export interface RegisterRequest{
+export interface RegisterRequest {
     userName: string,
-    passsWord: string,
+    password: string,
     confirmPassword: string,
-    email: string
+    name: string
 };

@@ -62,6 +62,10 @@ export class ProductManagementService {
     return this.httpClient.get<BaseResponse<StatisticUserDto[]>>(environment.apiUrl + 'ProductManagement/turnover-by-month/' + this.authService.getUserName());
   }
 
+  checkProductExist(productName: string) {
+    return this.httpClient.get<BaseResponse<boolean>>(environment.apiUrl + 'ProductManagement/name-exist/' + productName);
+  }
+
   deleteOneProduct(productId: number) {
     return this.httpClient.delete<BaseResponse<boolean[]>>(environment.apiUrl + 'ProductManagement/' + productId);
   }

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { VgApiService } from '@videogular/ngx-videogular/core';
 import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
+import { LoginDialogComponent } from 'src/app/components/login-dialog/login-dialog.component';
 import { BillType } from 'src/app/enums/BillType';
 import { CartType } from 'src/app/enums/CartType';
 import { PaymentType } from 'src/app/enums/PaymentType';
@@ -53,9 +55,10 @@ export class CourseDetailComponent implements OnInit {
     private commonService: CommonService,
     private paymentService: PaymentService,
     private moneyPipe: MoneyPipe,
-    private promotionService: PromotionService) {
+    private promotionService: PromotionService,
+    public dialog: MatDialog) {
     commonService.displaySpinner();
-    this.token = authService.getDecodedAccessToken();
+    this.token = authService.getUserId();
   }
 
   onPlayerReady(api: VgApiService) {
@@ -175,6 +178,19 @@ export class CourseDetailComponent implements OnInit {
           subComment.value = '';
         }
       });
+  }
+
+  openLoginDialog() {
+    const dialogRef = this.dialog.open(LoginDialogComponent, {
+      width: '50%',
+      maxWidth: '800px',
+      minWidth: '350px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result);
+    });
   }
 
   private getComment() {

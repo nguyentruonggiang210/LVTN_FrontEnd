@@ -14,6 +14,8 @@ import { CreateUpdateCourseComponent } from './management/create-update-course/c
 import { CourseDetailComponent } from './detail/course-detail/course-detail.component';
 import { PromotionManagementComponent } from './management/promotion-management/promotion-management.component';
 import { ShopComponent } from './management/shop/shop.component';
+import { PermissionComponent } from './components/permission/permission.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -39,6 +41,8 @@ const routes: Routes = [
   { path: 'management/product', component: ProductComponent },
   { path: 'management/shop', component: ShopComponent },
   // others
+  { path: 'denied', component: PermissionComponent },
+  { path: 'notfound', component: NotFoundComponent },
   { path: '**', component: HomeComponent }
 ];
 
