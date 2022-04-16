@@ -15,6 +15,7 @@ import { PaymentType } from 'src/app/enums/PaymentType';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/common/auth.service';
 import { CommonService } from 'src/app/services/common/common.service';
+import * as signalR from '@aspnet/signalr';
 
 const ProductString = "Product";
 const CourseString = "Course";
@@ -39,6 +40,7 @@ export class CartDialogComponent implements OnInit {
   paypalArray: PayPalItem[] = [];
   moneyCode = 'USD';
   snackBarTimeout: any;
+  private hubConnection: signalR.HubConnection;
 
   constructor(private cartService: CartService,
     private paymentService: PaymentService,
@@ -49,7 +51,7 @@ export class CartDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.signalRConnection();
     this.cartArray = this.cartService.getCart();
     console.log(this.cartArray);
 
@@ -156,6 +158,7 @@ export class CartDialogComponent implements OnInit {
           this.paymentService.uploadPayment(payment)
             .subscribe(x => {
               if (x) {
+                this.triggerNotify();
                 this.commonService.displaySnackBar(CartMessage, ActionString);
               }
             });
@@ -181,5 +184,22 @@ export class CartDialogComponent implements OnInit {
     this.productArray = [];
     this.courseArray = [];
     this.cartService.clearAll();
+  }
+
+  private signalRConnection() {
+    this.hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl(environment.signalConnection + 'notify', {
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets
+      }).build();
+
+    this.hubConnection.start()
+      .then(res => {
+        console.log(res);
+      });
+  }
+
+  private triggerNotify() {
+    this.hubConnection.invoke('GetNotification')
   }
 }

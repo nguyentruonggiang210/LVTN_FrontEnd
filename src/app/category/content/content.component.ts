@@ -21,7 +21,7 @@ const ActionString = "Close";
   styleUrls: ['./content.component.scss']
 })
 export class ContentComponent implements OnInit {
-  @Input() dataSource: OdataResponse<CategoryDto[]>;
+  @Input() dataSource?: OdataResponse<CategoryDto[]>;
 
   currentPageIndex: number = 1;
   dataType: number;
@@ -72,7 +72,7 @@ export class ContentComponent implements OnInit {
   getListPageIndex() {
     let pageIndexes: number[] = [];
 
-    for (let i = 0; i < (this.dataSource.count / pageSize); i++) {
+    for (let i = 0; i < (this.dataSource?.count / pageSize); i++) {
       pageIndexes.push(i + 1);
     }
 
@@ -85,8 +85,8 @@ export class ContentComponent implements OnInit {
 
   nextPage() {
     this.setCurrentPageIndex();
-    let value = parseInt(((this.dataSource.count / pageSize)).toString());
-    value += this.dataSource.count <= pageSize ? 0 : 1;
+    let value = parseInt(((this.dataSource?.count / pageSize)).toString());
+    value += this.dataSource?.count <= pageSize ? 0 : 1;
     if (this.currentPageIndex == value) {
       return;
     }
@@ -114,8 +114,8 @@ export class ContentComponent implements OnInit {
 
   lastPage() {
     debugger
-    let value = parseInt(((this.dataSource.count / pageSize)).toString());
-    value += this.dataSource.count <= pageSize ? 0 : 1;
+    let value = parseInt(((this.dataSource?.count / pageSize)).toString());
+    value += this.dataSource?.count <= pageSize ? 0 : 1;
 
     if (this.currentPageIndex == value) {
       return;

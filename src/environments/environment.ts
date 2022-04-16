@@ -4,8 +4,10 @@
 
 export const environment = {
   production: false,
+  lang: 'fitnessWebsite-lang',
   apiUrl: 'https://localhost:5001/api/',
   tokenName: 'fitnessToken',
+  notify: 'notifyNumber',
   googleClientId: '333934555231-3ri2pq81dnfvidel11ept1t9guchlonl.apps.googleusercontent.com',
   facebookClientId: '351753203524687',
   paypalClientId: 'AeiQS0YNiaIX8CLU0xpZkryxPZgdYc82ot4Auw0uTsS8SIXJg1BjgJGZnVzSHP8zZFzlDqMDqtTyIGGL',

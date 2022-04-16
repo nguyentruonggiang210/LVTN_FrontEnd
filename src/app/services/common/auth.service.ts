@@ -34,6 +34,7 @@ export class AuthService {
 
   public logOut() {
     this.commonSerivce.setLocalStorage(environment.tokenName, signOutVal);
+    this.signOutExternal();
     this.router.navigate(['/']);
   }
 

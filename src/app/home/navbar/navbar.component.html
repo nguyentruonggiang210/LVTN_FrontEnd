@@ -76,7 +76,11 @@
                 <mat-form-field class="col-md-8 m-0 position-relative">
                     <mat-label>{{ 'Search' | translate }}</mat-label>
                     <input id="input-container" [(ngModel)]="keyword" autocomplete="off" matInput placeholder="Enter."
-                        (keyup)="keyUpEvent($event)">
+                        (input)="keyUpEvent($event)">
+                    <button id="mic-voice" type="button" (click)="handlerVoiceSearch()" style="right: 30px;" class="my-search-icon"
+                        mat-icon-button color="primary" aria-label="Example icon button with a menu icon">
+                        <mat-icon>mic</mat-icon>
+                    </button>
                     <button type="button" (click)="searchValue()" class="my-search-icon" mat-icon-button color="primary"
                         aria-label="Example icon button with a menu icon">
                         <mat-icon>search</mat-icon>
@@ -104,23 +108,17 @@
                     </li>
 
                     <li class="nav-item me-3 me-lg-1">
-                        <a class="nav-link" [mdePopoverTriggerFor]="notifyPopover" mdePopoverTriggerOn="click"
-                            #popoverTrigger="mdePopoverTrigger">
+                        <a (click)="beltClick()" class="nav-link" [mdePopoverTriggerFor]="notifyPopover"
+                            mdePopoverTriggerOn="click" #popoverTrigger="mdePopoverTrigger">
                             <span><i class="fas fa-bell fa-lg"></i></span>
+                            <span *ngIf="notifyCount > 0"
+                                class="badge rounded-pill badge-notification bg-danger">!</span>
                         </a>
                         <mde-popover #notifyPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
                             <div class="scrollbar scrollbar-primary"
                                 style="width: 400px; max-width: 400px; min-width: 300px; min-height: 100px; max-height: 400px;">
                                 <div class="force-overflow">
-                                    <mat-list role="list">
-                                        <mat-list-item role="listitem">Item 1</mat-list-item>
-                                        <mat-list-item role="listitem">Item 2</mat-list-item>
-                                        <mat-list-item role="listitem">Item 3</mat-list-item>
-                                        <mat-list-item role="listitem">Item 1</mat-list-item>
-                                        <mat-list-item role="listitem">Item 2</mat-list-item>
-                                        <mat-list-item role="listitem">Item 3</mat-list-item>
-
-                                    </mat-list>
+                                    <app-notify></app-notify>
                                 </div>
                             </div>
                         </mde-popover>
@@ -136,7 +134,7 @@
                                 <div>
                                     <mat-list role="list">
                                         <mat-list-item role="listitem"> <a class="dropdown-item"
-                                                (click)="openLoginDialog()">User Information</a>
+                                                (click)="openUserDetail()">User Information</a>
                                         </mat-list-item>
                                         <mat-list-item role="listitem"> <a class="dropdown-item"
                                                 (click)="logOutEvent()">Logout</a></mat-list-item>

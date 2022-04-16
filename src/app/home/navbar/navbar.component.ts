@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { SearchDto } from 'src/app/models/SearchDto';
 import { CarouselService } from 'src/app/services/home/carousel.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -12,6 +12,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from 'src/app/services/home/cart.service';
 import { CartDialogComponent } from 'src/app/components/cart-dialog/cart-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environments/environment';
+import { SpeechRecognitionService } from 'src/app/services/common/speech-recognition.service';
 
 
 @Component({
@@ -21,10 +23,12 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class NavbarComponent implements OnInit {
   // variables
+  isRecording: boolean = false;
   itemCount: number = 0;
   isclicked: boolean = false;
   pid: 1;
   cartCount: number = 0;
+  notifyCount: number = 0;
   tokenString: string = this.commonService.getLocalStorage(this.commonService.tokenName);
   defaultSelect: number;
   searchForm: FormGroup;
@@ -53,7 +57,8 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     private activeRouter: ActivatedRoute,
     private cartService: CartService,
-    public translateService: TranslateService) {
+    public translateService: TranslateService,
+    private speechService: SpeechRecognitionService) {
     this.handlerParamForCategory();
     this.foucusOutEvent();
     this.searchForm = this.formBuilder.group({
@@ -63,10 +68,20 @@ export class NavbarComponent implements OnInit {
 
     var cartInterval = setInterval(() => {
       this.cartCount = this.cartService.getCart().length;
+      this.notifyCount = this.commonService.getLocalStorage(environment.notify);
     }, 300);
 
     translateService.addLangs(['vi', 'en']);
-    translateService.setDefaultLang('vi');
+
+    let lang = this.commonService.getLocalStorage(environment.lang);
+
+    if (lang == null || lang == undefined || lang == '') {
+      commonService.setLocalStorage(environment.lang, 'vi')
+      translateService.setDefaultLang('vi');
+    }
+    else {
+      translateService.setDefaultLang(lang);
+    }
   }
 
   ngOnInit(): void {
@@ -77,6 +92,7 @@ export class NavbarComponent implements OnInit {
 
   changeLanguage(lang: string) {
     this.translateService.use(lang);
+    this.commonService.setLocalStorage(environment.lang, lang);
   }
 
   handlerLanguageDisplay(language: string): string {
@@ -163,6 +179,10 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  openUserDetail() {
+    this.router.navigate(['detail', 'user']);
+  }
+
   openRegisterDialog(): void {
     const dialogRef = this.dialog.open(RegisterDialogComponent, {
       width: '50%',
@@ -191,6 +211,10 @@ export class NavbarComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('Cart dialog was closed');
     });
+  }
+
+  beltClick() {
+    this.commonService.setLocalStorage(environment.notify, 0)
   }
 
   searchValue() {
@@ -254,7 +278,33 @@ export class NavbarComponent implements OnInit {
         }
       });
     }
-
   }
+
+  handlerVoiceSearch() {
+    let element = document.getElementById('mic-voice');
+    if (!this.isRecording) {
+      this.keyword = '';
+      this.speechService.text = '';
+      element.style.backgroundColor = '#d9534f';
+      this.speechService.start();
+      this.isRecording = true;
+    }
+    else {
+      this.speechService.stop();
+      element.style.backgroundColor = 'transparent';
+      this.isRecording = false;
+      this.keyword = this.speechService.text;
+      if (this.keyword !== '' && this.keyword !== null && this.keyword !== undefined && this.keyword.trim().toLocaleLowerCase() !== 'undefined') {
+        // call api here
+        this.searchResult();
+
+        document.getElementById("search-result").style.display = "block";
+      }
+      else {
+        document.getElementById("search-result").style.display = "none";
+      }
+    }
+  }
+
 }
 

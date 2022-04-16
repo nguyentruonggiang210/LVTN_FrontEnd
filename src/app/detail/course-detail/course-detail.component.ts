@@ -25,6 +25,7 @@ import { CartService } from 'src/app/services/home/cart.service';
 import { PromotionService } from 'src/app/services/management/promotion.service';
 import { PaymentService } from 'src/app/services/payment/payment.service';
 import { environment } from 'src/environments/environment';
+import * as signalR from '@aspnet/signalr';
 
 @Component({
   selector: 'app-course-detail',
@@ -47,6 +48,7 @@ export class CourseDetailComponent implements OnInit {
   commentContent: string = null;
   promotionId?: number = null;
   isPromotionRemain: boolean = true;
+  private hubConnection: signalR.HubConnection;
 
   constructor(private detailService: DetailService,
     private router: ActivatedRoute,
@@ -299,6 +301,7 @@ export class CourseDetailComponent implements OnInit {
           this.paymentService.uploadPayment(payment)
             .subscribe(x => {
               if (x) {
+                this.triggerNotify();
                 this.commonService.displaySnackBar("Applied payment success", "Close")
               }
             });
@@ -332,5 +335,10 @@ export class CourseDetailComponent implements OnInit {
         }
       },
     };
+  }
+
+
+  private triggerNotify() {
+    this.hubConnection.invoke('GetNotification')
   }
 }

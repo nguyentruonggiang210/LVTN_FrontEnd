@@ -70,6 +70,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader'
 import { DragScrollModule } from 'ngx-drag-scroll';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MatTabsModule } from '@angular/material/tabs';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 // import { AgmCoreModule } from '@agm/core';
 
@@ -132,6 +133,7 @@ import { PromotionManagementComponent } from './management/promotion-management/
 import { ShopComponent } from './management/shop/shop.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PermissionComponent } from './components/permission/permission.component';
+import { NotifyComponent } from './components/notify/notify.component';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -232,7 +234,8 @@ const toolbarConfig: any = [
     PromotionManagementComponent,
     ShopComponent,
     NotFoundComponent,
-    PermissionComponent
+    PermissionComponent,
+    NotifyComponent
   ],
   imports: [
     BrowserModule,
@@ -314,7 +317,8 @@ const toolbarConfig: any = [
     }),
     DragScrollModule,
     NgSelectModule,
-    MatTabsModule
+    MatTabsModule,
+    FontAwesomeModule
     // AgmCoreModule.forRoot({
     //   apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     // })

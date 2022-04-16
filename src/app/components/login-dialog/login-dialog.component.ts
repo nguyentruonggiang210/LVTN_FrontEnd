@@ -67,6 +67,7 @@ export class LoginDialogComponent implements OnInit {
   }
 
   googleLogin() {
+    debugger
     this.authService.signInWithGoogle().then(res => {
       const user: SocialUser = { ...res };
 

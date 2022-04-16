@@ -28,6 +28,7 @@ import { ProductPromotionDto } from 'src/app/models/ProductPromotionDto';
 import { PromotionService } from 'src/app/services/management/promotion.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from 'src/app/components/login-dialog/login-dialog.component';
+import * as signalR from '@aspnet/signalr';
 
 const NewQuantity = 1;
 const CartMessage = "Add successfully";
@@ -59,6 +60,7 @@ export class ProductDetailComponent implements OnInit {
   promotionId?: number = null;
   originPrice: number;
   isPromotionRemain: boolean = true;
+  private hubConnection: signalR.HubConnection;
 
   constructor(private detailService: DetailService,
     private commonService: CommonService,
@@ -150,7 +152,6 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addToCart(id: string, image: string, price: number, name: string, cartType: CartType) {
-    debugger
     let model: CartDto = {
       id: Number(id),
       name: name,
@@ -337,6 +338,7 @@ export class ProductDetailComponent implements OnInit {
           this.paymentService.uploadPayment(payment)
             .subscribe(x => {
               if (x) {
+                this.triggerNotify();
                 this.commonService.displaySnackBar(CartMessage, ActionString);
               }
             });
@@ -387,6 +389,10 @@ export class ProductDetailComponent implements OnInit {
     array.push(item);
 
     return array;
+  }
+
+  private triggerNotify() {
+    this.hubConnection.invoke('GetNotification')
   }
 }
 
