@@ -77,8 +77,9 @@
                     <mat-label>{{ 'Search' | translate }}</mat-label>
                     <input id="input-container" [(ngModel)]="keyword" autocomplete="off" matInput placeholder="Enter."
                         (input)="keyUpEvent($event)">
-                    <button id="mic-voice" type="button" (click)="handlerVoiceSearch()" style="right: 30px;" class="my-search-icon"
-                        mat-icon-button color="primary" aria-label="Example icon button with a menu icon">
+                    <button id="mic-voice" type="button" (click)="handlerVoiceSearch()" style="right: 30px;"
+                        class="my-search-icon" mat-icon-button color="primary"
+                        aria-label="Example icon button with a menu icon">
                         <mat-icon>mic</mat-icon>
                     </button>
                     <button type="button" (click)="searchValue()" class="my-search-icon" mat-icon-button color="primary"

@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { from } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -9,7 +11,8 @@ export class CommonService {
   timeOutEvent: any;
   public tokenName: string = environment.tokenName;
 
-  constructor(private snackBar: MatSnackBar) { }
+  constructor(private snackBar: MatSnackBar,
+    private httpClient: HttpClient) { }
 
   spinner = document.getElementsByClassName("my-spinner");
   container = document.getElementsByClassName("my-spinner-container");
@@ -42,5 +45,18 @@ export class CommonService {
     this.timeOutEvent = setTimeout(() => {
       this.snackBar.dismiss();
     }, timeOut);
+  }
+
+  public getMoney() {
+
+    let lang = this.getLocalStorage(environment.lang);
+    return this.httpClient.get(environment.apiUrl + 'Hub/currency');
+  }
+
+  private httpGet(theUrl) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", 'https://www.dongabank.com.vn/exchange/export', false); // false for synchronous request
+    xmlHttp.send(null);
+    return xmlHttp.responseText;
   }
 }

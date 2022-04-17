@@ -84,12 +84,18 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
+   ngOnInit(): void {
+    this.commonService.getMoney()
+      .subscribe(x => {
+        let obj = JSON.parse(x.toString());
+        console.log(obj.ExrateList);
+        
+        
+      });
     this.setDefaultType();
     this.searchTypeClassify();
     this.setDefaultSearchValue();
   }
-
   changeLanguage(lang: string) {
     this.translateService.use(lang);
     this.commonService.setLocalStorage(environment.lang, lang);

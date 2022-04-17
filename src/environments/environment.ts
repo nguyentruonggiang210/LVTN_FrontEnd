@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  vndCurrency: 'vndCurrency',
   lang: 'fitnessWebsite-lang',
   apiUrl: 'https://localhost:5001/api/',
   tokenName: 'fitnessToken',
