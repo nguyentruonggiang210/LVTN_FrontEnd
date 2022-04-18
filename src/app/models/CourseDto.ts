@@ -10,6 +10,7 @@ export interface CourseDto {
     quantity: number,
     price: number,
     teacherName: string,
+    teacherUserName: string,
     bodyFocus: string,
     tag: string,
     isOutOfStock?: boolean,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { VgApiService } from '@videogular/ngx-videogular/core';
 import { ICreateOrderRequest, IPayPalConfig } from 'ngx-paypal';
 import { LoginDialogComponent } from 'src/app/components/login-dialog/login-dialog.component';
@@ -52,6 +52,7 @@ export class CourseDetailComponent implements OnInit {
 
   constructor(private detailService: DetailService,
     private router: ActivatedRoute,
+    private route: Router,
     private cartService: CartService,
     private authService: AuthService,
     private commonService: CommonService,
@@ -193,6 +194,10 @@ export class CourseDetailComponent implements OnInit {
       console.log('The dialog was closed');
       console.log(result);
     });
+  }
+
+  trainerDetail(userName: string) {
+    this.route.navigate(['detail', 'user', userName]);
   }
 
   private getComment() {

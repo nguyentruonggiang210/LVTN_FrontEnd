@@ -232,6 +232,10 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
+  shopDetail(shopId: number) {
+    this.route.navigate(['detail', 'shop', shopId])
+  }
+
   openLoginDialog() {
     const dialogRef = this.dialog.open(LoginDialogComponent, {
       width: '50%',

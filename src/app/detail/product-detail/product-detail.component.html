@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col col-md-12">
                     <h2 class="mb-3">{{ dataSource?.productName }}</h2>
-                    <p>Price: $ {{ displayPrice() }}</p>
+                    <p>Price: {{ displayPrice() }}</p>
                     <p>Languages: {{ dataSource?.languageSupport || '-' }}</p>
                     <p>Difficulty: {{ dataSource?.difficulty || '-' }}/5</p>
                     <p>Weight: {{ dataSource?.weight || '-' }} Kilograms</p>
@@ -53,7 +53,7 @@
         <h1 class="mt-4">Description</h1>
         <div class="row mb-3">
             <div class="col col-md-9">
-                <div style="font-size: 20px; width: fit-content; border-radius: 8px;"
+                <div (click)="shopDetail(dataSource?.shopId)" style="font-size: 20px; width: fit-content; border-radius: 8px;"
                     class="bg-light p-3 text-center my-avatar-btn">
                     <img alt="avatar" style="border-radius: 15px; display: inline-block;" width="30" height="30"
                         [src]="dataSource?.shopImage" />

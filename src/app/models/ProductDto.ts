@@ -12,6 +12,7 @@ export interface ProductDto {
     bodyFocus: string,
     tag: string,
     shopName: string,
+    shopId?: number,
     facebook: string,
     isOutOfStock?: boolean,
     youtube: string,

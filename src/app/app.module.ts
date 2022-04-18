@@ -134,6 +134,7 @@ import { ShopComponent } from './management/shop/shop.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PermissionComponent } from './components/permission/permission.component';
 import { NotifyComponent } from './components/notify/notify.component';
+import { ShopDetailComponent } from './detail/shop-detail/shop-detail.component';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -235,7 +236,8 @@ const toolbarConfig: any = [
     ShopComponent,
     NotFoundComponent,
     PermissionComponent,
-    NotifyComponent
+    NotifyComponent,
+    ShopDetailComponent
   ],
   imports: [
     BrowserModule,

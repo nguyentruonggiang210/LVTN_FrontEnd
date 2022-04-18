@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ShopDto } from 'src/app/models/admin/ShopDto';
 import { BaseResponse } from 'src/app/models/BaseResponse';
+import { ShopDetailDto } from 'src/app/models/ShopDetailDto';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../common/auth.service';
 
@@ -12,6 +13,10 @@ export class ShopManagementService {
 
   constructor(private httpClient: HttpClient,
     private authService: AuthService) { }
+
+  public getShopDetailInfo(shopId: number) {
+    return this.httpClient.get<BaseResponse<ShopDetailDto>>(environment.apiUrl + "Shop/detail/" + shopId);
+  }
 
   public getShopInfo() {
     return this.httpClient.get<BaseResponse<ShopDto>>(environment.apiUrl + "Shop/" + this.authService.getUserId());
@@ -33,7 +38,7 @@ export class ShopManagementService {
     return this.httpClient.put<BaseResponse<boolean>>(environment.apiUrl + 'Shop/image/' + shopId, formData);
   }
 
-  checkShopNameExist(name: string) {
+  public checkShopNameExist(name: string) {
     return this.httpClient.get<BaseResponse<boolean>>(environment.apiUrl + 'Shop/name-exist/' + name);
   }
 }

@@ -16,6 +16,8 @@ import { PromotionManagementComponent } from './management/promotion-management/
 import { ShopComponent } from './management/shop/shop.component';
 import { PermissionComponent } from './components/permission/permission.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { DetailMainComponent } from './detail/detail-main/detail-main.component';
+import { ShopDetailComponent } from './detail/shop-detail/shop-detail.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,7 +28,9 @@ const routes: Routes = [
 
   // { path: 'detail/:type/:id', component: DetailMainComponent },
   { path: 'detail/user', component: UserDetailComponent },
+  { path: 'detail/user/:userName', component: DetailMainComponent },
   { path: 'detail/product/:id', component: ProductDetailComponent },
+  { path: 'detail/shop/:shopId', component: ShopDetailComponent },
   { path: 'detail/course/:id', component: CourseDetailComponent },
   // admin
   { path: 'management/user', component: UserComponent },

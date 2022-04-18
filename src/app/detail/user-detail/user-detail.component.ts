@@ -69,14 +69,9 @@ export class UserDetailComponent implements OnInit {
     this.userDetailService.updateUserInf(model)
       .subscribe(x => {
         if (x && x.body == true) {
-          clearTimeout(this.snackBarTimeout);
-          this.snackBar.open(DialogMessage, ActionString);
-          this.snackBarTimeout = setTimeout(() => {
-            this.snackBar.dismiss();
-          }, 3000);
+          this.commonService.displaySnackBar(DialogMessage, ActionString);
         }
       });
-    console.log(this.userForm.get('description').value);
   }
 
   upload(target: any) {
