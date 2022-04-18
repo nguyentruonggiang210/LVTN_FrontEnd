@@ -297,8 +297,8 @@ export class NavbarComponent implements OnInit {
       this.speechService.stop();
       element.style.backgroundColor = 'transparent';
       this.isRecording = false;
-      this.keyword = this.speechService.text;
-      if (this.keyword !== '' && this.keyword !== null && this.keyword !== undefined && this.keyword.trim().toLocaleLowerCase() !== 'undefined') {
+      if (this.speechService.text !== '' && this.speechService.text !== null && this.speechService.text !== undefined && this.speechService.text.trim().toLocaleLowerCase() !== 'undefined') {
+        this.keyword = this.speechService.text;
         // call api here
         this.searchResult();
 

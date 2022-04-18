@@ -135,6 +135,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PermissionComponent } from './components/permission/permission.component';
 import { NotifyComponent } from './components/notify/notify.component';
 import { ShopDetailComponent } from './detail/shop-detail/shop-detail.component';
+import { VideoCallComponent } from './detail/video-call/video-call.component';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -237,7 +238,8 @@ const toolbarConfig: any = [
     NotFoundComponent,
     PermissionComponent,
     NotifyComponent,
-    ShopDetailComponent
+    ShopDetailComponent,
+    VideoCallComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,50 @@
+<div id="app container-fluid p-2 screen-component">
+    <h1 class="text-center mt-4">{{ "MeetingRoomTile" | translate }}</h1>
+    <!-- <div class="text-center">
+        <form *ngIf="!conversation" [formGroup]="conversationFormGroup" (ngSubmit)="getOrcreateConversation()">
+            <mat-form-field>
+                <mat-label>{{ 'EnterClassCode' | translate }}</mat-label>
+                <input style="width: 50vw" type="text" matInput formControlName="name">
+            </mat-form-field>&nbsp;
+            <button mat-raised-button color="primary" type="submit" [disabled]="!conversationFormGroup.valid"
+                title="Get Or Create Conversation">{{ 'EnterClassCode' | translate }}</button>
+        </form>
+    </div> -->
+    <div class="p-3 row">
+        <div class="col-md-6" style="overflow: hidden;">
+            <video #remoteVideo [autoplay]="true" [muted]="true"></video>
+        </div>
+        <div class="col-md-6" class="fullscreen">
+            <video #localVideo [autoplay]="true" [muted]="true"></video>
+        </div>
+    </div>
+    <button mat-raised-button (click)="startSharing()">Start Sharing</button>
+    <button mat-raised-button (click)="stopSharing()">Stop Sharing</button>
+    <button mat-raised-button (click)="call()">Call</button>
+    <button mat-raised-button (click)="hangUp()">Hang up</button>
+    <button mat-raised-button (click)="test()">Test</button>
+    <div class="col-md-4">
+        <h2 class="text-center">Chat</h2>
+        <!-- <div>
+            <div class="example-container mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="content" sticky>
+                        <th mat-header-cell *matHeaderCellDef> Chat </th>
+                        <td mat-cell *matCellDef="let element"> {{element.content}} </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+            <div style="position: relative;">
+                <button style="position:absolute; right: 15px; top: 13px;" mat-icon-button color="primary"
+                    aria-label="Example icon button with a home icon">
+                    <mat-icon>send</mat-icon>
+                </button>
+                <mat-form-field class="text-full-width" appearance="fill">
+                    <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+                </mat-form-field>
+            </div>
+        </div> -->
+    </div>
+</div>

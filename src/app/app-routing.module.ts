@@ -18,6 +18,7 @@ import { PermissionComponent } from './components/permission/permission.componen
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { DetailMainComponent } from './detail/detail-main/detail-main.component';
 import { ShopDetailComponent } from './detail/shop-detail/shop-detail.component';
+import { VideoCallComponent } from './detail/video-call/video-call.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'detail/product/:id', component: ProductDetailComponent },
   { path: 'detail/shop/:shopId', component: ShopDetailComponent },
   { path: 'detail/course/:id', component: CourseDetailComponent },
+  { path: 'videocall', component: VideoCallComponent },
   // admin
   { path: 'management/user', component: UserComponent },
   { path: 'management/user/update/:userName', component: CreateUpdateUserComponent },
