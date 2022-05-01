@@ -69,7 +69,7 @@ export class VideoCallComponent implements AfterViewInit {
     try {
       const offer: RTCSessionDescriptionInit = await this.peerConnection.createOffer(offerOptions);
       await this.peerConnection.setLocalDescription(offer);
-      this.sendMessage({ type: 'offer', data: offer })
+      this.sendMessage({ type: 'offer', data: offer });
     }
     catch (err) {
       this.handlerGetUserMediaErr(err);
@@ -84,7 +84,10 @@ export class VideoCallComponent implements AfterViewInit {
     this.peerConnection = new RTCPeerConnection({
       iceServers: [
         {
-          urls: ['stun:stun.cablenet-as.net:3478']
+          urls: [
+            'stun:stun1.l.google.com:19302',
+            'stun:stun2.l.google.com:19302',
+          ],
         }
       ]
     });
@@ -107,7 +110,9 @@ export class VideoCallComponent implements AfterViewInit {
       case 'PermissionDeniedErr':
         break;
       default:
-        this.commonService.displaySnackBar('Error while opening camera', 'Close');
+        console.log(err);
+
+        // this.commonService.displaySnackBar('Error while opening camera', 'Close');
         break;
     }
 
@@ -208,6 +213,7 @@ export class VideoCallComponent implements AfterViewInit {
 
   // receivable event handler asp net core
   private handlerOfferMessage(msg: RTCSessionDescriptionInit) {
+
     if (!this.peerConnection) {
       this.createPeerConnection();
     }
@@ -220,8 +226,8 @@ export class VideoCallComponent implements AfterViewInit {
       .then(() => {
         this.localVideo.nativeElement.srcObject = this.localStream;
 
-        this.localStream.getTracks()
-          .forEach(track => this.peerConnection.addTrack(track, this.localStream));
+        // this.localStream.getTracks()
+        //   .forEach(track => this.peerConnection.addTrack(track, this.localStream));
       })
       .then(() => {
         return this.peerConnection.createAnswer();

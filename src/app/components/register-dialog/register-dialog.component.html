@@ -1,24 +1,24 @@
-<h1 mat-dialog-title class="text-center">REGISTER</h1>
+<h1 mat-dialog-title class="text-center">{{ 'REGISTER' | translate }}</h1>
 <div class="text-center">
   <img src="../../../assets/logo.png" style="margin: 10px auto;" height="120" alt="" loading="lazy" />
 </div>
 <div mat-dialog-content class="mb-2">
   <form [formGroup]="registerFormGroup" (ngSubmit)="registerEvent()" class="text-center">
     <mat-form-field appearance="fill" class="w-100">
-      <mat-label class="myform-label">User Name</mat-label>
+      <mat-label class="myform-label">{{ 'UserName' | translate }}</mat-label>
       <input (change)="validateUserName()" class="myform-input" matInput formControlName="userName"
         autocomplete="new-password">
-      <mat-hint align="start">Required</mat-hint>
+      <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="fill" class="w-100 mt-4">
-      <mat-label class="myform-label">Name</mat-label>
+      <mat-label class="myform-label">{{ 'Name' | translate }}</mat-label>
       <input class="myform-input" matInput formControlName="name">
-      <mat-hint align="start">Required</mat-hint>
+      <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
     </mat-form-field>
     <mat-form-field appearance="fill" class="w-100 mt-4">
-      <mat-label class="myform-label">Password</mat-label>
+      <mat-label class="myform-label">{{ 'Password' | translate }}</mat-label>
       <input autocomplete="new-password" class="myform-input" matInput type="password" formControlName="password">
-      <mat-hint align="start">Required</mat-hint>
+      <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
       <i class="fa-solid fa-circle-question fa-2x myform-tooltip" matTooltipClass="my-tooltip" matTooltip="Password must:
       Has at least 1 digit.
       Has at least 1 upper.
@@ -26,9 +26,9 @@
       Length must be more than 8."></i>
     </mat-form-field>
     <mat-form-field appearance="fill" class="w-100 mt-4">
-      <mat-label class="myform-label">Confirm Password</mat-label>
+      <mat-label class="myform-label">{{ 'ConfirmPassword' | translate }}</mat-label>
       <input class="myform-input" matInput type="password" formControlName="confirmPassword">
-      <mat-hint align="start">Required</mat-hint>
+      <mat-hint align="start">{{ 'Password' | translate }}</mat-hint>
       <i class="fa-solid fa-circle-question fa-2x myform-tooltip" matTooltipClass="my-tooltip" matTooltip="Confirm Password must:
       Has at least 1 digit.
       Has at least 1 upper.
@@ -37,8 +37,8 @@
       Confirm passsword must equal password."></i>
     </mat-form-field>
     <button mat-stroked-button style="width: 120px;" color="primary" class="mt-4 mr-2 myform-button p-2" type="submit"
-      [disabled]="!registerFormGroup.valid">Register</button>
+      [disabled]="!registerFormGroup.valid">{{ "Register" | translate }}</button>
     <button mat-stroked-button style="width: 120px;" color="accent" class="mt-4 ml-2 myform-button p-2" type="button"
-      (click)="closeDialogEvent()">Close</button>
+      (click)="closeDialogEvent()">{{ "Close" | translate }}</button>
   </form>
 </div>

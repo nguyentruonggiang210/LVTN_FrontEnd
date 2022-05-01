@@ -1,6 +1,6 @@
 <div *ngIf="productArray != [] && productArray.length != 0 && productArray !== undefined">
-    <h1 mat-dialog-title class="text-center">Cart</h1>
-    <h2 class="text-left ml-2">Product</h2>
+    <h1 mat-dialog-title class="text-center">{{ 'Cart' | translate }}</h1>
+    <h2 class="text-left ml-2">{{ 'Product' | translate }}</h2>
     <mat-list role="list">
         <mat-list-item role="listitem" *ngFor="let item of productArray" class="p-2" style="height: 100px;">
             <img src="{{ item.image || defaultProductImage }}" matListAvatar alt="image"
@@ -29,7 +29,7 @@
 </div>
 
 <div class="mt-4" *ngIf="courseArray != [] && courseArray.length != 0 && courseArray !== undefined">
-    <h2 class="text-left ml-2">Course</h2>
+    <h2 class="text-left ml-2">{{ 'Course' | translate }}</h2>
     <mat-list role="list">
         <mat-list-item role="listitem" *ngFor="let item of courseArray" class="p-2" style="height: 100px;">
             <img src="{{ item.image || defaultCourseImage }}" matListAvatar alt="image"
@@ -41,7 +41,7 @@
             </div>
             <div style="float: right;">
                 <button mat-raised-button (click)="minusCart(item)" class="numberpicker" color="warn"
-                    style="height: 40px; width: 120px;">Remove</button>
+                    style="height: 40px; width: 120px;">{{ 'Remove' | translate }}</button>
             </div>
             <div matLine class="m-2">
                 <span>

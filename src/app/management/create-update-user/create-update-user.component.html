@@ -42,7 +42,7 @@
                     </mat-form-field>
                     <mat-form-field class="w-100 mt-4">
                         <mat-label>{{ 'Roles' | translate }}</mat-label>
-                        <mat-select formControlName="role" multiple>
+                        <mat-select class="myform-input" formControlName="role" multiple>
                             <mat-option *ngFor="let role of roleList" [value]="role">{{ role }}</mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -73,7 +73,7 @@
                     </mat-form-field>
                     <br>
                     <button mat-stroked-button style="width: 120px;" color="primary" class="mt-4 mr-2 myform-button p-2"
-                        type="submit" [disabled]="!managementFormGroup.valid">{{ buttonTitle }}</button>
+                        type="submit" [disabled]="!managementFormGroup.valid">{{ buttonTitle | translate }}</button>
                     <button mat-stroked-button style="width: 120px;" color="accent" class="mt-4 ml-2 myform-button p-2"
                         type="button" (click)="backEvent()">{{ 'Back' | translate }}</button>
                 </form>
@@ -83,10 +83,10 @@
                     class="my-user-image" />
                 <div *ngIf="userName != null" class="mt-3">
                     <button (click)="uploadFile.click()" class="m-1" mat-raised-button color="primary"
-                        style="width: 120px">Choose Image</button>
+                        style="width: 120px">{{ 'Choose Image' | translate }}</button>
                     <input #uploadFile (change)="upload($event.target)" type='file' style="display:none" />
                     <button *ngIf="imageFile != null && userName != null" (click)="uploadImage()" class="m-1" mat-raised-button
-                        color="primary" style="width: 120px">Upload Image</button>
+                        color="primary" style="width: 120px">{{ 'Upload Image' | translate}}</button>
                 </div>
             </div>
         </div>

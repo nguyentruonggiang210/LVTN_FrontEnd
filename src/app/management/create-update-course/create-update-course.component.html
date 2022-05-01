@@ -4,36 +4,36 @@
         <form class="text-center" [formGroup]="managementFormGroup">
             <div class="row">
                 <div class="col-md-4">
-                    <h2 class="text-left">Course Information</h2>
+                    <h2 class="text-left">{{ 'Course Information' | translate }}</h2>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Course Name</mat-label>
+                        <mat-label class="myform-label">{{ 'Course Name' | translate }}</mat-label>
                         <input class="myform-input" matInput formControlName="courseName" autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Start Date</mat-label>
+                        <mat-label class="myform-label">{{ 'Start Date' | translate }}</mat-label>
                         <input type="date" class="myform-input" matInput formControlName="startDate" autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">End Date</mat-label>
+                        <mat-label class="myform-label">{{ 'End Date' | translate }}</mat-label>
                         <input type="date" class="myform-input" matInput formControlName="endDate" autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Teacher Name (Nick Name)</mat-label>
+                        <mat-label class="myform-label">{{ 'Teacher Name' | translate }} (Nick Name)</mat-label>
                         <input type="text" class="myform-input" matInput formControlName="teacherName"
                             autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Member</mat-label>
+                        <mat-label class="myform-label">{{ 'Member' | translate }}</mat-label>
                         <input type="number" max="1000" min="1" min class="myform-input" matInput
                             formControlName="member" autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Course Type</mat-label>
+                        <mat-label class="myform-label">{{ 'Course Type' | translate }}</mat-label>
                         <mat-select class="myform-input" formControlName="courseType">
                             <mat-option *ngFor="let ct of courseTypeList" [value]="ct.typeId">{{ ct.description }}
                             </mat-option>
@@ -41,27 +41,27 @@
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Difficulty</mat-label>
+                        <mat-label class="myform-label">{{ 'Difficulty' | translate }}</mat-label>
                         <mat-select class="myform-input" formControlName="difficulty">
                             <mat-option *ngFor="let d of difficultyList" [value]="d">{{ d }}</mat-option>
                         </mat-select>
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Price</mat-label>
+                        <mat-label class="myform-label">{{ 'Price' | translate }}</mat-label>
                         <input type="number" class="myform-input" [readonly]="dataSource != null" matInput
                             formControlName="price" autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Body Focus</mat-label>
+                        <mat-label class="myform-label">{{ 'Body Focus' | translate }}</mat-label>
                         <mat-select class="myform-input" formControlName="bodyFocus" multiple>
                             <mat-option *ngFor="let b of bodyFocusList" [value]="b">{{ b }}</mat-option>
                         </mat-select>
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Tag</mat-label>
+                        <mat-label class="myform-label">{{ 'Tag' |  translate }}</mat-label>
                         <mat-select class="myform-input" formControlName="tag" multiple>
                             <mat-option *ngFor="let t of tagList" [value]="t">{{ t }}</mat-option>
                         </mat-select>
@@ -70,51 +70,49 @@
                 </div>
                 <div class="col-md-4">
                     <div style="overflow: hidden;">
-                        <h2 class="text-left">Course Image</h2>
+                        <h2 class="text-left">{{ 'Course Image' | translate }}</h2>
                         <ngb-carousel *ngIf="carouselImages != null && carouselImages != [] && imageFiles == null">
                             <ng-template ngbSlide *ngFor="let img of carouselImages">
                                 <div class="picsum-img-wrapper">
                                     <img style="max-height: 450px;" [src]="img.biggerImageUrl" [alt]="img.imageId">
                                     <button class="text-center" mat-flat-button color="accent"
                                         (click)="deleteImage(img.publicId)"
-                                        style="width: 70px;position: absolute; bottom: 10px; left: 10px;z-index: 100;">Delete</button>
+                                        style="width: 70px;position: absolute; bottom: 10px; left: 10px;z-index: 100;">{{ 'Delete' | translate}}</button>
                                 </div>
                             </ng-template>
                         </ngb-carousel>
                         <img *ngIf="imageUrl != null" style="max-height: 450px" [src]="imageUrl" />
                         <div class="mt-1">
-                            <button mat-raised-button color="primary" (click)="uploadFile.click()">Choose Image</button>
+                            <button mat-raised-button color="primary" (click)="uploadFile.click()">{{ 'Choose Image' | translate }}</button>
                             <input accept="image/png, image/gif, image/jpeg" multiple #uploadFile
                                 (change)="upload($event.target)" type='file' style="display:none" />
                             <button *ngIf="imageFiles != null && courseId != null" mat-raised-button class="ml-1"
-                                color="primary" (click)="uploadImage()">Upload Image</button>
+                                color="primary" (click)="uploadImage()">{{ 'Upload Image' | translate }}</button>
                         </div>
                     </div>
                     <div class="mt-2">
-                        <h2 class="text-left">Course Video</h2>
+                        <h2 class="text-left">{{ 'Course Video' | translate }}</h2>
                         <a (click)="openVideoDialog()" *ngIf="videoFiles != null || videoUrl != null"><i
-                                class="fa-solid fa-arrow-right"></i> Watch video.........</a>
+                                class="fa-solid fa-arrow-right"></i> {{ 'Watch video.........' | translate }}</a>
                         <div class="mt-1">
-                            <button mat-raised-button color="primary" (click)="uploadVideoFile.click()">Choose
-                                Video</button>
+                            <button mat-raised-button color="primary" (click)="uploadVideoFile.click()">{{ 'Choose Video' | translate }}</button>
                             <input accept="video/mp4,video/x-m4v,video/*" #uploadVideoFile
                                 (change)="uploadVideo($event.target)" type='file' style="display:none" />
                             <button *ngIf="videoFiles != null && courseId != null" mat-raised-button class="ml-1"
-                                color="primary" (click)="uploadVideoToServer()">Upload Video</button>
+                                color="primary" (click)="uploadVideoToServer()">{{ 'Upload Video' | translate }}</button>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <h2 class="text-left">Rooms <button mat-raised-button class="ml-2" color="primary"
-                            [disabled]="courseId == null" (click)="openCreateOrUpdateRoomDialog()">Create
-                            Room</button></h2>
+                    <h2 class="text-left">{{ 'Rooms' | translate }} <button mat-raised-button class="ml-2" color="primary"
+                            [disabled]="courseId == null" (click)="openCreateOrUpdateRoomDialog()">{{ 'Create Room' | translate}}</button></h2>
                     <ul *ngIf="roomDtos != null" class="list-group text-left">
                         <li *ngFor="let room of roomDtos" class="list-group-item">
                             <div class="row">
                                 <div class="col-9">
-                                    <h4>Start Time: {{ room.startTime | datetime: 'dd-MM-yyyy-hh-mi-ss' }}</h4>
-                                    <h4>End Time: {{ room.endTime | datetime: 'dd-MM-yyyy hh-mi-ss' }}</h4>
-                                    <p>Max Member: {{ room.maxMember }} - Current member: {{ room.currentUser }}</p>
+                                    <h4>{{ 'Start Time' | translate }}: {{ room.startTime | datetime: 'dd-MM-yyyy-hh-mi-ss' }}</h4>
+                                    <h4>{{ 'End Time' | translate }}: {{ room.endTime | datetime: 'dd-MM-yyyy hh-mi-ss' }}</h4>
+                                    <p>{{ 'Max Member' | translate }}: {{ room.maxMember }} - {{ 'Current member' | translate }}: {{ room.currentUser }}</p>
                                 </div>
                                 <div class="col-3">
                                     <div class="example-button-container">
@@ -141,7 +139,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <h2 class="text-left bmd-label-floating">Description</h2>
+                        <h2 class="text-left bmd-label-floating">{{ 'Description' | translate }}</h2>
                         <!-- Rich textbox here -->
                         <quill-editor formControlName="description"></quill-editor>
                         <!-- End rich textboxt here -->
@@ -149,7 +147,7 @@
                 </div>
                 <div class="text-center">
                     <button mat-stroked-button style="width: 120px;" color="primary" class="mt-4 mr-2 myform-button p-2"
-                        type="submit" [disabled]="!managementFormGroup.valid" (click)="submitEvent()">{{ buttonTitle
+                        type="submit" [disabled]="!managementFormGroup.valid" (click)="submitEvent()">{{ buttonTitle | translate
                         }}</button>
                     <button mat-stroked-button style="width: 120px;" color="accent" class="mt-4 ml-2 myform-button p-2"
                         type="button" (click)="backEvent()">{{ 'Back' | translate }}</button>

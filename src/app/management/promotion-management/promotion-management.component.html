@@ -7,12 +7,11 @@
                     <div class="card-header card-header-danger">
                         <div class="row">
                             <div class="col col-md-2">
-                                <h2 class="card-title" style="float: left;">Promotion Management
+                                <h2 class="card-title" style="float: left;">{{ 'Promotion Management' | translate }}
                                 </h2>
                             </div>
                             <div class="col col-md-4">
-                                <button mat-raised-button color="primary" (click)="triggerCreate()">Create
-                                    promotion</button>
+                                <button mat-raised-button color="primary" (click)="triggerCreate()">{{ 'Create promotion' | translate }}</button>
                             </div>
                         </div>
                     </div>
@@ -23,25 +22,25 @@
                                     <table class="table">
                                         <thead class="text-primary">
                                             <th>
-                                                Promotion Name
+                                                {{ 'Promotion Name' | translate }}
                                             </th>
                                             <th>
-                                                Promotion Unit
+                                                {{ 'Promotion Unit' | translate }}
                                             </th>
                                             <th>
-                                                Applid Date
+                                                {{ 'Applid Date' | translate}}
                                             </th>
                                             <th>
-                                                Due Date
+                                                {{ 'Due Date' | translate }}
                                             </th>
                                             <th>
-                                                Quantity
+                                                {{ 'Quantity' | translate }}
                                             </th>
                                             <th>
-                                                Remain
+                                                {{ 'Remain' | translate}}
                                             </th>
                                             <th>
-                                                Amount
+                                                {{ 'Amount' | translate}}
                                             </th>
                                         </thead>
                                         <tbody>
@@ -75,51 +74,50 @@
                             </div>
                             <div class="col-md-4">
                                 <form [formGroup]="promotionFormGroup" class="text-center" (submit)="submitForm()">
-                                    <h2 class="text-center">Promotion Information</h2>
+                                    <h2 class="text-center">{{ 'Promotion Information' | translate}}</h2>
                                     <mat-form-field appearance="fill" class="w-100">
-                                        <mat-label class="myform-label">Name</mat-label>
+                                        <mat-label class="myform-label">{{ 'Promotion Name' | translate }}</mat-label>
                                         <input class="myform-input" matInput formControlName="promotionName">
-                                        <mat-hint align="start">Required</mat-hint>
+                                        <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                                     </mat-form-field>
                                     <mat-form-field appearance="fill" class="w-100">
-                                        <mat-label class="myform-label">Quantity</mat-label>
+                                        <mat-label class="myform-label">{{ 'Quantity' | translate }}</mat-label>
                                         <input type='number' min="1" class="myform-input" matInput
                                             formControlName="quantity">
-                                        <mat-hint align="start">Required</mat-hint>
+                                        <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                                     </mat-form-field>
                                     <mat-form-field appearance="fill" class="w-100">
-                                        <mat-label class="myform-label">Unit</mat-label>
+                                        <mat-label class="myform-label">{{ 'Promotion Unit' | translate }}</mat-label>
                                         <mat-select class="myform-input" formControlName="unit">
                                             <mat-option *ngFor="let u of unitList" [value]="u.id">
                                                 {{ u.value }}
                                             </mat-option>
                                         </mat-select>
-                                        <mat-hint align="start">Required</mat-hint>
+                                        <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                                     </mat-form-field>
                                     <mat-form-field appearance="fill" class="w-100">
-                                        <mat-label class="myform-label">Amount</mat-label>
+                                        <mat-label class="myform-label">{{ 'Amount' | translate }}</mat-label>
                                         <input type="number" class="myform-input" matInput formControlName="amount">
-                                        <mat-hint align="start">Required</mat-hint>
                                     </mat-form-field>
                                     <mat-form-field appearance="fill" class="w-100">
-                                        <mat-label class="myform-label">Applied Date</mat-label>
+                                        <mat-label class="myform-label">{{ 'Applid Date' | translate }}</mat-label>
                                         <input type="datetime-local" class="myform-input" matInput
                                             formControlName="appliedDate">
-                                        <mat-hint align="start">Required</mat-hint>
+                                        <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                                     </mat-form-field>
                                     <mat-form-field appearance="fill" class="w-100">
-                                        <mat-label class="myform-label">Due Date</mat-label>
+                                        <mat-label class="myform-label">{{ 'Due Date' | translate }}</mat-label>
                                         <input type="datetime-local" class="myform-input" matInput
                                             formControlName="dueDate">
-                                        <mat-hint align="start">Required</mat-hint>
+                                        <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                                     </mat-form-field>
                                     <mat-form-field appearance="fill" class="w-100">
-                                        <mat-label>Description</mat-label>
+                                        <mat-label>{{ 'Description' | translate }}</mat-label>
                                         <textarea matInput formControlName="description"></textarea>
                                     </mat-form-field>
                                     <mat-form-field *ngIf="!isCreate && productPromotionList.length > 0"
                                         class="w-100 mt-4">
-                                        <mat-label class="myform-label">Products</mat-label>
+                                        <mat-label class="myform-label">{{ 'Product' | translate }}</mat-label>
                                         <mat-select class="myform-input" formControlName="productPromotion" multiple>
                                             <mat-option *ngFor="let p of productPromotionList" [value]="p.objectId">{{
                                                 p.name }}</mat-option>
@@ -127,17 +125,17 @@
                                     </mat-form-field>
                                     <mat-form-field *ngIf="!isCreate && coursePromotionList.length > 0"
                                         class="w-100 mt-4">
-                                        <mat-label class="myform-label">Courses</mat-label>
+                                        <mat-label class="myform-label">{{ 'Course' | translate }}</mat-label>
                                         <mat-select class="myform-input" formControlName="coursePromotion" multiple>
                                             <mat-option *ngFor="let p of coursePromotionList" [value]="p.objectId">{{
                                                 p.name }}</mat-option>
                                         </mat-select>
                                     </mat-form-field>
-                                    <button mat-stroked-button style="width: 120px;" color="primary"
-                                        class="mt-4 mr-2 myform-button p-2" type="submit">{{ buttonTitle }}</button>
+                                    <button mat-stroked-button style="width: 150px;" color="primary"
+                                        class="mt-4 mr-2 myform-button p-2 myform-button" type="submit">{{ buttonTitle }}</button>
                                     <button *ngIf="!isCreate && currentPromotionId != null" mat-stroked-button
                                         style="width: 120px;" color="accent" class="mt-4 mr-2 myform-button p-2"
-                                        (click)="deletePromotion()" type="button">Delete</button>
+                                        (click)="deletePromotion()" type="button">{{ 'Delete' | translate}}</button>
                                 </form>
                             </div>
                         </div>

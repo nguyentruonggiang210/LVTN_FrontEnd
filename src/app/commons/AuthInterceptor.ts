@@ -13,7 +13,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let token = this.commonService.getLocalStorage(environment.tokenName);
-
+    console.log(token);
+    
     if (!token || token == null || token == undefined) {
       return next.handle(req);
     }

@@ -59,7 +59,7 @@ export class PromotionManagementComponent implements OnInit {
   ];
   // variables
   currentPromotionId?: number;
-  buttonTitle = "Create";
+  buttonTitle = "Tạo mới";
   dataSource: PromotionDto[] = [];
   coursePromotionList: DisplayPromotion[] = [];
   productPromotionList: DisplayPromotion[] = [];
@@ -79,7 +79,7 @@ export class PromotionManagementComponent implements OnInit {
   changeFormValue(id: number) {
     this.currentPromotionId = id;
     this.isCreate = false;
-    this.buttonTitle = "Update";
+    this.buttonTitle = "Cập nhật";
     let currentValue = this.dataSource.find(x => x.promotionId == id);
     this.promotionFormGroup.setValue({
       promotionName: currentValue.promotionName,
@@ -171,6 +171,7 @@ export class PromotionManagementComponent implements OnInit {
   }
 
   private getPromotionList() {
+    
     this.commonService.displaySpinner();
 
     this.promotionService.getPromotions()

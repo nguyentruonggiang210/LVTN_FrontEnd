@@ -9,10 +9,9 @@
             </mat-card-header>
             <img mat-card-image style="width:100%; height:360px;" [src]="item?.image" [alt]="item?.name">
             <mat-card-actions>
-                <button mat-button (click)="navigateToDetail(item.id)">DETAIL</button>
+                <button mat-button (click)="navigateToDetail(item.id)">{{ 'DETAIL' | translate }}</button>
                 <button mat-button
-                    (click)="addToCart(item?.id, item?.image, item?.price, item?.name, dataType === productCart ? productCart : courseCart)">ADD
-                    TO CART</button>
+                    (click)="addToCart(item?.id, item?.image, item?.price, item?.name, dataType === productCart ? productCart : courseCart)">{{ 'ADDTOCART' | translate }}</button>
             </mat-card-actions>
         </mat-card>
     </div>

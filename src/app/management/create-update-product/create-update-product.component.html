@@ -4,112 +4,112 @@
         <form class="text-center" [formGroup]="managementFormGroup">
             <div class="row">
                 <div class="col-md-4">
-                    <h2 class="text-left">Product Information</h2>
+                    <h2 class="text-left">{{ 'Product Information' | translate }}</h2>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Product Name</mat-label>
+                        <mat-label class="myform-label">{{ 'Product Name' | translate }}</mat-label>
                         <input (change)="validateProductName()" class="myform-input" matInput
                             formControlName="productName" autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Weight (Kg)</mat-label>
+                        <mat-label class="myform-label">{{ 'Weight' | translate }} (Kg)</mat-label>
                         <input type="number" class="myform-input" matInput formControlName="weight" autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">User Max Weight (Kg)</mat-label>
+                        <mat-label class="myform-label">{{ 'User Max Weight' | translate }} (Kg)</mat-label>
                         <input type="number" class="myform-input" matInput formControlName="userMaxWeight"
                             autocomplete="off">
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Difficulty</mat-label>
+                        <mat-label class="myform-label">{{ 'Difficulty' | translate }}</mat-label>
                         <mat-select class="myform-input" formControlName="difficulty">
                             <mat-option *ngFor="let d of difficultyList" [value]="d">{{ d }}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Language Support</mat-label>
+                        <mat-label class="myform-label">{{ "Language Support" | translate }}</mat-label>
                         <input type="number" max="100" class="myform-input" matInput formControlName="languageSupport"
                             autocomplete="off">
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Price</mat-label>
+                        <mat-label class="myform-label">{{ 'Price' | translate }}</mat-label>
                         <input type="number" class="myform-input" matInput formControlName="price" autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Body Focus</mat-label>
+                        <mat-label class="myform-label">{{ 'Body Focus' | translate }}</mat-label>
                         <mat-select class="myform-input" formControlName="bodyFocus" multiple>
                             <mat-option *ngFor="let b of bodyFocusList" [value]="b">{{ b }}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Tag</mat-label>
+                        <mat-label class="myform-label">{{ 'Tag' | translate }}</mat-label>
                         <mat-select class="myform-input" formControlName="tag" multiple>
                             <mat-option *ngFor="let t of tagList" [value]="t">{{ t }}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                    <h2 class="text-left">Product Import</h2>
+                    <h2 class="text-left">{{ 'Import Information' | translate }}</h2>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Import Date</mat-label>
+                        <mat-label class="myform-label">{{ "Import Date" | translate }}</mat-label>
                         <input type="date" class="myform-input" matInput formControlName="importDate"
                             autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Import Original</mat-label>
+                        <mat-label class="myform-label">{{ 'Import Original' | translate }}</mat-label>
                         <input class="myform-input" matInput formControlName="importOriginal" autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Import Quantity</mat-label>
+                        <mat-label class="myform-label">{{ 'Import Quantity' | translate }}</mat-label>
                         <input type="number" class="myform-input" matInput formControlName="importQuantity"
                             autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Import Price</mat-label>
+                        <mat-label class="myform-label">{{ 'Import Price' | translate }}</mat-label>
                         <input type="number" class="myform-input" matInput formControlName="importPrice"
                             autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Country</mat-label>
+                        <mat-label class="myform-label">{{ 'Country' | translate }}</mat-label>
                         <input type="text" class="myform-input" matInput formControlName="country" autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Company</mat-label>
+                        <mat-label class="myform-label">{{ 'Company' | translate }}</mat-label>
                         <input type="text" class="myform-input" matInput formControlName="company" autocomplete="off">
                         <mat-hint align="start"></mat-hint>
                     </mat-form-field>
                 </div>
                 <div class="col-md-4">
-                    <h2 class="text-left">Product Image</h2>
+                    <h2 class="text-left">{{ 'Product Image' | translate }}</h2>
                     <ngb-carousel *ngIf="carouselImages != null && imageFiles == null">
                         <ng-template ngbSlide *ngFor="let img of carouselImages">
                             <div class="picsum-img-wrapper">
                                 <img style="max-height: 450px" [src]="img.biggerImageUrl" [alt]="img.imageId">
                                 <button class="text-center" mat-flat-button color="accent"
                                     (click)="deleteImage(img.publicId)"
-                                    style="width: 70px;position: absolute; bottom: 10px; left: 10px;z-index: 100;">Delete</button>
+                                    style="width: 70px;position: absolute; bottom: 10px; left: 10px;z-index: 100;">{{ "Delete" | translate }}</button>
                             </div>
                         </ng-template>
                     </ngb-carousel>
                     <img *ngIf="imageUrl != null" style="max-height: 450px" [src]="imageUrl" />
                     <div class="mt-1">
-                        <button mat-raised-button color="primary" (click)="uploadFile.click()">Choose Image</button>
+                        <button mat-raised-button color="primary" (click)="uploadFile.click()">{{ 'Choose Image' | translate }}</button>
                         <input accept="image/png, image/gif, image/jpeg" multiple #uploadFile
                             (change)="upload($event.target)" type='file' style="display:none" />
                         <button *ngIf="imageFiles != null && productId != null" mat-raised-button class="ml-1"
-                            color="primary" (click)="uploadImage()">Upload Image</button>
+                            color="primary" (click)="uploadImage()">{{ 'Upload Image' | translate }}</button>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <h2 class="text-left bmd-label-floating">Description</h2>
+                        <h2 class="text-left bmd-label-floating">{{ 'Description' | translate }}</h2>
                         <!-- Rich textbox here -->
                         <quill-editor formControlName="description"></quill-editor>
                         <!-- End rich textboxt here -->
@@ -117,7 +117,7 @@
                 </div>
                 <div class="text-center">
                     <button mat-stroked-button style="width: 120px;" color="primary" class="mt-4 mr-2 myform-button p-2"
-                        type="submit" [disabled]="!managementFormGroup.valid" (click)="submitEvent()">{{ buttonTitle
+                        type="submit" [disabled]="!managementFormGroup.valid" (click)="submitEvent()">{{ buttonTitle | translate
                         }}</button>
                     <button mat-stroked-button style="width: 120px;" color="accent" class="mt-4 ml-2 myform-button p-2"
                         type="button" (click)="backEvent()">{{ 'Back' | translate }}</button>
