@@ -8,6 +8,7 @@ import { RoomValidateDto } from 'src/app/models/RoomValidateDto';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonService } from 'src/app/services/common/common.service';
 import { AuthService } from 'src/app/services/common/auth.service';
+import * as signalR from '@aspnet/signalr';
 
 @Component({
   selector: 'app-meeting-room',
@@ -32,6 +33,7 @@ export class MeetingRoomComponent implements OnInit {
     'content',
   ];
   dataSource = ELEMENT_DATA;
+  private hubConnection: signalR.HubConnection;
 
   constructor(private fb: FormBuilder,
     private signalService: SignalrService,
@@ -54,18 +56,19 @@ export class MeetingRoomComponent implements OnInit {
 
   getOrcreateConversation() {
     // validate room number
-    this.validateRoom();
-    if (!this.validateResponse.isValid) {
-      this.snackBar.open('Room code is invalid', 'Close');
-      return;
-    }
+    this.validateRoom().subscribe(x => {
+      if (!x.body.isValid) {
+        this.snackBar.open('Room code is invalid', 'Close');
+        return;
+      }
 
-    if (!this.validateResponse.isStarted) {
-      this.snackBar.open('Waiting for host', 'Close');
-      return;
-    }
+      this.signalRConnection();
 
+      this.handleStreaming();
+    });
+  }
 
+  private handleStreaming() {
     var localStream = null;
 
     //==============================
@@ -154,15 +157,34 @@ export class MeetingRoomComponent implements OnInit {
     });
   }
 
-
-  async validateRoom() {
+  private validateRoom() {
     let token = this.commonService.getLocalStorage(environment.tokenName);
     let decodeToken = this.authService.getDecodedAccessToken(token)
     let userid = decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
 
     let room = this.conversationFormGroup.value['name'];
-    let result = await this.videoService.validateCourse(Number(room), userid).toPromise();
-    this.validateResponse = result.body;
+    return this.videoService.validateCourse(Number(room), userid);
+  }
+
+  private signalRConnection() {
+    this.hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl(environment.signalConnection + 'videocall', {
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets
+      }).build();
+
+    this.hubConnection.start()
+      .then(res => {
+        console.log(res);
+      });
+      
+    this.hubConnection.on('receiveChat', (message, name, timeSpan) => {
+      
+    });
+  }
+
+  private sendMessage(){
+
   }
 }
 
