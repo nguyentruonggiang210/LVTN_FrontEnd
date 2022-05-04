@@ -125,25 +125,14 @@
                         </mde-popover>
                     </li>
                     <li class="nav-item dropdown my-nav-item">
-                        <a class="nav-link" [mdePopoverTriggerFor]="userPopover" mdePopoverTriggerOn="click"
-                            #popoverTrigger="mdePopoverTrigger">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span><i class="fas fa-users fa-lg"></i></span>
                         </a>
-                        <mde-popover #userPopover="mdePopover" [mdePopoverOverlapTrigger]="false">
-                            <div class="scrollbar scrollbar-primary"
-                                style="width: 200px; max-width: 400px; max-height: 220px; height: 100px;">
-                                <div>
-                                    <mat-list role="list">
-                                        <mat-list-item role="listitem"> <a class="dropdown-item"
-                                                (click)="openUserDetail()">User Information</a>
-                                        </mat-list-item>
-                                        <mat-list-item role="listitem"> <a class="dropdown-item"
-                                                (click)="logOutEvent()">Logout</a></mat-list-item>
-                                    </mat-list>
-                                </div>
-                            </div>
-                        </mde-popover>
-
+                        <div style="right: 20px;" class="dropdown-menu" #selectedLang aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" (click)="openUserDetail()">Account</a>
+                            <a class="dropdown-item" (click)="logOutEvent()">Logout</a>
+                        </div>
                     </li>
                 </ul>
             </div>
