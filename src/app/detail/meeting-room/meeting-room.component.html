@@ -12,34 +12,47 @@
     </div>
     <div class="p-3 row" *ngIf="conversation">
         <div class="col-md-8" style="overflow: hidden;">
-            <div *ngIf="!validateResponse.isHost" id="remote-container" class="fullscreen">
+            <div style="width: 100%; height: 100%" *ngIf="validateResponse.isHost; else elseBlock">
+                <div id="local-container" class="fullscreen" [ngClass]="{'over':remotesCounter > 0}">
+                    <video #localVideo autoplay playsinline></video>
+                </div>
+                <div id="remote-container" class="smallscreen">
+                </div>
             </div>
-            <div id="local-container" class="fullscreen" [ngClass]="{'over':remotesCounter > 0}">
-                <video #localVideo autoplay playsinline></video>
-            </div>
+            <ng-template #elseBlock>
+                <div id="remote-container" class="fullscreen-guest">
+                </div>
+                <div id="local-container" class="smallscreen-guest" [ngClass]="{'over':remotesCounter > 0}">
+                    <video #localVideo autoplay playsinline style="height: 150px;"></video>
+                </div>
+            </ng-template>
         </div>
         <div class="col-md-4">
-            <h2 class="text-center">Chat</h2>
+            <h2 class="text-center">{{ 'Chat' | translate }}</h2>
             <div>
                 <div class="example-container mat-elevation-z8">
-                    <table mat-table [dataSource]="dataSource">
-
+                    <table mat-table [dataSource]="groupChatData">
                         <!-- Name Column -->
                         <ng-container matColumnDef="content" sticky>
                             <th mat-header-cell *matHeaderCellDef> Chat </th>
-                            <td mat-cell *matCellDef="let element"> {{element.content}} </td>
+                            <td mat-cell *matCellDef="let element">
+                                {{element.name}} - {{element.createDate | datetime:'dd-MM-yy'}}
+                                <br>
+                                {{element.message}}
+                            </td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
                 </div>
                 <div style="position: relative;">
-                    <button style="position:absolute; right: 15px; top: 13px;" mat-icon-button color="primary"
+                    <button class="my-button" (click)="chat()"
+                        style="position:absolute; right: 15px; top: 13px; z-index: 100;" mat-icon-button color="primary"
                         aria-label="Example icon button with a home icon">
                         <mat-icon>send</mat-icon>
                     </button>
                     <mat-form-field class="text-full-width" appearance="fill">
-                        <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+                        <textarea [(ngModel)]="chatContent" matInput></textarea>
                     </mat-form-field>
                 </div>
             </div>

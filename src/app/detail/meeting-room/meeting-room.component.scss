@@ -1,7 +1,40 @@
 .fullscreen {
-    width: auto;
-    height: 90vh;
+    width: 100%;
+    height: auto;
+    min-width: 80%;
 
+}
+
+.smallscreen {
+    margin-left: 25px;
+    width: 200px !important;
+    height: 150px !important;
+    position: relative;
+
+    display: flex; // And you will probably need this too.
+    flex-direction: row;
+    overflow: hidden;
+
+    video {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+
+        align-self: center;
+    }
+}
+
+.fullscreen-guest>video {
+    width: 100% !important;
+}
+
+.smallscreen-guest {
+    width: 200px;
+}
+
+.my-button:hover {
+    z-index: 100;
+    cursor: pointer;
 }
 
 // .over {
@@ -20,15 +53,17 @@
 // }
 
 .example-container {
-    height: 75vh;
+    height: auto;
     width: 100%;
     max-width: 100%;
     overflow: auto;
+    max-height: 795px;
 }
 
 table {
     width: 100%;
-    height: 100%;
+    height: auto;
+    max-height: 800px;
 }
 
 td.mat-column-star {

@@ -9,6 +9,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonService } from 'src/app/services/common/common.service';
 import { AuthService } from 'src/app/services/common/auth.service';
 import * as signalR from '@aspnet/signalr';
+import { UserEnterRequest } from 'src/app/models/hubs/UserEnterRequest';
+import { GroupChatDto } from 'src/app/models/hubs/GroupChatDto';
+import { SendChatMessageDto } from 'src/app/models/hubs/SendChatMessageDto';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-meeting-room',
@@ -18,13 +22,15 @@ import * as signalR from '@aspnet/signalr';
 export class MeetingRoomComponent implements OnInit {
 
   @ViewChild("localVideo") videoRef: ElementRef;
-
+  @ViewChild("myTable") table: ElementRef;
+  groupChatData: GroupChatDto[] = [];
   validateResponse: RoomValidateDto = {
     isValid: false,
     isHost: false,
     isStarted: false
   };
-
+  roomId?: number;
+  chatContent: string;
   conversationFormGroup = this.fb.group({
     name: this.fb.control('', [Validators.required])
   });
@@ -32,19 +38,29 @@ export class MeetingRoomComponent implements OnInit {
   displayedColumns = [
     'content',
   ];
-  dataSource = ELEMENT_DATA;
   private hubConnection: signalR.HubConnection;
 
   constructor(private fb: FormBuilder,
-    private signalService: SignalrService,
     private videoService: VideoService,
     private snackBar: MatSnackBar,
     private commonService: CommonService,
     private authService: AuthService) {
   }
-  ngOnInit(): void {
+  ngOnInit(): void { }
 
-    this.signalService.startConnect();
+  chat() {
+    if (this.chatContent == null || this.chatContent == '') {
+      return;
+    }
+
+    let model: SendChatMessageDto = {
+      chatContent: this.chatContent,
+      userId: this.authService.getUserId(),
+      roomId: this.roomId
+    };
+    this.hubConnection.invoke('Chat', JSON.stringify(model));
+
+    this.chatContent = '';
   }
 
   get conversationNameFc(): FormControl {
@@ -55,16 +71,20 @@ export class MeetingRoomComponent implements OnInit {
   remotesCounter = 0;
 
   getOrcreateConversation() {
+    this.commonService.displaySpinner();
     // validate room number
-    this.validateRoom().subscribe(x => {
+    this.validateRoom().subscribe(async x => {
       if (!x.body.isValid) {
         this.snackBar.open('Room code is invalid', 'Close');
         return;
       }
-
-      this.signalRConnection();
-
+      this.validateResponse = x.body;
+      this.getChatList();
+      await this.signalRConnection();
       this.handleStreaming();
+      this.commonService.distroySpinner();
+      await this.onConnectHandler(this.authService.getUserId(), this.roomId);
+      console.log(x.body);
     });
   }
 
@@ -111,6 +131,8 @@ export class MeetingRoomComponent implements OnInit {
       conversation.on('streamAdded', (stream: Stream) => {
         this.remotesCounter += 1;
         stream.addInDiv('remote-container', 'remote-media-' + stream.streamId, {}, false);
+        let video = document.getElementById('remote-media-' + stream.streamId);
+        video.setAttribute('width', '100%');
       }).on('streamRemoved', (stream: any) => {
         this.remotesCounter -= 1;
         stream.removeFromDiv('remote-container', 'remote-media-' + stream.streamId);
@@ -163,47 +185,67 @@ export class MeetingRoomComponent implements OnInit {
     let userid = decodeToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
 
     let room = this.conversationFormGroup.value['name'];
+    this.roomId = room;
     return this.videoService.validateCourse(Number(room), userid);
   }
 
-  private signalRConnection() {
+  private async signalRConnection() {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(environment.signalConnection + 'videocall', {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets
       }).build();
 
-    this.hubConnection.start()
+    await this.hubConnection.start()
       .then(res => {
         console.log(res);
       });
-      
-    this.hubConnection.on('receiveChat', (message, name, timeSpan) => {
-      
+
+    this.hubConnection.on('UserConnectHandler', (name) => {
+      this.commonService.displaySnackBar(`${name} joined`, 'Close');
+    });
+
+    this.hubConnection.on('userJoined', (name) => {
+      this.commonService.displaySnackBar(`${name} joined`, 'Close');
+    });
+
+    this.hubConnection.on('userOut', (name) => {
+      this.commonService.displaySnackBar(`${name} leaved`, 'Close');
+    });
+
+    this.hubConnection.on('receiveChat', (msg, name, time) => {
+      debugger
+      let model: GroupChatDto = {
+        message: msg,
+        name: name,
+        createDate: time
+      }
+
+      this.groupChatData.push(model);
+
+      this.groupChatData = [...this.groupChatData];
+      this.autoScroll();
     });
   }
 
-  private sendMessage(){
+  private async onConnectHandler(userId: string, roomId: number) {
+    let model: UserEnterRequest = {
+      userId: userId,
+      roomId: roomId
+    }
+    await this.hubConnection.invoke('UserConnectHandler', JSON.stringify(model));
+  }
 
+  private autoScroll() {
+    this.table.nativeElement.scrollBy(0, this.table.nativeElement.height);
+  }
+
+  private async getChatList() {
+    this.videoService.getChatList(this.roomId).subscribe(x => {
+      if (x) {
+        this.groupChatData = x.body;
+        this.autoScroll();
+      }
+    });
   }
 }
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
