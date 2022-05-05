@@ -7,31 +7,37 @@ z
                     <div class="card-header card-header-danger">
                         <div class="row">
                             <div class="col col-md-2">
-                                <h2 class="card-title" style="float: left;">Product Management</h2>
+                                <h2 class="card-title" style="float: left;">{{ 'Product Management' | translate }}</h2>
                             </div>
                             <div class="col col-md-1">
                                 <button [disabled]="!isShopExist" (click)="navigateProductCreate()"
-                                    class="ml-3 mr-3 user-button" mat-stroked-button color="primary">Create
-                                    product</button>
+                                    class="ml-3 mr-3 user-button" mat-stroked-button color="primary">{{ 'Create product'
+                                    | translate }}</button>
                             </div>
                             <div class="col col-md-1">
                                 <button (click)="printEvent()" class="ml-3 mr-3 user-button" mat-stroked-button
-                                    color="primary">Export
-                                    Pdf</button>
+                                    color="primary">{{ 'Export Pdf' | translate }}</button>
                             </div>
                             <div class="col col-md-1">
                                 <button (click)="basicCollapse.toggle()" class="ml-3 mr-3 user-button"
                                     aria-expanded="false" aria-controls="adminCollapse" mat-stroked-button
-                                    color="primary">Filter</button>
+                                    color="primary">{{ 'Filter' | translate }}</button>
                             </div>
                             <div class="col col-md-1">
-                                <button (click)="confirmDelete(null)" class="ml-3 mr-3 user-button" aria-expanded="false"
-                                    aria-controls="adminCollapse" mat-stroked-button color="warn">Delete All</button>
+                                <button (click)="confirmDelete(null)" class="ml-3 mr-3 user-button"
+                                    aria-expanded="false" aria-controls="adminCollapse" mat-stroked-button
+                                    color="warn">{{ 'Delete All' | translate }}</button>
                             </div>
                             <div class="col col-md-1">
                                 <button (click)="navigateShop()" class="ml-3 mr-3 user-button" aria-expanded="false"
-                                    aria-controls="adminCollapse" mat-stroked-button color="primary">{{ shopTitle
+                                    aria-controls="adminCollapse" mat-stroked-button color="primary">{{ shopTitle |
+                                    translate
                                     }}</button>
+                            </div>
+                            <div class="col col-md-1">
+                                <button (click)="navigateShop()" class="ml-3 mr-3 user-button" aria-expanded="false"
+                                    aria-controls="adminCollapse" mat-stroked-button color="primary">{{ 'History' |
+                                    translate }}</button>
                             </div>
                         </div>
 
@@ -41,19 +47,19 @@ z
                             <div class="row">
                                 <div class="col col-md-3">
                                     <mat-form-field class="user-form-field" appearance="fill">
-                                        <mat-label>Product Name</mat-label>
+                                        <mat-label>{{ 'Product Name' | translate }}</mat-label>
                                         <input matInput type="text" [(ngModel)]="productName">
                                     </mat-form-field>
                                 </div>
                                 <div class="col col-md-3">
                                     <mat-form-field class="user-form-field" appearance="fill">
-                                        <mat-label>Date Import</mat-label>
+                                        <mat-label>{{ 'Import Date' | translate }}</mat-label>
                                         <input type="date" matInput [(ngModel)]="dateImport">
                                     </mat-form-field>
                                 </div>
                                 <div class="col col-md-3">
                                     <mat-form-field class="user-form-field" appearance="fill">
-                                        <mat-label>Sort by</mat-label>
+                                        <mat-label>{{ 'Sort by' | translate }}</mat-label>
                                         <mat-select [(ngModel)]="sortBy">
                                             <mat-option *ngFor="let s of sortByList" [value]="s.value">
                                                 {{ s.display }}
@@ -63,7 +69,7 @@ z
                                 </div>
                                 <div class="col col-md-3">
                                     <button mat-raised-button style="height: 52px; width: 100px;" color="primary"
-                                        (click)="applyFilter()">Apply</button>
+                                        (click)="applyFilter()">{{ 'Apply' | translate }}</button>
                                 </div>
                             </div>
                         </div>
@@ -74,25 +80,25 @@ z
                                         Id
                                     </th>
                                     <th>
-                                        Product Name
+                                        {{ 'Product Name' | translate }}
                                     </th>
                                     <th>
-                                        Date Import
+                                        {{ 'Import Date' | translate }}
                                     </th>
                                     <th>
-                                        Price
+                                        {{ 'Price' | translate }}
                                     </th>
                                     <th>
-                                        Bought
+                                        {{ 'Bought Product' | translate}}
                                     </th>
                                     <th>
-                                        Remain Quantity
+                                        {{ 'Remain Quantity' | translate }}
                                     </th>
                                     <th>
-                                        Status
+                                        {{ 'Status' | translate }}
                                     </th>
                                     <th style="width: 10%;">
-                                        Action
+                                        {{ 'Action' | translate }}
                                     </th>
                                 </thead>
                                 <tbody>
@@ -110,7 +116,7 @@ z
                                             {{ product.importDate | datetime: 'dd-MM-yyyy' }}
                                         </td>
                                         <td>
-                                            {{ product.price | money }} $
+                                            {{ product.price | money }}
                                         </td>
                                         <td>
                                             {{ product.bought }}
@@ -119,17 +125,19 @@ z
                                             {{ product.remainQuantity }}
                                         </td>
                                         <td [ngClass]="handlerStatus(product.status)">
-                                            {{ product.status ? "Activated" : "Disabled" }}
+                                            {{ product.status ? "Activated" : "Disabled" | translate }}
                                         </td>
                                         <td>
                                             <div class="row text-center">
                                                 <div class="col col-lg-6">
                                                     <button class="ml-auto mr-auto" mat-stroked-button color="primary"
-                                                        (click)="navigateUpdatePage(product.productId)">Update</button>
+                                                        (click)="navigateUpdatePage(product.productId)">{{ 'Update' |
+                                                        translate }}</button>
                                                 </div>
                                                 <div class="col col-lg-6">
                                                     <button class="ml-auto mr-auto" mat-stroked-button color="accent"
-                                                        (click)="confirmDelete(product.productId)">Delete</button>
+                                                        (click)="confirmDelete(product.productId)">{{ 'Delete' |
+                                                        translate }}</button>
                                                 </div>
                                             </div>
                                         </td>
@@ -147,15 +155,103 @@ z
                 </div>
             </div>
         </div>
+        <!-- Bill -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <div class="row">
+                            <div class="col col-md-2">
+                                <h2 class="card-title" style="float: left;">{{ 'Bill' | translate }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body mb-3">
+                        <div class="mt-3 mb-3" id="adminCollapse" mdbCollapse #basicCollapse="mdbCollapse">
+                            <div class="row">
+                                <div class="col col-md-3">
+                                    <mat-form-field class="user-form-field" appearance="fill">
+                                        <mat-label>{{ 'Product Name' | translate }}</mat-label>
+                                        <input matInput type="text" [(ngModel)]="productName">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col col-md-3">
+                                    <mat-form-field class="user-form-field" appearance="fill">
+                                        <mat-label>{{ 'Import Date' | translate }}</mat-label>
+                                        <input type="date" matInput [(ngModel)]="dateImport">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col col-md-3">
+                                    <mat-form-field class="user-form-field" appearance="fill">
+                                        <mat-label>{{ 'Sort by' | translate }}</mat-label>
+                                        <mat-select [(ngModel)]="sortBy">
+                                            <mat-option *ngFor="let s of sortByList" [value]="s.value">
+                                                {{ s.display }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col col-md-3">
+                                    <button mat-raised-button style="height: 52px; width: 100px;" color="primary"
+                                        (click)="applyFilter()">{{ 'Apply' | translate }}</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        Bill Id
+                                    </th>
+                                    <th>
+                                        {{ 'Total Amount' | translate }}
+                                    </th>
+                                    <th>
+                                        {{ 'Create Date' | translate }}
+                                    </th>
+                                    <th>
+                                        {{ 'By' | translate }}
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let bill of billDataSource">
+                                        <ng-template #tolTemplate>
+                                            <img id="tool-tip" src="https://placehold.jp/200x200.png" />
+                                        </ng-template>
+                                        <td>
+                                            {{ bill.billId }}
+                                        </td>
+                                        <td>
+                                            {{ bill.totalAmount | money }}
+                                        </td>
+                                        <td>
+                                            {{ bill.createDate | datetime: 'dd-MM-yyyy' }}
+                                        </td>
+                                        <td>
+                                            {{ bill.by }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="text-left mt-3">
+                        <mat-paginator #paginator [length]="billTotal" [pageSize]="take" [pageSizeOptions]="[10]"
+                            aria-label="Select page" (page)="getBillPaginatorData($event)">
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Chart -->
         <div id="print-section">
-            <h2 class="col-12">Statistics</h2>
+            <h2 class="col-12">{{ 'Statistics' | translate }}</h2>
             <div class="row">
                 <!-- Bar Chart -->
                 <div class="col-lg-4">
                     <div class="card card-chart">
                         <div class="card-header">
-                            <h4 class="card-title">Turn over</h4>
+                            <h4 class="card-title">{{ 'Turn over' | translate }}</h4>
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
@@ -172,7 +268,7 @@ z
                 <div class="col-lg-4">
                     <div class="card card-chart">
                         <div class="card-header">
-                            <h4 class="card-title">Bought Product</h4>
+                            <h4 class="card-title">{{ 'Bought Product' | translate }}</h4>
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
@@ -189,7 +285,7 @@ z
                 <div class="col-lg-4">
                     <div class="card card-chart">
                         <div class="card-header">
-                            <h4 class="card-title">Import Product</h4>
+                            <h4 class="card-title">{{ 'Import Product' | translate }}</h4>
                         </div>
                         <div class="card-body">
                             <div class="chart-area">

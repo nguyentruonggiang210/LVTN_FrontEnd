@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BillDto } from 'src/app/models/admin/BillDto';
 import { CourseManagementDto } from 'src/app/models/admin/CourseManagementDto';
 import { CourseTypeDto } from 'src/app/models/admin/CourseTypeDto';
 import { CreateCourseManagementDto } from 'src/app/models/admin/CreateCourseManagementDto';
@@ -94,6 +95,10 @@ export class CourseManagementService {
 
   checkCourseExist(courseName: string) {
     return this.httpClient.get<BaseResponse<boolean>>(environment.apiUrl + 'CourseManagement/name-exist/' + courseName);
+  }
+
+  getBills() {
+    return this.httpClient.get<BaseResponse<BillDto[]>>(environment.apiUrl + 'CourseManagement/bill/' + this.authService.getUserName());
   }
 
   deleteOneCourse(courseId: number) {

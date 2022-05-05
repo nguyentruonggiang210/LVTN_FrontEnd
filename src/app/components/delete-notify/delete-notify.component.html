@@ -1,12 +1,12 @@
-<h1 mat-dialog-title class="text-center text-danger">Delete Confirmation</h1>
+<h1 mat-dialog-title class="text-center text-danger">{{ 'Delete Confirmation' | translate }}</h1>
 <h3 class="text-center">{{ data }}!</h3>
 <div class="row text-center mt-3">
     <div class="col col-md-6">
         <button class="ml-auto mr-auto" mat-stroked-button color="accent"
-            (click)="closeDialogEvent(true)">Delete</button>
+            (click)="closeDialogEvent(true)">{{ 'Delete' | translate }}</button>
     </div>
     <div class="col col-md-6">
         <button (click)="closeDialogEvent(false)" class="ml-auto mr-auto" mat-stroked-button
-            color="primary">Cancel</button>
+            color="primary">{{ 'Cancel' | translate }}</button>
     </div>
 </div>

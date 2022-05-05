@@ -11,6 +11,7 @@ import { CourseManagementDto } from 'src/app/models/admin/CourseManagementDto';
 import { CourseManagementService } from 'src/app/services/management/course-management.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { AuthService } from 'src/app/services/common/auth.service';
+import { BillDto } from 'src/app/models/admin/BillDto';
 
 const blankSpace = ' ';
 const contentDelete = "Are you sure to delete course ";
@@ -84,9 +85,13 @@ export class TrainerComponent implements OnInit {
   ];
 
   total: number;
+  billTotal: number;
+  billDataSource: BillDto[] = [];
+  originalBillDataSource: BillDto[] = [];
   dataSource: CourseManagementDto[] = [];
   skip: number = 0;
   take: number = 10;
+  billSkip: number = 0;
 
   constructor(private router: Router,
     public dialog: MatDialog,
@@ -185,6 +190,11 @@ export class TrainerComponent implements OnInit {
     this.getCourseList();
   }
 
+  getBillPaginatorData(event?: PageEvent) {
+    this.billSkip = event.pageIndex * this.take;
+    this.billDataSource = this.originalBillDataSource.slice(this.billSkip, this.take + this.billSkip);
+  }
+
   applyFilter() {
     let filter = this.courseNameQuery();
     filter += this.trainerNameQuery();
@@ -270,6 +280,14 @@ export class TrainerComponent implements OnInit {
   }
 
   private getInitStatistic() {
+    this.courseManagementService.getBills()
+      .subscribe(x => {
+        if (x) {
+          this.originalBillDataSource = x.body;
+          this.billDataSource = x.body.slice(this.billSkip, this.take);
+          this.billTotal = x.body.length;
+        }
+      })
     this.courseManagementService.getBoughtCourseByMonth()
       .subscribe(x => {
         let dataArray = x.body.map(x => x.number);

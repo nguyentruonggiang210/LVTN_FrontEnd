@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BillDto } from 'src/app/models/admin/BillDto';
 import { CreateProductManagementDto } from 'src/app/models/admin/CreateProductManagementDto';
 import { StatisticUserDto } from 'src/app/models/admin/StatisticUserDto';
 import { BaseResponse } from 'src/app/models/BaseResponse';
@@ -60,6 +61,10 @@ export class ProductManagementService {
 
   getProductTurnOverByMonth() {
     return this.httpClient.get<BaseResponse<StatisticUserDto[]>>(environment.apiUrl + 'ProductManagement/turnover-by-month/' + this.authService.getUserName());
+  }
+
+  getBills() {
+    return this.httpClient.get<BaseResponse<BillDto[]>>(environment.apiUrl + 'ProductManagement/bill/' + this.authService.getUserName());
   }
 
   checkProductExist(productName: string) {

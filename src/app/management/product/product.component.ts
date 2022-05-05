@@ -11,6 +11,7 @@ import { ProductManagementService } from 'src/app/services/management/product-ma
 import { ProductManagementDto } from 'src/app/models/ProductManagementDto';
 import { AuthService } from 'src/app/services/common/auth.service';
 import { CommonService } from 'src/app/services/common/common.service';
+import { BillDto } from 'src/app/models/admin/BillDto';
 
 const blankSpace = ' ';
 const contentDelete = "Are you sure to delete product ";
@@ -83,14 +84,15 @@ export class ProductComponent implements OnInit {
     { data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], label: 'Turn Over' }
   ];
 
-  // user list
-  userList: Array<any> = [];
-
+  // data
   total: number;
+  billTotal: number;
   dataSource: ProductManagementDto[] = [];
+  billDataSource: BillDto[] = [];
+  originalBillDataSource: BillDto[] = [];
   skip: number = 0;
   take: number = 10;
-
+  billSkip: number = 0;
   constructor(private router: Router,
     public dialog: MatDialog,
     private productManagementService: ProductManagementService,
@@ -189,6 +191,11 @@ export class ProductComponent implements OnInit {
     this.getProductList();
   }
 
+  getBillPaginatorData(event?: PageEvent) {
+    this.billSkip = event.pageIndex * this.take;
+    this.billDataSource = this.originalBillDataSource.slice(this.billSkip, this.take + this.billSkip);
+  }
+
   applyFilter() {
     let filter = this.productNameQuery();
     filter += this.dateImportQuery();
@@ -258,6 +265,15 @@ export class ProductComponent implements OnInit {
   }
 
   private getInitStatistic() {
+    this.productManagementService.getBills()
+      .subscribe(x => {
+        if (x) {
+          this.originalBillDataSource = x.body;
+          this.billDataSource = x.body.slice(this.billSkip, this.take);
+          this.billTotal = x.body.length;
+        }
+      })
+
     this.productManagementService.getBoughtProductByMonth()
       .subscribe(x => {
         let dataArray = x.body.map(x => x.number);
