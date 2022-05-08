@@ -120,5 +120,13 @@
     "Bill": "Đơn hàng",
     "Total Amount": "Tổng tiền",
     "Create Date": "Ngày tạo",
-    "By": "Bởi"
+    "By": "Bởi",
+    "Recommendation": "Gợi ý sản phẩm",
+    "Item Name": "Tên",
+    "Image": "Hình ảnh",
+    "Bill Id": "Mã hóa đơn",
+    "Bought Course": "Khóa học đã bán",
+    "New Course": "Khóa học mới",
+    "Trainer Name": "Tên giảng viên",
+    "Account": "Tài khoản",
 }

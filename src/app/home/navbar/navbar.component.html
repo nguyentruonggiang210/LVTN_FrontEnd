@@ -130,8 +130,8 @@
                             <span><i class="fas fa-users fa-lg"></i></span>
                         </a>
                         <div style="right: 20px;" class="dropdown-menu" #selectedLang aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" (click)="openUserDetail()">Account</a>
-                            <a class="dropdown-item" (click)="logOutEvent()">Logout</a>
+                            <a class="dropdown-item" (click)="openUserDetail()">{{ 'Account' | translate }}</a>
+                            <a class="dropdown-item" (click)="logOutEvent()">{{ 'Logout' | translate }}</a>
                         </div>
                     </li>
                 </ul>
@@ -148,11 +148,11 @@
                         </li>
                         <li class="nav-item me-3 me-lg-1 pr-1">
                             <button style="font-size: 17px;" mat-button color="primary"
-                                (click)="openLoginDialog()">Login</button>
+                                (click)="openLoginDialog()">{{ 'Login' | translate }}</button>
                         </li>
                         <li class="nav-item me-3 me-lg-1 pr-1">
                             <button style="font-size: 17px;" mat-button color="primary"
-                                (click)="openRegisterDialog()">Register</button>
+                                (click)="openRegisterDialog()">{{ 'Register' | translate }}</button>
                         </li>
                     </ul>
                 </ng-template>

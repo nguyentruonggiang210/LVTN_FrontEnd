@@ -76,7 +76,7 @@
         <div style="font-size: 20px; line-height: 25px;" [innerHtml]="dataSource?.description | safe: 'html'">
         </div>
         <div class="recommendation-slider">
-            <h1 class="mt-4">Recommendation</h1>
+            <h1 class="mt-4">{{ 'Recommendation' | translate }}</h1>
             <drag-scroll
                 *ngIf="recommendationProducts != null && recommendationProducts?.length > 0; else recommendationElseBlock"
                 class="demo-one" [drag-scroll-y-disabled]="true" [scrollbar-hidden]="true" #nav>

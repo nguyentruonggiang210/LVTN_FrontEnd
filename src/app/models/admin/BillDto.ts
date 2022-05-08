@@ -7,7 +7,8 @@ export interface BillDto {
 }
 
 export interface BillDetailDto {
-    bame: string,
+    name: string,
     quantity: number,
-    amount: number
+    amount: number,
+    image: string,
 }

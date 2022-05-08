@@ -12,6 +12,7 @@ import { ProductManagementDto } from 'src/app/models/ProductManagementDto';
 import { AuthService } from 'src/app/services/common/auth.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import { BillDto } from 'src/app/models/admin/BillDto';
+import { BillDetailComponent } from 'src/app/components/bill-detail/bill-detail.component';
 
 const blankSpace = ' ';
 const contentDelete = "Are you sure to delete product ";
@@ -239,6 +240,16 @@ export class ProductComponent implements OnInit {
 
   navigateShop() {
     this.router.navigate(["management/shop"]);
+  }
+
+  openDetaiBilllDialog(id: number) {
+    var billDetailData = this.billDataSource.find(x => x.billId == id);
+    const dialogRef = this.dialog.open(BillDetailComponent, {
+      minWidth: '500px',
+      width: '80%'
+    });
+
+    dialogRef.componentInstance.data = JSON.stringify(billDetailData.details);
   }
 
   deleteEvent(productId?: number) {

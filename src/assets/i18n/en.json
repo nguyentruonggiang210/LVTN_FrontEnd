@@ -119,5 +119,14 @@
     "Bill": "Bill",
     "Total Amount": "Total Amount",
     "Create Date": "Create Date",
-    "By": "By"
+    "By": "By",
+    "Recommendation": "Recommendation",
+    "Item Name": "Item Name",
+    "Image": "Image",
+    "Bill Id": "Bill Id",
+    "Bought Course": "Bought Course",
+    "New Course": "New Course",
+    "Trainer Name": "Trainer Name",
+    "Account": "Account",
+    "Logout": "Logout"
 }

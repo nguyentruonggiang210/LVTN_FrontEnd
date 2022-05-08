@@ -137,6 +137,7 @@ import { NotifyComponent } from './components/notify/notify.component';
 import { ShopDetailComponent } from './detail/shop-detail/shop-detail.component';
 import { VideoCallComponent } from './detail/video-call/video-call.component';
 import { BillComponent } from './management/bill/bill.component';
+import { BillDetailComponent } from './components/bill-detail/bill-detail.component';
 
 const errorInterceptor = {
   provide: HTTP_INTERCEPTORS,
@@ -241,7 +242,8 @@ const toolbarConfig: any = [
     NotifyComponent,
     ShopDetailComponent,
     VideoCallComponent,
-    BillComponent
+    BillComponent,
+    BillDetailComponent
   ],
   imports: [
     BrowserModule,

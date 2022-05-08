@@ -80,22 +80,22 @@
                                         {{ 'Order' | translate }}
                                     </th>
                                     <th>
-                                        Course Name
+                                        {{ 'Course Name' | translate }}
                                     </th>
                                     <th>
-                                        Trainer Name
+                                        {{ 'Trainer Name' | translate }}
                                     </th>
                                     <th>
-                                        Start Date
+                                        {{ 'Start Date' | translate }}
                                     </th>
                                     <th>
-                                        End Date
+                                        {{ 'End Date' | translate }}
                                     </th>
                                     <th>
-                                        Status
+                                        {{ 'Status' | translate }}
                                     </th>
                                     <th style="width: 10%;">
-                                        Action
+                                        {{ 'Action' | translate }}
                                     </th>
                                 </thead>
                                 <tbody>
@@ -122,11 +122,11 @@
                                             <div class="row text-center">
                                                 <div class="col col-lg-6">
                                                     <button class="ml-auto mr-auto" mat-stroked-button color="primary"
-                                                        (click)="navigateUpdatePage(course.courseId)">Update</button>
+                                                        (click)="navigateUpdatePage(course.courseId)">{{ 'Update' | translate }}</button>
                                                 </div>
                                                 <div class="col col-lg-6">
                                                     <button class="ml-auto mr-auto" mat-stroked-button color="accent"
-                                                        (click)="confirmDelete(course.courseId)">Delete</button>
+                                                        (click)="confirmDelete(course.courseId)">{{ 'Delete' | translate }}</button>
                                                 </div>
                                             </div>
                                         </td>
@@ -160,7 +160,7 @@
                             <table class="table">
                                 <thead class=" text-primary">
                                     <th>
-                                        Bill Id
+                                        {{ 'Bill Id' | translate }
                                     </th>
                                     <th>
                                         {{ 'Total Amount' | translate }}
@@ -173,7 +173,7 @@
                                     </th>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let bill of billDataSource">
+                                    <tr class="bill-detail-row" (click)="openDetaiBilllDialog(bill.billId)" *ngFor="let bill of billDataSource">
                                         <ng-template #tolTemplate>
                                             <img id="tool-tip" src="https://placehold.jp/200x200.png" />
                                         </ng-template>
@@ -204,13 +204,13 @@
         </div>
         <!-- Chart -->
         <div id="print-section">
-            <h2 class="col-12">Statistics</h2>
+            <h2 class="col-12">{{ 'Statistics' | translate }}</h2>
             <div class="row">
                 <!-- Bar Chart -->
                 <div class="col-lg-4">
                     <div class="card card-chart">
                         <div class="card-header">
-                            <h4 class="card-title">Turnover</h4>
+                            <h4 class="card-title">{{ 'Turn over' | translate }}</h4>
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
@@ -227,7 +227,7 @@
                 <div class="col-lg-4">
                     <div class="card card-chart">
                         <div class="card-header">
-                            <h4 class="card-title">Bought</h4>
+                            <h4 class="card-title">{{ 'Bought Course' | translate }}</h4>
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
@@ -244,7 +244,7 @@
                 <div class="col-lg-4">
                     <div class="card card-chart">
                         <div class="card-header">
-                            <h4 class="card-title">New Course</h4>
+                            <h4 class="card-title">{{ 'New Course' | translate }}</h4>
                         </div>
                         <div class="card-body">
                             <div class="chart-area">

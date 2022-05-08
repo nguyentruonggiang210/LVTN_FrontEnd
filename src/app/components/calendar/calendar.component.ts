@@ -22,7 +22,7 @@ export class CalendarComponent implements OnInit {
   public currentviewdata: View = 'Month';
   public data: object[] = [{
     id: 2,
-    eventName: 'Interview Meeting',
+    eventName: 'Schedule',
     startTime: new Date(this.date.getFullYear(), 1, 11, 10, 30),
     endTime: new Date(this.date.getFullYear(), 3, 11, 11, 50),
     isAllDay: false

@@ -4,12 +4,16 @@
     }
 }
 
-.user-form-field{
+.user-form-field {
     width: 100%;
 }
 
-.user-button{
+.user-button {
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.bill-detail-row:hover {
+    cursor: pointer;
 }

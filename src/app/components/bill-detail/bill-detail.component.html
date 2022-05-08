@@ -1,0 +1,20 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">{{ 'Order' | translate }}</th>
+            <th scope="col">{{ 'Item Name' | translate }}</th>
+            <th scope="col">{{ 'Quantity' | translate }}</th>
+            <th scope="col">{{ 'Price' | translate }}</th>
+            <th scope="col">{{ 'Image' | translate }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let e of dataSourse; let i = index">
+            <th scope="row">{{ i }}</th>
+            <td>{{ e.name }}</td>
+            <td>{{ e.quantity }}</td>
+            <td>{{ e.amount | money }}</td>
+            <td><img [src]="e.image" height="40" width="40" /></td>
+        </tr>
+    </tbody>
+</table>

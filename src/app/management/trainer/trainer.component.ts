@@ -12,6 +12,7 @@ import { CourseManagementService } from 'src/app/services/management/course-mana
 import { CommonService } from 'src/app/services/common/common.service';
 import { AuthService } from 'src/app/services/common/auth.service';
 import { BillDto } from 'src/app/models/admin/BillDto';
+import { BillDetailComponent } from 'src/app/components/bill-detail/bill-detail.component';
 
 const blankSpace = ' ';
 const contentDelete = "Are you sure to delete course ";
@@ -117,6 +118,16 @@ export class TrainerComponent implements OnInit {
     else {
       return 'text-danger';
     }
+  }
+
+  openDetaiBilllDialog(id: number) {
+    var billDetailData = this.billDataSource.find(x => x.billId == id);
+    const dialogRef = this.dialog.open(BillDetailComponent, {
+      minWidth: '500px',
+      width: '80%'
+    });
+
+    dialogRef.componentInstance.data = JSON.stringify(billDetailData.details);
   }
 
   printEvent() {
