@@ -8,20 +8,26 @@ import { CourseDto } from 'src/app/models/CourseDto';
 import { ProductDto } from 'src/app/models/ProductDto';
 import { SendCommentDto } from 'src/app/models/SendCommentDto';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../common/auth.service';
+import { CommonService } from '../common/common.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DetailService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,
+    private authService: AuthService) { }
 
   getProductDetail(productId: number) {
     return this.httpClient.get<BaseResponse<ProductDto>>(environment.apiUrl + "Detail/product/" + productId);
   }
 
   getProductRecommendation(userId: string, productId: number) {
-    return this.httpClient.get<BaseResponse<CategoryDto[]>>(`${environment.apiUrl}Detail/product/recommendation/${userId}/${productId}`);
+    if(this.authService.getUserName() == null){
+      return null;
+    }
+    return this.httpClient.get<BaseResponse<CategoryDto[]>>(`${environment.apiUrl}Detail/product/recommendation/${this.authService.getUserName()}/${productId}`);
   }
 
   getProductComment(productId: number) {

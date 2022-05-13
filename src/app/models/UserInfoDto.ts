@@ -1,3 +1,5 @@
+import { MeetingRoomScheduleDto } from "./MeetingRoomScheduleDto";
+
 export interface UserInfoDto {
     userId: string,
     userName: string,
@@ -9,5 +11,6 @@ export interface UserInfoDto {
     description: string,
     gender: number,
     isExternalAccount?: boolean,
-    roles?: string[]
+    roles?: string[],
+    meetingRoomSchedules?: MeetingRoomScheduleDto[]
 }

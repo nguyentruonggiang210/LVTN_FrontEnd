@@ -78,6 +78,16 @@
                             <input #uploadFile (change)="upload($event.target)" type='file' style="display:none" />
                         </div>
                     </div>
+                    <div>
+                        <h2 class="p-1 ml-3">Course</h2>
+                        <ul class="list-group">
+                            <li class="list-group-item" *ngFor="let schedule in dataSource?.meetingRoomSchedules">
+                                <p>{{ schedule.courseName }}</p>
+                                <p>Start Date: {{ schedule.startDate | datetime: 'dd-MM-yyyy' }} - End Date: {{ schedule.endDate| datetime: 'dd-MM-yyyy' }}</p>
+                                <p>Start Time: {{ schedule.startTime | datetime: 'dd-MM-yyyy hh:mm:ss' }} - End Time: {{ schedule.endTime | datetime: 'dd-MM-yyyy hh:mm:ss' }}</p>
+                            </li>
+                          </ul>
+                    </div>
                 </div>
             </div>
         </div>

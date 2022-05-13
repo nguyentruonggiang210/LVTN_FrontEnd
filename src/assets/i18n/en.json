@@ -128,5 +128,15 @@
     "New Course": "New Course",
     "Trainer Name": "Trainer Name",
     "Account": "Account",
-    "Logout": "Logout"
+    "Logout": "Logout",
+    "bought": "bought",
+    "Out of stock": "Out of stock",
+    "Max User Weight": "Max User Weight",
+    "Languages": "Languages",
+    "Add to card": "Add to card",
+    "Comment": "Comment",
+    "Comments": "Comments",
+    "SIGN IN TO REPLY": "SIGN IN TO REPLY",
+    "Cannot find any item": "Cannot find any item",
+    "Product Infomation": "Product Infomation"
 }

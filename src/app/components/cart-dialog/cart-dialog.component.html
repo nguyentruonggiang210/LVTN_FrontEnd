@@ -61,6 +61,6 @@
 <div *ngIf="(courseArray == [] || courseArray.length == 0 || courseArray === undefined) && (productArray== [] || productArray.length == 0 || productArray === undefined)"
     class="text-center h-75" style="display: flex;justify-content: center; align-items: center;">
     <span class="text-danger" style="font-size: 20px;">
-        You don't have any item in your cart!
+        {{ 'Cannot find any item' | translate }}
     </span>
 </div>

@@ -1,5 +1,5 @@
 <div class="container-fluid w-75">
-    <h1 class="text-center mt-4">Product Detail</h1>
+    <h1 class="text-center mt-4">{{ 'Product Infomation' | translate }}</h1>
     <div class="row mt-2">
         <div class="col col-md-6 m-0">
             <lib-ngx-image-zoom [thumbImage]="imageSource" [fullImage]="fullImageSource" [magnification]="1"
@@ -17,40 +17,39 @@
             <div class="row">
                 <div class="col col-md-12">
                     <h2 class="mb-3">{{ dataSource?.productName }}</h2>
-                    <p>Price: {{ displayPrice() }}</p>
-                    <p>Languages: {{ dataSource?.languageSupport || '-' }}</p>
-                    <p>Difficulty: {{ dataSource?.difficulty || '-' }}/5</p>
-                    <p>Weight: {{ dataSource?.weight || '-' }} Kilograms</p>
-                    <p>Max User Weight: {{ dataSource?.maxUserWeight || '-' }} Kilograms</p>
-                    <p>Body Focus: {{ dataSource?.bodyFocus || '-' }}</p>
-                    <p>Tags: {{ dataSource?.tag || '-' }}</p>
+                    <p>{{ 'Price' | translate }}: {{ displayPrice() }}</p>
+                    <p>{{ 'Languages' | translate }}: {{ dataSource?.languageSupport || '-' }}</p>
+                    <p>{{ 'Difficulty' | translate }}: {{ dataSource?.difficulty || '-' }}/5</p>
+                    <p>{{ 'Weight' | translate}}: {{ dataSource?.weight || '-' }} Kilograms</p>
+                    <p>{{ 'Max User Weight' | translate }}: {{ dataSource?.maxUserWeight || '-' }} Kilograms</p>
+                    <p>{{ 'Body Focus' | translate }}: {{ dataSource?.bodyFocus || '-' }}</p>
+                    <p>{{ 'Tags' | translate}}: {{ dataSource?.tag || '-' }}</p>
                 </div>
             </div>
             <div class="text-center left-0 mt-5">
                 <button type="button" class="btn btn-outline-primary mt-2 mb-2 w-100"
-                    (click)="addToCart(dataSource?.productId.toString(), dataSource?.productDetails[0]?.productDetailImages[0], dataSource?.productDetails[0]?.price, dataSource?.productName, 1)">Add
-                    to card</button>
+                    (click)="addToCart(dataSource?.productId.toString(), dataSource?.productDetails[0]?.productDetailImages[0], dataSource?.productDetails[0]?.price, dataSource?.productName, 1)">{{ 'Add to card' | translate }}</button>
                 <button *ngIf="dataSource?.isOutOfStock || !isPromotionRemain" type="button" disabled
-                    class="btn btn-outline-warning mt-2 mb-2 w-100">Out of stock</button>
+                    class="btn btn-outline-warning mt-2 mb-2 w-100">{{ 'Out of stock' | translate }}</button>
                 <ngx-paypal *ngIf="token != null && !dataSource?.isOutOfStock && isPromotionRemain"
                     [config]="payPalConfig"></ngx-paypal>
             </div>
         </div>
     </div>
     <div class="promotion">
-        <h1 class="mt-4">Promotion</h1>
+        <h1 class="mt-4">{{ 'Promotion' | translate }}</h1>
         <mat-tab-group (focusChange)="promotionChange($event)">
             <mat-tab *ngFor="let promotion of dataSource?.productPromotions" [label]="promotion?.promotionName">
                 <div *ngIf="promotion?.promotionId != null">
-                    <p class="mt-1">Unit: {{ promotion?.promotionUnit }}</p>
-                    <p class="mt-1">Amount: {{ promotion?.amount || '-' }}</p>
-                    <p class="mt-1">Description: {{ promotion?.promotionDescription }}</p>
+                    <p class="mt-1">{{ 'Unit' | translate }}: {{ promotion?.promotionUnit }}</p>
+                    <p class="mt-1">{{ 'Amount' | translate }}: {{ promotion?.amount || '-' }}</p>
+                    <p class="mt-1">{{ 'Description' | translate }}: {{ promotion?.promotionDescription }}</p>
                 </div>
             </mat-tab>
         </mat-tab-group>
     </div>
     <div class="description">
-        <h1 class="mt-4">Description</h1>
+        <h1 class="mt-4">{{ 'Description' | translate }}</h1>
         <div class="row mb-3">
             <div class="col col-md-9">
                 <div (click)="shopDetail(dataSource?.shopId)" style="font-size: 20px; width: fit-content; border-radius: 8px;"
@@ -90,24 +89,22 @@
                 </div>
             </drag-scroll>
             <ng-template #recommendationElseBlock>
-                <h3 class="text-center">Cannot find any item</h3>
+                <h3 class="text-center">{{ 'Cannot find any item' | translate }}</h3>
             </ng-template>
         </div>
         <div class="comment mt-5">
-            <h1 class="mt-2">{{ commentDto?.length }} Comments</h1>
+            <h1 class="mt-2">{{ commentDto?.length }} {{ 'Comments' | translate }}</h1>
             <hr>
             <div class="p-4 text-center">
                 <button (click)="openLoginDialog()" *ngIf="token == null; else elseBlock" class="btn btn-primary w-75 m-auto"
-                    style="height: 50px; font-size: 22px; font-weight: 450;">SIGN IN
-                    TO REPLY</button>
+                    style="height: 50px; font-size: 22px; font-weight: 450;">{{ 'SIGN IN TO REPLY' | translate }}</button>
                 <ng-template #elseBlock>
                     <div class="comment-input mt-2 text-right">
                         <div class="input-group">
                             <textarea [(ngModel)]="commentContent" class="form-control" rows="5" style="height: 100px;"
                                 aria-label="With textarea" placeholder="Enter something ...."></textarea>
                         </div>
-                        <button (click)="sendComment()" mat-raised-button color="primary" class="mt-2">Send
-                            Comment</button>
+                        <button (click)="sendComment()" mat-raised-button color="primary" class="mt-2">{{ 'Comment' | translate }}</button>
                     </div>
                 </ng-template>
 
@@ -139,8 +136,7 @@
                                     placeholder="Enter something ...."></textarea>
                             </div>
                             <button type="button" (click)="sendSubComment(cmt?.commentId)" mat-raised-button
-                                color="primary" class="mt-2">Send
-                                Comment</button>
+                                color="primary" class="mt-2">{{ 'Comment' | translate }}</button>
                         </div>
                     </div>
                 </div>
