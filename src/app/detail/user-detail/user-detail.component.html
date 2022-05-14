@@ -4,7 +4,7 @@
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h1 class="card-title">User Information</h1>
+                        <h1 class="card-title">{{ 'User Information' | translate }}</h1>
                     </div>
                     <div class="card-body">
                         <form [formGroup]="userForm" (ngSubmit)="updateUserInfo()">
@@ -51,7 +51,7 @@
                             <div class="row">
                                 <div class="col col-md-12">
                                     <div class="form-group">
-                                        <label class="bmd-label-floating">Description</label>
+                                        <label class="bmd-label-floating">{{ 'Description' | translate }}</label>
                                         <!-- Rich textbox here -->
                                         <quill-editor formControlName="description"></quill-editor>
                                         <!-- End rich textboxt here -->
@@ -74,17 +74,17 @@
                     </div>
                     <div class="card-body">
                         <div (click)="uploadFile.click()">
-                            <button mat-raised-button color="primary">Choose File</button>
+                            <button mat-raised-button color="primary">{{ 'Choose File' | translate }}</button>
                             <input #uploadFile (change)="upload($event.target)" type='file' style="display:none" />
                         </div>
                     </div>
                     <div>
-                        <h2 class="p-1 ml-3">Course</h2>
+                        <h2 class="p-1 ml-3">{{ 'Course' | translate }}</h2>
                         <ul class="list-group">
-                            <li class="list-group-item" *ngFor="let schedule in dataSource?.meetingRoomSchedules">
-                                <p>{{ schedule.courseName }}</p>
-                                <p>Start Date: {{ schedule.startDate | datetime: 'dd-MM-yyyy' }} - End Date: {{ schedule.endDate| datetime: 'dd-MM-yyyy' }}</p>
-                                <p>Start Time: {{ schedule.startTime | datetime: 'dd-MM-yyyy hh:mm:ss' }} - End Time: {{ schedule.endTime | datetime: 'dd-MM-yyyy hh:mm:ss' }}</p>
+                            <li class="list-group-item" *ngFor="let schedule of dataSource?.meetingRoomSchedules">
+                                <p><a [href]="'course/room/' + schedule?.meetingRoomId">{{ 'Course Name' | translate }} : {{ schedule?.courseName }} - {{ 'Room Code' | translate }}: {{ schedule?.meetingRoomId }}</a></p>
+                                <p>{{ 'Start Time' | translate }}: {{ schedule?.startTime | datetime: 'dd-MM-yyyy hh:mm:ss' }}</p>
+                                <p>{{ 'End Time' | translate }}: {{ schedule?.endTime | datetime: 'dd-MM-yyyy hh:mm:ss' }}</p>
                             </li>
                           </ul>
                     </div>

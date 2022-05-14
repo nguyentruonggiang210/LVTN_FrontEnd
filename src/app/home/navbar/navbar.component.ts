@@ -14,6 +14,7 @@ import { CartDialogComponent } from 'src/app/components/cart-dialog/cart-dialog.
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 import { SpeechRecognitionService } from 'src/app/services/common/speech-recognition.service';
+import { AuthService } from 'src/app/services/common/auth.service';
 
 
 @Component({
@@ -35,6 +36,8 @@ export class NavbarComponent implements OnInit {
   dataSource: SearchDto[];
   keyword: string = "";
   searchTypeString: string = 'product';
+  roles: any;
+  isAdmin: boolean = false;
   searchType: any[] = [
     {
       id: 1,
@@ -51,6 +54,7 @@ export class NavbarComponent implements OnInit {
   ];
 
   constructor(private carouselService: CarouselService,
+    private authService: AuthService,
     private formBuilder: FormBuilder,
     private commonService: CommonService,
     public dialog: MatDialog,
@@ -59,6 +63,8 @@ export class NavbarComponent implements OnInit {
     private cartService: CartService,
     public translateService: TranslateService,
     private speechService: SpeechRecognitionService) {
+    this.roles = authService.getRoles();
+    this.isAdmin = this.checkAdmin();
     this.handlerParamForCategory();
     this.foucusOutEvent();
     this.searchForm = this.formBuilder.group({
@@ -94,6 +100,11 @@ export class NavbarComponent implements OnInit {
     this.searchTypeClassify();
     this.setDefaultSearchValue();
   }
+
+  checkAdmin() {
+    return this.roles?.includes('Shop') || this.roles?.includes('Admin') || this.roles?.includes('Trainer');
+  }
+
   changeLanguage(lang: string) {
     this.translateService.use(lang);
     this.commonService.setLocalStorage(environment.lang, lang);
@@ -159,16 +170,8 @@ export class NavbarComponent implements OnInit {
       });
   }
 
-  onSubmit(): void {
-    console.log(this.searchForm.value);
-  }
-
   calendarEvent(): void {
     const dialogRef = this.dialog.open(CalendarComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 
   openLoginDialog(): void {
@@ -176,10 +179,6 @@ export class NavbarComponent implements OnInit {
       width: '50%',
       maxWidth: '800px',
       minWidth: '350px',
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result);
     });
   }
 
@@ -192,10 +191,6 @@ export class NavbarComponent implements OnInit {
       width: '50%',
       maxWidth: '800px',
       minWidth: '350px',
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result);
     });
   }
 
@@ -210,10 +205,6 @@ export class NavbarComponent implements OnInit {
       height: '90vh',
       maxWidth: '1000px',
       minWidth: '450px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Cart dialog was closed');
     });
   }
 

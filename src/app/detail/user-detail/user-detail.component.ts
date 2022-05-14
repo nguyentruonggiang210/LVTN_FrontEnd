@@ -45,8 +45,6 @@ export class UserDetailComponent implements OnInit {
   });
 
   constructor(private userDetailService: UserDetailService,
-    private snackBar: MatSnackBar,
-    private location: Location,
     private commonService: CommonService,
     private authService: AuthService) { }
 
@@ -90,13 +88,14 @@ export class UserDetailComponent implements OnInit {
   }
 
   handlerDisplayImage() {
-    return this.dataSource.avatar == null || this.dataSource.avatar === '' ? DefaultAvatar : this.dataSource.avatar;
+    return this.dataSource?.avatar == null || this.dataSource?.avatar === '' ? DefaultAvatar : this.dataSource?.avatar;
   }
 
   private getUserDetail() {
     this.userDetailService.getUserInf(this.authService.getUserName())
       .subscribe(user => {
         if (user) {
+          debugger
           // set value 
           let body = user.body;
           this.dataSource = body;

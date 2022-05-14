@@ -13,6 +13,7 @@ import { UserEnterRequest } from 'src/app/models/hubs/UserEnterRequest';
 import { GroupChatDto } from 'src/app/models/hubs/GroupChatDto';
 import { SendChatMessageDto } from 'src/app/models/hubs/SendChatMessageDto';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-meeting-room',
@@ -42,11 +43,19 @@ export class MeetingRoomComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private videoService: VideoService,
-    private snackBar: MatSnackBar,
     private commonService: CommonService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private activatedRoute: ActivatedRoute) {
   }
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.activatedRoute.params.subscribe(x => {
+      if (x && x?.roomId) {
+        this.conversationFormGroup.patchValue({
+          name: x?.roomId
+        })
+      }
+    });
+  }
 
   chat() {
     if (this.chatContent == null || this.chatContent == '') {
@@ -75,7 +84,7 @@ export class MeetingRoomComponent implements OnInit {
     // validate room number
     this.validateRoom().subscribe(async x => {
       if (!x.body.isValid) {
-        this.snackBar.open('Room code is invalid', 'Close');
+        this.commonService.displaySnackBar('Room code is invalid', 'Close');
         return;
       }
       this.validateResponse = x.body;
@@ -129,6 +138,8 @@ export class MeetingRoomComponent implements OnInit {
       // 4 BIS/ ADD EVENT LISTENER : WHEN STREAM IS ADDED/REMOVED TO/FROM THE CONVERSATION
       //=====================================================
       conversation.on('streamAdded', (stream: Stream) => {
+        this.videoService.setStream(this.roomId, stream.streamId.toString())
+         .subscribe(x => console.log(x));
         this.remotesCounter += 1;
         stream.addInDiv('remote-container', 'remote-media-' + stream.streamId, {}, false);
         let video = document.getElementById('remote-media-' + stream.streamId);
@@ -224,7 +235,7 @@ export class MeetingRoomComponent implements OnInit {
       this.groupChatData.push(model);
 
       this.groupChatData = [...this.groupChatData];
-      this.autoScroll();
+      // this.autoScroll();
     });
   }
 
@@ -244,7 +255,7 @@ export class MeetingRoomComponent implements OnInit {
     this.videoService.getChatList(this.roomId).subscribe(x => {
       if (x) {
         this.groupChatData = x.body;
-        this.autoScroll();
+        // this.autoScroll();
       }
     });
   }

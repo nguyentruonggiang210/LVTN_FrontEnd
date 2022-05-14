@@ -9,6 +9,7 @@ import {
   EventSettingsModel,
   View
 } from '@syncfusion/ej2-angular-schedule';
+import { CarouselService } from 'src/app/services/home/carousel.service';
 
 @Component({
   selector: 'app-calendar',
@@ -18,35 +19,44 @@ import {
 /* Month being +1 */
 export class CalendarComponent implements OnInit {
   date: Date = new Date();
-  public selecteddatavalue: Date = new Date(2022, 3, 11);
+  public selecteddatavalue: Date = new Date(this.date.getFullYear(), this.date.getMonth(), this.date.getDate());
   public currentviewdata: View = 'Month';
-  public data: object[] = [{
-    id: 2,
-    eventName: 'Schedule',
-    startTime: new Date(this.date.getFullYear(), 1, 11, 10, 30),
-    endTime: new Date(this.date.getFullYear(), 3, 11, 11, 50),
-    isAllDay: false
-  }];
-  public eventSettings: EventSettingsModel = {
-    dataSource: this.data,
-    fields: {
-      id: 'id',
-      subject: {
-        name: 'eventName'
-      },
-      isAllDay: {
-        name: 'isAllDay'
-      },
-      startTime: {
-        name: 'startTime'
-      },
-      endTime: {
-        name: 'endTime'
-      },
-    }
-  };
-  constructor() { }
+  public data: object[];
+  public eventSettings: EventSettingsModel;
+  constructor(private carouselService: CarouselService) { }
   ngOnInit(): void {
+    this.getSchedule();
+  }
 
+  private getSchedule() {
+    this.carouselService.geSchedule()
+      .subscribe(x => {
+        this.data = x.body.map(x => <Object>{
+          id: x.meetingRoomId,
+          eventName: x.courseName,
+          startTime: x.startTime,
+          endTime: x.endTime,
+          isAllDay: false
+        });
+
+        this.eventSettings = {
+          dataSource: this.data,
+          fields: {
+            id: 'id',
+            subject: {
+              name: 'eventName'
+            },
+            isAllDay: {
+              name: 'isAllDay'
+            },
+            startTime: {
+              name: 'startTime'
+            },
+            endTime: {
+              name: 'endTime'
+            },
+          }
+        };
+      });
   }
 }

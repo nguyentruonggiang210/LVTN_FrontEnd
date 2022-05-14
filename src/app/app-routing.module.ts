@@ -26,6 +26,7 @@ const routes: Routes = [
   { path: 'category/:type', component: CategoryComponent },
   { path: 'category/:type/:pageIndex', component: CategoryComponent },
   { path: 'course/room', component: MeetingRoomComponent },
+  { path: 'course/room/:roomId', component: MeetingRoomComponent },
 
   // { path: 'detail/:type/:id', component: DetailMainComponent },
   { path: 'detail/user', component: UserDetailComponent },

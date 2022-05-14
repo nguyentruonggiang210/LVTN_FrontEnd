@@ -35,19 +35,19 @@
                 <li class="nav-item my-nav-item">
                     <a class="nav-link" href="#">{{ 'Community' | translate }}</a>
                 </li>
-                <li class="nav-item dropdown my-nav-item">
+                <li *ngIf="isAdmin" class="nav-item dropdown my-nav-item">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-navbar-listhaspopup="true" aria-expanded="false">
                         {{ 'ManagementTitle' | translate }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" routerLink="/management/product">{{ 'Product' | translate }}</a>
-                        <mat-divider></mat-divider>
-                        <a class="dropdown-item" routerLink="/management/course">{{ 'Course' | translate }}</a>
-                        <mat-divider></mat-divider>
-                        <a class="dropdown-item" routerLink="/management/user">{{ 'User' | translate }}</a>
-                        <mat-divider></mat-divider>
-                        <a class="dropdown-item" routerLink="/management/promotion">{{ 'Promotion' | translate }}</a>
+                        <a *ngIf="roles?.includes('Shop')" class="dropdown-item" routerLink="/management/product">{{ 'Product' | translate }}</a>
+                        <mat-divider *ngIf="roles?.includes('Shop')"></mat-divider>
+                        <a *ngIf="roles?.includes('Trainer')" class="dropdown-item" routerLink="/management/course">{{ 'Course' | translate }}</a>
+                        <mat-divider *ngIf="roles?.includes('Trainer')"></mat-divider>
+                        <a *ngIf="roles?.includes('Admin')" class="dropdown-item" routerLink="/management/user">{{ 'User' | translate }}</a>
+                        <mat-divider *ngIf="roles?.includes('Admin')"></mat-divider>
+                        <a *ngIf="roles?.includes('Shop') || roles?.includes('Trainer')" class="dropdown-item" routerLink="/management/promotion">{{ 'Promotion' | translate }}</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown my-nav-item">

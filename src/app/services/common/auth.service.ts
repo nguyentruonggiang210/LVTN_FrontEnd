@@ -79,4 +79,13 @@ export class AuthService {
       return null;
     }
   }
+
+  public getRoles(){
+    try {
+      return this.getDecodedAccessToken()['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    }
+    catch {
+      return null;
+    }
+  }
 }
