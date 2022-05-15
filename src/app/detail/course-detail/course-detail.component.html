@@ -9,14 +9,14 @@
         <div class="col col-lg-4 p-4 bg-dark text-light m-0">
             <div class="row">
                 <div class="col col-md-7">
-                    <h2 class="mb-3">WORKOUT DETAILS</h2>
-                    <p>Name: {{ dataSource?.name }}</p>
-                    <p>Price: {{ displayPrice() }}</p>
-                    <p>Start Date: {{ dataSource?.startDate | datetime:'dd-MM-yyyy' }}</p>
-                    <p>End Date: {{ dataSource?.endDate | datetime:'dd-MM-yyyy' }}</p>
-                    <p>Max Member: {{ dataSource?.quantity }}</p>
-                    <p>Body Focus: {{ dataSource?.bodyFocus || '-' }}</p>
-                    <p>Tags: {{ dataSource?.tag || '-' }}</p>
+                    <h2 class="mb-3">{{ 'WORKOUT DETAILS' | translate }}</h2>
+                    <p>{{ 'Course Name' | translate }}: {{ dataSource?.name }}</p>
+                    <p>{{ 'Price' | translate }}: {{ displayPrice() }}</p>
+                    <p>{{ 'Start Date' | translate }}: {{ dataSource?.startDate | datetime:'dd-MM-yyyy' }}</p>
+                    <p>{{ 'End Date' | translate }}: {{ dataSource?.endDate | datetime:'dd-MM-yyyy' }}</p>
+                    <p>{{ 'Max Member' | translate }}: {{ dataSource?.quantity }}</p>
+                    <p>{{ 'Body Focus' | translate }}: {{ dataSource?.bodyFocus || '-' }}</p>
+                    <p>{{ 'Tags' | translate }}: {{ dataSource?.tag || '-' }}</p>
                 </div>
                 <div class="col col-md-5">
                     <i class="icon -focus-core_lower_body" aria-hidden="true"></i>
@@ -24,29 +24,28 @@
             </div>
             <div class="text-center left-0 mt-5">
                 <button type="button" class="btn btn-outline-primary mt-2 mb-2 w-100"
-                    (click)="addToCart(dataSource?.courseId.toString(), dataSource?.name, dataSource?.price ,2)">Add
-                    to card</button>
+                    (click)="addToCart(dataSource?.courseId.toString(), dataSource?.name, dataSource?.price ,2)">{{ 'Add to card' | translate }}</button>
                 <button *ngIf="dataSource?.isOutOfStock || !isPromotionRemain" type="button" disabled
-                    class="btn btn-outline-warning mt-2 mb-2 w-100">Out of stock</button>
+                    class="btn btn-outline-warning mt-2 mb-2 w-100">{{ 'Out of stock' | translate }}</button>
                 <ngx-paypal *ngIf="token != null && !dataSource?.isOutOfStock && isPromotionRemain"
                     [config]="payPalConfig"></ngx-paypal>
             </div>
         </div>
     </div>
     <div class="promotion">
-        <h1 class="mt-4">Promotion</h1>
+        <h1 class="mt-4">{{ 'Promotion' | translate }}</h1>
         <mat-tab-group (focusChange)="promotionChange($event)">
             <mat-tab *ngFor="let promotion of dataSource?.coursePromotions" [label]="promotion?.promotionName">
                 <div *ngIf="promotion?.promotionId != null">
-                    <p class="mt-1">Unit: {{ promotion?.promotionUnit }}</p>
-                    <p class="mt-1">Amount: {{ promotion?.amount || '-' }}</p>
-                    <p class="mt-1">Description: {{ promotion?.promotionDescription }}</p>
+                    <p class="mt-1">{{ 'Unit' | translate }}: {{ promotion?.promotionUnit }}</p>
+                    <p class="mt-1">{{ 'Amount' | translate }}: {{ promotion?.amount || '-' }}</p>
+                    <p class="mt-1">{{ 'Description' | translate }}: {{ promotion?.promotionDescription }}</p>
                 </div>
             </mat-tab>
         </mat-tab-group>
     </div>
     <div class="description">
-        <h1 class="mt-4">Description</h1>
+        <h1 class="mt-4">{{ 'Description' | translate }}</h1>
         <div class="row mb-3">
             <div class="col col-md-9">
                 <div (click)="trainerDetail(dataSource?.teacherUserName)" style="font-size: 20px; width: fit-content; border-radius: 8px;"
@@ -62,20 +61,18 @@
         </div>
     </div>
     <div class="comment mt-5">
-        <h1 class="mt-2">{{ commentDto?.length }} Comments</h1>
+        <h1 class="mt-2">{{ commentDto?.length }} {{ 'Comments' | translate }}</h1>
         <hr>
         <div class="p-4 text-center">
             <button (click)="openLoginDialog()" *ngIf="token == null; else elseBlock" class="btn btn-primary w-75 m-auto"
-                style="height: 50px; font-size: 22px; font-weight: 450;">SIGN IN
-                TO REPLY</button>
+                style="height: 50px; font-size: 22px; font-weight: 450;">{{'SIGN IN TO REPLY' | translate }}</button>
             <ng-template #elseBlock>
                 <div class="comment-input mt-2 text-right">
                     <div class="input-group">
                         <textarea [(ngModel)]="commentContent" class="form-control" rows="5" style="height: 100px;"
                             aria-label="With textarea" placeholder="Enter something ...."></textarea>
                     </div>
-                    <button (click)="sendComment()" mat-raised-button color="primary" class="mt-2">Send
-                        Comment</button>
+                    <button (click)="sendComment()" mat-raised-button color="primary" class="mt-2">{{ 'Comment' | translate }}</button>
                 </div>
             </ng-template>
         </div>
@@ -106,8 +103,7 @@
                                 placeholder="Enter something ...."></textarea>
                         </div>
                         <button type="button" (click)="sendSubComment(cmt.commentId)" mat-raised-button color="primary"
-                            class="mt-2">Send
-                            Comment</button>
+                            class="mt-2">{{ 'Comment' | translate }}</button>
                     </div>
                 </div>
             </div>

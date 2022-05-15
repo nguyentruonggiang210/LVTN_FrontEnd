@@ -11,13 +11,14 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <mat-form-field class="full-width-field">
-                                        <input matInput placeholder="Username" formControlName="userName">
+                                        <input matInput placeholder="{{ 'UserName' | translate }}"
+                                            formControlName="userName">
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-6">
                                     <mat-form-field class="full-width-field">
-                                        <input matInput placeholder="Name" type="text" autocomplete="off"
-                                            formControlName="name">
+                                        <input matInput placeholder="{{ 'Name' | translate }}" type="text"
+                                            autocomplete="off" formControlName="name">
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-6">
@@ -37,14 +38,14 @@
                                 </div>
                                 <div class="col-md-3">
                                     <mat-form-field class="full-width-field">
-                                        <input matInput placeholder="Age" maxlength="3" type="number" max="150" min="1"
-                                            formControlName="age">
+                                        <input matInput placeholder="{{ 'Age' | translate }}" maxlength="3"
+                                            type="number" max="150" min="1" formControlName="age">
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-6">
                                     <mat-form-field class="full-width-field">
-                                        <input matInput placeholder="Address" type="text" autocomplete="off"
-                                            formControlName="name" formControlName="address">
+                                        <input matInput placeholder="{{ 'Address' | translate }}" type="text"
+                                            autocomplete="off" formControlName="name" formControlName="address">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -58,8 +59,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <button mat-raised-button type="submit" color="primary" class="btnpull-right">Update
-                                Profile</button>
+                            <button mat-raised-button type="submit" color="primary" class="btnpull-right">{{ 'Update' |
+                                translate }}</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>
@@ -78,15 +79,83 @@
                             <input #uploadFile (change)="upload($event.target)" type='file' style="display:none" />
                         </div>
                     </div>
-                    <div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <div class="row">
+                            <div class="col col-md-2">
+                                <h2 class="card-title" style="float: left;">{{ 'Bill' | translate }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body mb-3">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        {{ 'Bill Id' | translate }}
+                                    </th>
+                                    <th>
+                                        {{ 'Total Amount' | translate }}
+                                    </th>
+                                    <th>
+                                        {{ 'Create Date' | translate }}
+                                    </th>
+                                    <th>
+                                        {{ 'By' | translate }}
+                                    </th>
+                                </thead>
+                                <tbody>
+                                    <tr class="bill-detail-row" (click)="openDetaiBilllDialog(bill.billId)"
+                                        *ngFor="let bill of billDataSource">
+                                        <ng-template #tolTemplate>
+                                            <img id="tool-tip" src="https://placehold.jp/200x200.png" />
+                                        </ng-template>
+                                        <td>
+                                            {{ bill.billId }}
+                                        </td>
+                                        <td>
+                                            {{ bill.totalAmount | money }}
+                                        </td>
+                                        <td>
+                                            {{ bill.createDate | datetime: 'dd-MM-yyyy' }}
+                                        </td>
+                                        <td>
+                                            {{ bill.by }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="text-left mt-3">
+                        <mat-paginator #paginator [length]="billTotal" [pageSize]="take" [pageSizeOptions]="[10]"
+                            aria-label="Select page" (page)="getBillPaginatorData($event)">
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header card-header-danger">
                         <h2 class="p-1 ml-3">{{ 'Course' | translate }}</h2>
+                    </div>
+                    <div class="card-body mb-3">
                         <ul class="list-group">
                             <li class="list-group-item" *ngFor="let schedule of dataSource?.meetingRoomSchedules">
-                                <p><a [href]="'course/room/' + schedule?.meetingRoomId">{{ 'Course Name' | translate }} : {{ schedule?.courseName }} - {{ 'Room Code' | translate }}: {{ schedule?.meetingRoomId }}</a></p>
-                                <p>{{ 'Start Time' | translate }}: {{ schedule?.startTime | datetime: 'dd-MM-yyyy hh:mm:ss' }}</p>
-                                <p>{{ 'End Time' | translate }}: {{ schedule?.endTime | datetime: 'dd-MM-yyyy hh:mm:ss' }}</p>
+                                <p><a [href]="'course/room/' + schedule?.meetingRoomId">{{ 'Course Name' | translate }}
+                                        : {{ schedule?.courseName }} - {{ 'Room Code' | translate }}: {{
+                                        schedule?.meetingRoomId }}</a></p>
+                                <p>{{ 'Start Time' | translate }}: {{ schedule?.startTime | datetime: 'dd-MM-yyyy
+                                    hh:mm:ss' }}</p>
+                                <p>{{ 'End Time' | translate }}: {{ schedule?.endTime | datetime: 'dd-MM-yyyy hh:mm:ss'
+                                    }}</p>
                             </li>
-                          </ul>
+                        </ul>
                     </div>
                 </div>
             </div>

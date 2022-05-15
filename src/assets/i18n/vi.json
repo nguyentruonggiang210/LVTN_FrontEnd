@@ -141,5 +141,13 @@
     "Cannot find any item": "Không thể tìm thấy item nào",
     "Product Infomation": "Thông Tin Sản Phẩm",
     "Room Code": "Mã phòng",
-    "User Information": "Thông Tin Người Dùng"
+    "User Information": "Thông Tin Người Dùng",
+    "WORKOUT DETAILS": "CHI TIẾT",
+    "Session Per Week": "Số buổi trong tuần",
+    "Update Room": "Cập nhật phòng học",
+    "Current Member": "Thành viên hiện tại",
+    "Go Back": "Quay lại",
+    "Sorry, we cannot find any url match with for request.": "Xin lỗi, chúng tôi không thể tìm thấy đường dẫn nào phù hợp.",
+    "Please go back to the previous page to continue browsing.": "Hãy quay trở lại trang trước",
+    "Sorry, your access is refused due to security reasons of our server and also our sensitive data.": "Xin lỗi, quyền truy cập của bạn bị hạn chế do dữ liệu nhạy cảm"
 }

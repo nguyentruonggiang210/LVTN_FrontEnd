@@ -9,6 +9,7 @@ export interface CreateCourseManagementDto {
     teacherName: string,
     member: number,
     difficulty: number,
+    sessionPerWeek?: number,
     price: number,
     bodyFocus: string[],
     tag: string[],

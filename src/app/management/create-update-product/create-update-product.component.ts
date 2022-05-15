@@ -268,7 +268,7 @@ export class CreateUpdateProductComponent implements OnInit {
   }
 
   backEvent() {
-    window.location.href = 'http://localhost:4200/management/product';
+    window.location.href = 'https://localhost:4200/management/product';
   }
 
   validateProductName() {

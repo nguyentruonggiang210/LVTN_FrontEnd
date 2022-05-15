@@ -17,8 +17,6 @@ import { AuthService } from 'src/app/services/common/auth.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import * as signalR from '@aspnet/signalr';
 
-const ProductString = "Product";
-const CourseString = "Course";
 const CartMessage = "Payment successful";
 const ActionString = "Close";
 

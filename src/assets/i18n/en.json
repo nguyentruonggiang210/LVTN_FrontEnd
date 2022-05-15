@@ -140,5 +140,13 @@
     "Cannot find any item": "Cannot find any item",
     "Product Infomation": "Product Infomation",
     "Room Code": "Room Code",
-    "User Information": "User Information"
+    "User Information": "User Information",
+    "WORKOUT DETAILS": "WORKOUT DETAILS",
+    "Session Per Week": "Session Per Week",
+    "Update Room": "Update Room",
+    "Current Member": "Current Member",
+    "Go Back": "Go Back",
+    "Sorry, we cannot find any url match with for request.": "Sorry, we cannot find any url match with for request.",
+    "Please go back to the previous page to continue browsing.": "Please go back to the previous page to continue browsing.",
+    "Sorry, your access is refused due to security reasons of our server and also our sensitive data.": "Sorry, your access is refused due to security reasons of our server and also our sensitive data."
 }

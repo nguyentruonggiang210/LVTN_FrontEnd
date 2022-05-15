@@ -8,6 +8,10 @@ import { UserDetailService } from 'src/app/services/detail/user-detail.service';
 import { Location } from '@angular/common';
 import { CommonService } from 'src/app/services/common/common.service';
 import { AuthService } from 'src/app/services/common/auth.service';
+import { BillDetailComponent } from 'src/app/components/bill-detail/bill-detail.component';
+import { MatDialog } from '@angular/material/dialog';
+import { BillDto } from 'src/app/models/admin/BillDto';
+import { PageEvent } from '@angular/material/paginator';
 
 const DialogMessage = "Update successfull";
 const ActionString = "Close";
@@ -20,6 +24,12 @@ const DefaultAvatar = "assets/img/my-default-avatar.png";
   styleUrls: ['./user-detail.component.scss']
 })
 export class UserDetailComponent implements OnInit {
+  take: number = 10;
+  billTotal: number;
+  billSkip: number = 0;
+  originalBillDataSource: BillDto[] = [];
+  billDataSource: BillDto[] = [];
+
   genderArray: any = Object.values(GenderType)
     .filter(value => typeof value === "string")
     .map((value, index) => ({ value: value as string, index: index }));
@@ -46,7 +56,8 @@ export class UserDetailComponent implements OnInit {
 
   constructor(private userDetailService: UserDetailService,
     private commonService: CommonService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getUserDetail();
@@ -91,6 +102,21 @@ export class UserDetailComponent implements OnInit {
     return this.dataSource?.avatar == null || this.dataSource?.avatar === '' ? DefaultAvatar : this.dataSource?.avatar;
   }
 
+  openDetaiBilllDialog(id: number) {
+    var billDetailData = this.dataSource?.bills?.find(x => x.billId == id);
+    const dialogRef = this.dialog.open(BillDetailComponent, {
+      minWidth: '500px',
+      width: '80%'
+    });
+
+    dialogRef.componentInstance.data = JSON.stringify(billDetailData.details);
+  }
+
+  getBillPaginatorData(event?: PageEvent) {
+    this.billSkip = event.pageIndex * this.take;
+    this.billDataSource = this.originalBillDataSource.slice(this.billSkip, this.take + this.billSkip);
+  }
+
   private getUserDetail() {
     this.userDetailService.getUserInf(this.authService.getUserName())
       .subscribe(user => {
@@ -99,6 +125,9 @@ export class UserDetailComponent implements OnInit {
           // set value 
           let body = user.body;
           this.dataSource = body;
+          this.billTotal = body?.bills.length;
+          this.billDataSource = body?.bills.slice(this.billSkip, this.take);
+          this.originalBillDataSource = body?.bills;
           this.userForm.setValue({
             userId: body.userId,
             userName: body.userName,

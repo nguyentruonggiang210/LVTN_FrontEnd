@@ -55,6 +55,9 @@ export class CreateUpdateCourseComponent implements OnInit {
     member: new FormControl('', [
       Validators.required
     ]),
+    sessionPerWeek: new FormControl('', [
+      Validators.required
+    ]),
     difficulty: new FormControl('',
       [
         Validators.required
@@ -135,7 +138,7 @@ export class CreateUpdateCourseComponent implements OnInit {
     let file = this.videoFiles;
 
     const formData = new FormData();
-    
+
     formData.append('fileVideo', file[0]);
 
     formData.append('userId', this.authService.getUserId());
@@ -235,6 +238,7 @@ export class CreateUpdateCourseComponent implements OnInit {
       courseName: model.courseName,
       courseType: model.courseType,
       difficulty: model.difficulty,
+      sessionPerWeek: model.sessionPerWeek,
       startDate: formatDate(model.startDate, "yyyy-MM-dd", "en"),
       endDate: formatDate(model.endDate, "yyyy-MM-dd", "en"),
       price: model.price,
@@ -256,6 +260,7 @@ export class CreateUpdateCourseComponent implements OnInit {
       endDate: this.managementFormGroup.value['endDate'],
       difficulty: this.managementFormGroup.value['difficulty'],
       teacherName: this.managementFormGroup.value['teacherName'],
+      sessionPerWeek: this.managementFormGroup.value['sessionPerWeek'],
       courseType: this.managementFormGroup.value['courseType'],
       price: this.managementFormGroup.value['price'],
       bodyFocus: this.managementFormGroup.value['bodyFocus'],
@@ -283,6 +288,7 @@ export class CreateUpdateCourseComponent implements OnInit {
       endDate: this.managementFormGroup.value['endDate'],
       difficulty: this.managementFormGroup.value['difficulty'],
       teacherName: this.managementFormGroup.value['teacherName'],
+      sessionPerWeek: this.managementFormGroup.value['sessionPerWeek'],
       courseType: this.managementFormGroup.value['courseType'],
       price: this.managementFormGroup.value['price'],
       bodyFocus: this.managementFormGroup.value['bodyFocus'],
@@ -310,7 +316,7 @@ export class CreateUpdateCourseComponent implements OnInit {
   }
 
   backEvent() {
-    window.location.href = 'http://localhost:4200/management/course';
+    window.location.href = 'https://localhost:4200/management/course';
   }
 
   private loadRoom(courseId: number) {
@@ -330,6 +336,8 @@ export class CreateUpdateCourseComponent implements OnInit {
       .subscribe(b => this.bodyFocusList = b.body);
 
     this.courseManagementService.getCourseType()
-      .subscribe(b => this.courseTypeList = b.body);
+      .subscribe(b => {
+        this.courseTypeList = b.body
+      });
   }
 }

@@ -227,6 +227,6 @@ export class CreateUpdateUserComponent implements OnInit {
   }
 
   backEvent() {
-    window.location.href = 'http://localhost:4200/management/user';
+    window.location.href = 'https://localhost:4200/management/user';
   }
 }
