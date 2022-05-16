@@ -17,6 +17,7 @@ export interface ProductDto {
     isOutOfStock?: boolean,
     youtube: string,
     shopImage: string,
+    isValid?: boolean,
     productImages: string[],
     productVideos: string[],
     productPromotions: ProductPromotionDto[],
