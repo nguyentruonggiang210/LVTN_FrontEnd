@@ -103,6 +103,15 @@
                                         {{ 'Total Amount' | translate }}
                                     </th>
                                     <th>
+                                        {{ 'Phone Number' | translate }}
+                                    </th>
+                                    <th>
+                                        {{ 'Address' | translate }}
+                                    </th>
+                                    <th>
+                                        {{ 'Is Confirmed' | translate }}
+                                    </th>
+                                    <th>
                                         {{ 'Create Date' | translate }}
                                     </th>
                                     <th>
@@ -116,16 +125,25 @@
                                             <img id="tool-tip" src="https://placehold.jp/200x200.png" />
                                         </ng-template>
                                         <td>
-                                            {{ bill.billId }}
+                                            {{ bill?.billId }}
                                         </td>
                                         <td>
-                                            {{ bill.totalAmount | money }}
+                                            {{ bill?.totalAmount | money }}
                                         </td>
                                         <td>
-                                            {{ bill.createDate | datetime: 'dd-MM-yyyy' }}
+                                            {{ bill?.phoneNumber }}
                                         </td>
                                         <td>
-                                            {{ bill.by }}
+                                            {{ bill?.address }}
+                                        </td>
+                                        <td>
+                                            {{ bill?.isConfirmed ? 'Confirmed' : 'Not Confirm' | translate }}
+                                        </td>
+                                        <td>
+                                            {{ bill?.createDate | datetime: 'dd-MM-yyyy' }}
+                                        </td>
+                                        <td>
+                                            {{ bill?.by }}
                                         </td>
                                     </tr>
                                 </tbody>

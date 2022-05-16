@@ -26,6 +26,7 @@ import { PromotionService } from 'src/app/services/management/promotion.service'
 import { PaymentService } from 'src/app/services/payment/payment.service';
 import { environment } from 'src/environments/environment';
 import * as signalR from '@aspnet/signalr';
+import { OrderFormDialogComponent } from 'src/app/components/order-form-dialog/order-form-dialog.component';
 
 @Component({
   selector: 'app-course-detail',
@@ -48,6 +49,7 @@ export class CourseDetailComponent implements OnInit {
   commentContent: string = null;
   promotionId?: number = null;
   isPromotionRemain: boolean = true;
+  orderDetail: any = null;
   private hubConnection: signalR.HubConnection;
 
   constructor(private detailService: DetailService,
@@ -62,6 +64,7 @@ export class CourseDetailComponent implements OnInit {
     public dialog: MatDialog) {
     commonService.displaySpinner();
     this.token = authService.getUserId();
+    this.signalRConnection();
   }
 
   onPlayerReady(api: VgApiService) {
@@ -208,6 +211,18 @@ export class CourseDetailComponent implements OnInit {
         }
       });
   }
+  
+  openFormDialog() {
+    const dialogRef = this.dialog.open(OrderFormDialogComponent, {
+      width: '50%',
+      maxWidth: '800px',
+      minWidth: '350px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.orderDetail = result;      
+    });
+  }
 
   promotionChange(event: any) {
     this.promotionId = this.dataSource.coursePromotions[event.index].promotionId;
@@ -297,6 +312,9 @@ export class CourseDetailComponent implements OnInit {
           detailArray.push(tempData);
 
           let payment: PaymentDto = {
+            name: this.orderDetail.value['name'],
+            phoneNumber: this.orderDetail.value['phoneNumber'],
+            address: this.orderDetail.value['address'],
             userId: this.authService.getUserId(),
             billType: BillType.EWallet,
             paymentType: PaymentType.FullPaid,
@@ -342,6 +360,18 @@ export class CourseDetailComponent implements OnInit {
     };
   }
 
+  private signalRConnection() {
+    this.hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl(environment.signalConnection + 'notify', {
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets
+      }).build();
+
+    this.hubConnection.start()
+      .then(res => {
+        console.log(res);
+      });
+  }
 
   private triggerNotify() {
     this.hubConnection.invoke('GetNotification')

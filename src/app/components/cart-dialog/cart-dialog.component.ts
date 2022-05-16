@@ -16,6 +16,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from 'src/app/services/common/auth.service';
 import { CommonService } from 'src/app/services/common/common.service';
 import * as signalR from '@aspnet/signalr';
+import { MatDialog } from '@angular/material/dialog';
+import { OrderFormDialogComponent } from '../order-form-dialog/order-form-dialog.component';
 
 const CartMessage = "Payment successful";
 const ActionString = "Close";
@@ -37,27 +39,36 @@ export class CartDialogComponent implements OnInit {
   courseArray: CartDto[] = [];
   paypalArray: PayPalItem[] = [];
   moneyCode = 'USD';
-  snackBarTimeout: any;
+  orderDetail: any = null;
   private hubConnection: signalR.HubConnection;
 
   constructor(private cartService: CartService,
     private paymentService: PaymentService,
-    private snackBar: MatSnackBar,
     private authService: AuthService,
-    private commonService: CommonService) {
+    private commonService: CommonService,
+    private dialog: MatDialog) {
     this.token = authService.getUserId();
   }
 
   ngOnInit(): void {
     this.signalRConnection();
     this.cartArray = this.cartService.getCart();
-    console.log(this.cartArray);
 
     this.initConfig();
     this.productArray = this.cartArray.filter(x => x.type == CartType.product);
     this.courseArray = this.cartArray.filter(x => x.type == CartType.course);
-    console.log('product' + this.productArray);
-    console.log('course' + this.courseArray);
+  }
+
+  openFormDialog() {
+    const dialogRef = this.dialog.open(OrderFormDialogComponent, {
+      width: '50%',
+      maxWidth: '800px',
+      minWidth: '350px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.orderDetail = result;
+    });
   }
 
   plusCart(item: CartDto) {
@@ -147,6 +158,9 @@ export class CartDialogComponent implements OnInit {
           }
 
           let payment: PaymentDto = {
+            name: this.orderDetail.value['name'],
+            phoneNumber: this.orderDetail.value['phoneNumber'],
+            address: this.orderDetail.value['address'],
             userId: this.authService.getUserId(),
             billType: BillType.EWallet,
             paymentType: PaymentType.FullPaid,

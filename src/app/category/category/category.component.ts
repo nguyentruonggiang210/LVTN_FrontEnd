@@ -11,7 +11,6 @@ export class CategoryComponent implements OnInit {
 
   id: string;
   type: string;
-  sortBy: number = 1;
   dataSource: OdataResponse<CategoryDto[]>;
   currentPageIndex: number;
 
@@ -23,10 +22,6 @@ export class CategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
-
-  sortListChange(event): void {
-    this.sortBy = event.target.value;
   }
 
   addItem(newItem: OdataResponse<CategoryDto[]>) {

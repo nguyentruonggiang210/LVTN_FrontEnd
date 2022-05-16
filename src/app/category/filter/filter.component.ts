@@ -23,7 +23,6 @@ const blankSpace: string = ' ';
 export class FilterComponent implements OnInit {
   /// filter variables
   @Output() emitFilterCategory = new EventEmitter<OdataResponse<CategoryDto[]>>();
-  @Input() sortItem: number;
   page: number;
   dataSource: OdataResponse<CategoryDto[]>;
   difficulties: number[] = [1, 2, 3, 4, 5,];
@@ -36,9 +35,9 @@ export class FilterComponent implements OnInit {
   startDate: Date = null;
   endDate: Date = null;
   tag: string[] = null;
-  difficulty: number[] = null;
+  difficulty: number = null;
   bodyFocus: string[] = null;
-  sortBy: string;
+  sortBy: number = 1;
   searchTypeString: string = 'product';
   shopName: string = null;
   trainerName: string = null;
@@ -152,7 +151,7 @@ export class FilterComponent implements OnInit {
   tagQuery() {
     const key: string = "tag";
     if (this.tag != null) {
-      return this.odataService.addFilterOr(key, this.tag) + blankSpace;
+      return this.odataService.addFilterIn(key, this.tag) + blankSpace;
     }
     return "";
   }
@@ -160,7 +159,7 @@ export class FilterComponent implements OnInit {
   difficultyQuery() {
     const key: string = "difficulty";
     if (this.difficulty != null) {
-      return this.odataService.addFilterOr(key, this.difficulty) + blankSpace;
+      return this.odataService.addFilterEqual(key, this.difficulty.toString(), true) + blankSpace;
     }
     return "";
   }
@@ -168,7 +167,7 @@ export class FilterComponent implements OnInit {
   bodyFocusQuery() {
     const key: string = "bodyFocus";
     if (this.bodyFocus != null) {
-      return this.odataService.addFilterOr(key, this.bodyFocus) + blankSpace;
+      return this.odataService.addFilterIn(key, this.bodyFocus) + blankSpace;
     }
     return "";
   }
@@ -290,19 +289,23 @@ export class FilterComponent implements OnInit {
     this.queryData();
   }
 
-  sortQuery(): string {
+  sortListChange(event): void {
+    this.sortBy = Number(event.target.value);
+    this.queryData();
+  }
 
-    switch (this.sortItem.toString()) {
-      case SortType.Newest.toString():
+  sortQuery(): string {
+    switch (this.sortBy) {
+      case SortType.Newest:
         return this.odataService.sortBy('published', true);
-      case SortType.Oldest.toString():
+      case SortType.Oldest:
         return this.odataService.sortBy('published', false);
-      case SortType.PriceReduce.toString():
+      case SortType.PriceReduce:
         return this.odataService.sortBy('price', true);
-      case SortType.PriceGain.toString():
+      case SortType.PriceGain:
         return this.odataService.sortBy('price', false);
       default:
-        return "";
+        return this.odataService.sortBy('published', true);
     }
   }
 

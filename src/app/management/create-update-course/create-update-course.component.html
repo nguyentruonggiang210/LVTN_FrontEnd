@@ -67,7 +67,7 @@
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">{{ 'Tag' |  translate }}</mat-label>
+                        <mat-label class="myform-label">{{ 'Tag' | translate }}</mat-label>
                         <mat-select class="myform-input" formControlName="tag" multiple>
                             <mat-option *ngFor="let t of tagList" [value]="t">{{ t }}</mat-option>
                         </mat-select>
@@ -83,13 +83,15 @@
                                     <img style="max-height: 450px;" [src]="img.biggerImageUrl" [alt]="img.imageId">
                                     <button class="text-center" mat-flat-button color="accent"
                                         (click)="deleteImage(img.publicId)"
-                                        style="width: 70px;position: absolute; bottom: 10px; left: 10px;z-index: 100;">{{ 'Delete' | translate}}</button>
+                                        style="width: 70px;position: absolute; bottom: 10px; left: 10px;z-index: 100;">{{
+                                        'Delete' | translate}}</button>
                                 </div>
                             </ng-template>
                         </ngb-carousel>
                         <img *ngIf="imageUrl != null" style="max-height: 450px" [src]="imageUrl" />
                         <div class="mt-1">
-                            <button mat-raised-button color="primary" (click)="uploadFile.click()">{{ 'Choose Image' | translate }}</button>
+                            <button mat-raised-button color="primary" (click)="uploadFile.click()">{{ 'Choose Image' |
+                                translate }}</button>
                             <input accept="image/png, image/gif, image/jpeg" multiple #uploadFile
                                 (change)="upload($event.target)" type='file' style="display:none" />
                             <button *ngIf="imageFiles != null && courseId != null" mat-raised-button class="ml-1"
@@ -101,24 +103,30 @@
                         <a (click)="openVideoDialog()" *ngIf="videoFiles != null || videoUrl != null"><i
                                 class="fa-solid fa-arrow-right"></i> {{ 'Watch video.........' | translate }}</a>
                         <div class="mt-1">
-                            <button mat-raised-button color="primary" (click)="uploadVideoFile.click()">{{ 'Choose Video' | translate }}</button>
+                            <button mat-raised-button color="primary" (click)="uploadVideoFile.click()">{{ 'Choose
+                                Video' | translate }}</button>
                             <input accept="video/mp4,video/x-m4v,video/*" #uploadVideoFile
                                 (change)="uploadVideo($event.target)" type='file' style="display:none" />
                             <button *ngIf="videoFiles != null && courseId != null" mat-raised-button class="ml-1"
-                                color="primary" (click)="uploadVideoToServer()">{{ 'Upload Video' | translate }}</button>
+                                color="primary" (click)="uploadVideoToServer()">{{ 'Upload Video' | translate
+                                }}</button>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <h2 class="text-left">{{ 'Rooms' | translate }} <button mat-raised-button class="ml-2" color="primary"
-                            [disabled]="courseId == null" (click)="openCreateOrUpdateRoomDialog()">{{ 'Create Room' | translate}}</button></h2>
+                    <h2 class="text-left">{{ 'Rooms' | translate }} <button mat-raised-button class="ml-2"
+                            color="primary" [disabled]="courseId == null" (click)="openCreateOrUpdateRoomDialog()">{{
+                            'Create Room' | translate}}</button></h2>
                     <ul *ngIf="roomDtos != null" class="list-group text-left">
                         <li *ngFor="let room of roomDtos" class="list-group-item">
                             <div class="row">
                                 <div class="col-9">
-                                    <h4>{{ 'Start Time' | translate }}: {{ room.startTime | datetime: 'dd-MM-yyyy-hh-mi-ss' }}</h4>
-                                    <h4>{{ 'End Time' | translate }}: {{ room.endTime | datetime: 'dd-MM-yyyy hh-mi-ss' }}</h4>
-                                    <p>{{ 'Max Member' | translate }}: {{ room.maxMember }} - {{ 'Current member' | translate }}: {{ room.currentUser }}</p>
+                                    <h4>{{ 'Start Time' | translate }}: {{ room.startTime | datetime:
+                                        'dd-MM-yyyy-hh-mi-ss' }}</h4>
+                                    <h4>{{ 'End Time' | translate }}: {{ room.endTime | datetime: 'dd-MM-yyyy hh-mi-ss'
+                                        }}</h4>
+                                    <p>{{ 'Max Member' | translate }}: {{ room.maxMember }} - {{ 'Current member' |
+                                        translate }}: {{ room.currentUser }}</p>
                                 </div>
                                 <div class="col-3">
                                     <div class="example-button-container">
@@ -153,7 +161,8 @@
                 </div>
                 <div class="text-center">
                     <button mat-stroked-button style="width: 120px;" color="primary" class="mt-4 mr-2 myform-button p-2"
-                        type="submit" [disabled]="!managementFormGroup.valid" (click)="submitEvent()">{{ buttonTitle | translate
+                        type="submit" [disabled]="!managementFormGroup.valid" (click)="submitEvent()">{{ buttonTitle |
+                        translate
                         }}</button>
                     <button mat-stroked-button style="width: 120px;" color="accent" class="mt-4 ml-2 myform-button p-2"
                         type="button" (click)="backEvent()">{{ 'Back' | translate }}</button>

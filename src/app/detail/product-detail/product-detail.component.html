@@ -28,10 +28,12 @@
             </div>
             <div class="text-center left-0 mt-5">
                 <button type="button" class="btn btn-outline-primary mt-2 mb-2 w-100"
-                    (click)="addToCart(dataSource?.productId.toString(), dataSource?.productDetails[0]?.productDetailImages[0], dataSource?.productDetails[0]?.price, dataSource?.productName, 1)">{{ 'Add to card' | translate }}</button>
+                    (click)="addToCart(dataSource?.productId.toString(), dataSource?.productDetails[0]?.productDetailImages[0], dataSource?.productDetails[0]?.price, dataSource?.productName, 1)">{{
+                    'Add to card' | translate }}</button>
+                <button (click)="openFormDialog()" class="btn btn-outline-primary mt-2 mb-2 w-100">{{ 'Fill Form' | translate }}</button>
                 <button *ngIf="dataSource?.isOutOfStock || !isPromotionRemain" type="button" disabled
                     class="btn btn-outline-warning mt-2 mb-2 w-100">{{ 'Out of stock' | translate }}</button>
-                <ngx-paypal *ngIf="token != null && !dataSource?.isOutOfStock && isPromotionRemain"
+                <ngx-paypal *ngIf="token != null && !dataSource?.isOutOfStock && isPromotionRemain && orderDetail != null"
                     [config]="payPalConfig"></ngx-paypal>
             </div>
         </div>
@@ -52,7 +54,8 @@
         <h1 class="mt-4">{{ 'Description' | translate }}</h1>
         <div class="row mb-3">
             <div class="col col-md-9">
-                <div (click)="shopDetail(dataSource?.shopId)" style="font-size: 20px; width: fit-content; border-radius: 8px;"
+                <div (click)="shopDetail(dataSource?.shopId)"
+                    style="font-size: 20px; width: fit-content; border-radius: 8px;"
                     class="bg-light p-3 text-center my-avatar-btn">
                     <img alt="avatar" style="border-radius: 15px; display: inline-block;" width="30" height="30"
                         [src]="dataSource?.shopImage" />
@@ -69,7 +72,7 @@
                 </a>
             </div>
         </div>
-        <qr-code [value]="'http://localhost:4200/detail/product/' + dataSource?.productId" size="150"
+        <qr-code [value]="'https://localhost:4200/detail/product/' + dataSource?.productId" size="150"
             errorCorrectionLevel="M" centerImageSrc="undefined" centerImageSize="undefined" [margin]="4">
         </qr-code>
         <div style="font-size: 20px; line-height: 25px;" [innerHtml]="dataSource?.description | safe: 'html'">
@@ -96,15 +99,17 @@
             <h1 class="mt-2">{{ commentDto?.length }} {{ 'Comments' | translate }}</h1>
             <hr>
             <div class="p-4 text-center">
-                <button (click)="openLoginDialog()" *ngIf="token == null; else elseBlock" class="btn btn-primary w-75 m-auto"
-                    style="height: 50px; font-size: 22px; font-weight: 450;">{{ 'SIGN IN TO REPLY' | translate }}</button>
+                <button (click)="openLoginDialog()" *ngIf="token == null; else elseBlock"
+                    class="btn btn-primary w-75 m-auto" style="height: 50px; font-size: 22px; font-weight: 450;">{{
+                    'SIGN IN TO REPLY' | translate }}</button>
                 <ng-template #elseBlock>
                     <div class="comment-input mt-2 text-right">
                         <div class="input-group">
                             <textarea [(ngModel)]="commentContent" class="form-control" rows="5" style="height: 100px;"
                                 aria-label="With textarea" placeholder="Enter something ...."></textarea>
                         </div>
-                        <button (click)="sendComment()" mat-raised-button color="primary" class="mt-2">{{ 'Comment' | translate }}</button>
+                        <button (click)="sendComment()" mat-raised-button color="primary" class="mt-2">{{ 'Comment' |
+                            translate }}</button>
                     </div>
                 </ng-template>
 

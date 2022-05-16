@@ -51,8 +51,11 @@ export class NotifyComponent implements OnInit {
     if (model?.actionType == 1) {
       return `${model?.userName} bought ${model?.quantity} ${model?.name}`;
     }
-    else {
+    else if (model?.actionType == 2) {
       return `${model?.name} has ${model?.quantity} in stock`;
+    }
+    else {
+      return `Your order has been confirmed`;
     }
   }
 

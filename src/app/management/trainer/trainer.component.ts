@@ -13,6 +13,9 @@ import { CommonService } from 'src/app/services/common/common.service';
 import { AuthService } from 'src/app/services/common/auth.service';
 import { BillDto } from 'src/app/models/admin/BillDto';
 import { BillDetailComponent } from 'src/app/components/bill-detail/bill-detail.component';
+import * as signalR from '@aspnet/signalr';
+import { PaymentService } from 'src/app/services/payment/payment.service';
+import { environment } from 'src/environments/environment';
 
 const blankSpace = ' ';
 const contentDelete = "Are you sure to delete course ";
@@ -93,13 +96,16 @@ export class TrainerComponent implements OnInit {
   skip: number = 0;
   take: number = 10;
   billSkip: number = 0;
+  private hubConnection: signalR.HubConnection;
 
   constructor(private router: Router,
     public dialog: MatDialog,
     private courseManagementService: CourseManagementService,
     private odataService: OdataService,
+    private paymentService: PaymentService,
     private commonService: CommonService,
     private authService: AuthService) {
+    this.signalRConnection();
   }
 
   ngOnInit() {
@@ -118,6 +124,20 @@ export class TrainerComponent implements OnInit {
     else {
       return 'text-danger';
     }
+  }
+
+  confirmBill(billId: number, status: boolean) {
+    this.paymentService.updateBillStatus(billId, status)
+      .subscribe(x => {
+        if (x && x.body) {
+          let bill = this.billDataSource.find(x => x.billId == billId);
+          bill.isConfirmed = status;
+          bill = this.originalBillDataSource.find(x => x.billId == billId);
+          bill.isConfirmed = status;
+          this.triggerNotify();
+          this.commonService.displaySnackBar("Update successfully", "Close");
+        }
+      });
   }
 
   openDetaiBilllDialog(id: number) {
@@ -288,6 +308,23 @@ export class TrainerComponent implements OnInit {
           }
         });
     }
+  }
+
+  private triggerNotify() {
+    this.hubConnection.invoke('GetNotification')
+  }
+
+  private signalRConnection() {
+    this.hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl(environment.signalConnection + 'notify', {
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets
+      }).build();
+
+    this.hubConnection.start()
+      .then(res => {
+        console.log(res);
+      });
   }
 
   private getInitStatistic() {

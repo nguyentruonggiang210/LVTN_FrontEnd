@@ -121,7 +121,6 @@ export class UserDetailComponent implements OnInit {
     this.userDetailService.getUserInf(this.authService.getUserName())
       .subscribe(user => {
         if (user) {
-          debugger
           // set value 
           let body = user.body;
           this.dataSource = body;

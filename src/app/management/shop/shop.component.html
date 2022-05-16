@@ -1,49 +1,48 @@
 <div class="screen-component">
-    <h1 class="title">Shop Management</h1>
+    <h1 class="title">{{ 'Shop Management' | translate }}</h1>
     <div class="container">
         <div class="row">
             <div class="col-md-8">
                 <form class="text-center" [formGroup]="shopFormGroup" (submit)="submitEvent()">
                     <mat-form-field class="w-100">
-                        <mat-label class="myform-label">Shop Name</mat-label>
+                    <mat-label class="myform-label">{{ 'Shop Name' | translate }}</mat-label>
                         <input (change)="validateShopName()" class="myform-input" matInput formControlName="shopName"
                             autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100 mt-4">
-                        <mat-label class="myform-label">Host Name</mat-label>
+                        <mat-label class="myform-label">{{ 'Host Name' | translate }}</mat-label>
                         <input class="myform-input" matInput formControlName="hostName" autocomplete="off">
                         <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="w-100 mt-4">
-                        <mat-label class="myform-label">Facebook Link</mat-label>
+                        <mat-label class="myform-label">{{ 'Facebook Link' | translate }}</mat-label>
                         <input class="myform-input" matInput formControlName="facebook" autocomplete="off">
                     </mat-form-field>
                     <mat-form-field class="w-100 mt-4">
-                        <mat-label class="myform-label">Youtube Link</mat-label>
+                        <mat-label class="myform-label">{{ 'Youtube Link' | translate }}</mat-label>
                         <input class="myform-input" matInput formControlName="youtube" autocomplete="off">
                     </mat-form-field>
                     <mat-form-field appearance="fill" class="w-100">
-                        <mat-label>Description</mat-label>
+                        <mat-label>{{ "Description" | translate }}</mat-label>
                         <textarea matInput formControlName="description"></textarea>
                     </mat-form-field>
                     <button mat-stroked-button style="width: 120px;" color="primary" class="mt-4 mr-2 myform-button p-2"
-                        type="submit">{{ buttonTitle }}</button>
+                        type="submit">{{ buttonTitle | translate }}</button>
                     <button *ngIf="shopId != null" mat-stroked-button style="width: 120px;" color="accent"
-                        class="mt-4 ml-2 myform-button p-2" type="button" (click)="deleteEvent()">Delete</button>
+                        class="mt-4 ml-2 myform-button p-2" type="button" (click)="deleteEvent()">{{ 'Delete' | translate }}</button>
                 </form>
             </div>
             <div class="col-md-4">
                 <img *ngIf="imageUrl != null" [src]="imageUrl" class="my-user-image" />
                 <div *ngIf="dataSource != null" class="mt-3">
                     <button (click)="uploadFile.click()" class="m-1" mat-raised-button color="primary"
-                        style="width: 120px">Choose Image</button>
+                        style="width: 120px">{{ 'Choose Image' | translate }}</button>
                     <input #uploadFile (change)="upload($event.target)" type='file' style="display:none" />
                     <button *ngIf="imageFile != null" accept="image/png, image/gif, image/jpeg" (click)="uploadImage()"
-                        class="m-1" mat-raised-button color="primary" style="width: 120px">Upload Image</button>
+                        class="m-1" mat-raised-button color="primary" style="width: 120px">{{ 'Upload Image' | translate }}</button>
                 </div>
             </div>
         </div>
-
     </div>
 </div>

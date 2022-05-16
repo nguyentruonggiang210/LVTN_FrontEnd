@@ -1,0 +1,25 @@
+<h1 mat-dialog-title class="text-center">{{ 'ORDER DETAIL' | translate }}</h1>
+<br>
+<div mat-dialog-content class="mb-2">
+    <form [formGroup]="orderFormGroup" (ngSubmit)="submitEvent()" class="text-center">
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label class="myform-label">{{ 'Phone Number' | translate }}</mat-label>
+            <input class="myform-input" matInput formControlName="phoneNumber">
+            <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label class="myform-label">{{ 'Address' | translate }}</mat-label>
+            <input class="myform-input" matInput formControlName="address">
+            <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-100">
+            <mat-label class="myform-label">{{ 'Name' | translate }}</mat-label>
+            <input class="myform-input" matInput formControlName="name">
+            <mat-hint align="start">{{ 'Required' | translate }}</mat-hint>
+        </mat-form-field>
+        <button mat-stroked-button style="width: 120px;" color="primary" class="mt-4 mr-2 myform-button p-2"
+            type="submit" [disabled]="!orderFormGroup.valid">{{ 'Accept' | translate }}</button>
+        <button mat-stroked-button style="width: 120px;" color="accent" class="mt-4 ml-2 myform-button p-2"
+            type="button" (click)="closeDialogEvent()">{{ 'Close' | translate }}</button>
+    </form>
+</div>

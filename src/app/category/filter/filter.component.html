@@ -1,7 +1,7 @@
 <div class="m-5">
     <button class="btn btn-primary" type="button" (click)="basicCollapse.toggle()" aria-expanded="false"
         aria-controls="collapseExample">
-        Filter
+        {{ "Filter" | translate }}
     </button>
     <!--Collapsed content-->
     <div class="mt-3" id="collapseExample" mdbCollapse #basicCollapse="mdbCollapse">
@@ -9,8 +9,8 @@
             <div class="row">
                 <div class="form-group col col-md-3">
                     <div>
-                        <label class="my-form-label">{{ this.searchTypeString == 'product' ? 'Shop Name' : 'Trainer Name' }}</label>
-                        <input type="text" class="form-control" name="calorieMin" [placeholder]="this.searchTypeString == 'product' ? 'Shop Name' : 'Trainer Name'"
+                        <label class="my-form-label">{{ this.searchTypeString == 'product' ? 'Shop Name' : 'Trainer Name' | translate }}</label>
+                        <input type="text" class="form-control" name="calorieMin" [placeholder]="this.searchTypeString == 'product' ? 'Shop Name' : 'Trainer Name' | translate"
                             (change)="NameChange($event)">
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                         </div>
                     </div> -->
                     <div>
-                        <label class="my-form-label">Time to start</label>
+                        <label class="my-form-label">{{ 'Time to start' | translate }}</label>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -44,13 +44,13 @@
                 </div>
                 <div *ngIf="searchTypeString == 'course' || searchTypeString == 'product'"
                     class="form-group col col-md-3">
-                    <label class="my-form-label">From Price</label>
+                    <label class="my-form-label">{{ 'From Price' | translate }}</label>
                     <div>
                         <mat-slider class="w-100" thumbLabel [displayWith]="formatLabel" tickInterval="100" step="100"
                             min="0" max="20000" aria-label="units" color="primary" (change)="fromPriceChange($event)">
                         </mat-slider>
                     </div>
-                    <label class="my-form-label">To Price</label>
+                    <label class="my-form-label">{{ 'To Price' | translate }}</label>
                     <div>
                         <mat-slider class="w-100" thumbLabel [displayWith]="formatLabel" tickInterval="100" step="100"
                             min="0" max="20000" aria-label="units" color="primary" (change)="toPriceChange($event)">
@@ -59,7 +59,7 @@
                 </div>
                 <div *ngIf="searchTypeString == 'course' || searchTypeString == 'product'"
                     class="form-group col col-md-3">
-                    <label class="my-form-label">Tags</label>
+                    <label class="my-form-label">{{ 'Tag' | translate }}</label>
                     <mat-selection-list color="primary" #list [(ngModel)]="tag" name="tag"
                         (selectionChange)="listChange($event.option)" style="height: 230px; overflow: auto;">
                         <mat-list-option *ngFor="let tt of tags" [value]="tt">
@@ -69,23 +69,34 @@
                 </div>
                 <div *ngIf="searchTypeString == 'course' || searchTypeString == 'product'"
                     class="form-group col col-md-3">
-                    <label class="my-form-label">Difficulty</label>
-                    <mat-selection-list color="primary" #list [(ngModel)]="difficulty" name="difficulty"
-                        (selectionChange)="listChange($event.option)">
-                        <mat-list-option *ngFor="let d of difficulties" [value]="d">
-                            {{ d }}
-                        </mat-list-option>
-                    </mat-selection-list>
-                </div>
-                <div *ngIf="searchTypeString == 'course' || searchTypeString == 'product'"
-                    class="form-group col col-md-3">
-                    <label class="my-form-label">Body Focus</label>
+                    <label class="my-form-label">{{ 'Body Focus' | translate }}</label>
                     <mat-selection-list color="primary" #list [(ngModel)]="bodyFocus" name="bodyFocus"
                         (selectionChange)="listChange($event.option)">
                         <mat-list-option *ngFor="let b of bodyFocuses" [value]="b">
                             {{ b }}
                         </mat-list-option>
                     </mat-selection-list>
+                </div>
+                <div *ngIf="searchTypeString == 'course' || searchTypeString == 'product'"
+                    class="form-group col col-md-3">
+                    <mat-form-field class="w-100">
+                        <mat-label class="my-form-label">{{ 'Difficulty' | translate }}</mat-label>
+                        <mat-select class="myform-input" (valueChange)="listChange($event)" [(ngModel)]="difficulty" name="difficulty">
+                          <mat-option *ngFor="let d of difficulties" [value]="d">
+                            {{ d }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <div class="form-group w-100">
+                        <label class="my-form-label">{{ 'Sort By' | translate }}</label>
+                        <select class="custom-select" id="inlineFormCustomSelect" name="sortList" (change)="sortListChange($event)">
+                            <option value="1" selected>{{ 'Newest' | translate }}</option>
+                            <option value="2">{{ 'Oldest' | translate }}</option>
+                            <option value="3">{{ 'Price Gain' | translate }}</option>
+                            <option value="4">{{ 'Price Reduce' | translate }}</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         </form>

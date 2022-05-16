@@ -53,8 +53,12 @@
     </mat-list>
 </div>
 
-<div *ngIf="token != null && (courseArray != [] && courseArray.length != 0 && courseArray !== undefined) || (productArray != [] && productArray.length != 0 && productArray !== undefined)"
-    class="text-center mt-5">
+<div *ngIf="(token != null && (courseArray != [] && courseArray.length != 0 && courseArray !== undefined) || (productArray != [] && productArray.length != 0 && productArray !== undefined))" class="text-center mt-3">
+    <button (click)="openFormDialog()" class="btn btn-outline-primary mt-2 mb-2 w-75">{{ 'Fill Form' | translate }}</button>
+</div>
+
+<div *ngIf="(token != null && (courseArray != [] && courseArray.length != 0 && courseArray !== undefined) || (productArray != [] && productArray.length != 0 && productArray !== undefined)) && orderDetail != null"
+    class="text-center mt-3">
     <ngx-paypal *ngIf="token != null" [config]="payPalConfig"></ngx-paypal>
 </div>
 

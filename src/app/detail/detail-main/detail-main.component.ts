@@ -34,11 +34,11 @@ export class DetailMainComponent implements OnInit {
   }
 
   handlerDisplayImage() {
-    return this.dataSource.avatar == null || this.dataSource.avatar === '' ? DefaultAvatar : this.dataSource.avatar;
+    return this.dataSource?.avatar == null || this.dataSource?.avatar === '' ? DefaultAvatar : this.dataSource?.avatar;
   }
 
   displayGender() {
-    switch (this.dataSource.gender) {
+    switch (this.dataSource?.gender) {
       case 0:
         return 'FeMale';
       case 1:

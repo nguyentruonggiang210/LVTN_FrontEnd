@@ -29,6 +29,7 @@ import { PromotionService } from 'src/app/services/management/promotion.service'
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from 'src/app/components/login-dialog/login-dialog.component';
 import * as signalR from '@aspnet/signalr';
+import { OrderFormDialogComponent } from 'src/app/components/order-form-dialog/order-form-dialog.component';
 
 const NewQuantity = 1;
 const CartMessage = "Add successfully";
@@ -60,6 +61,7 @@ export class ProductDetailComponent implements OnInit {
   promotionId?: number = null;
   originPrice: number;
   isPromotionRemain: boolean = true;
+  orderDetail: any = null;
   private hubConnection: signalR.HubConnection;
 
   constructor(private detailService: DetailService,
@@ -75,6 +77,7 @@ export class ProductDetailComponent implements OnInit {
     private dialog: MatDialog) {
     commonService.displaySpinner();
     this.token = authService.getUserId();
+    this.signalRConnection();
   }
 
   ngOnInit(): void {
@@ -236,6 +239,18 @@ export class ProductDetailComponent implements OnInit {
     this.route.navigate(['detail', 'shop', shopId])
   }
 
+  openFormDialog() {
+    const dialogRef = this.dialog.open(OrderFormDialogComponent, {
+      width: '50%',
+      maxWidth: '800px',
+      minWidth: '350px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.orderDetail = result;      
+    });
+  }
+
   openLoginDialog() {
     const dialogRef = this.dialog.open(LoginDialogComponent, {
       width: '50%',
@@ -270,7 +285,7 @@ export class ProductDetailComponent implements OnInit {
       return this.moneyPipe.transform(this.dataSource?.productDetails[0]?.price, 'money');
     }
     else {
-      return this.moneyPipe.transform(this.originPrice, 'money') + ' Sale ' + this.moneyPipe.transform(this.dataSource?.productDetails[0]?.price, 'money')
+      return this.moneyPipe.transform(this.originPrice, 'money') + '  Sale  ' + this.moneyPipe.transform(this.dataSource?.productDetails[0]?.price, 'money')
     }
   }
 
@@ -333,6 +348,9 @@ export class ProductDetailComponent implements OnInit {
           detailArray.push(tempData);
 
           let payment: PaymentDto = {
+            name: this.orderDetail.value['name'],
+            phoneNumber: this.orderDetail.value['phoneNumber'],
+            address: this.orderDetail.value['address'],
             userId: this.authService.getUserId(),
             billType: BillType.EWallet,
             paymentType: PaymentType.FullPaid,
@@ -397,6 +415,19 @@ export class ProductDetailComponent implements OnInit {
 
   private triggerNotify() {
     this.hubConnection.invoke('GetNotification')
+  }
+
+  private signalRConnection() {
+    this.hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl(environment.signalConnection + 'notify', {
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets
+      }).build();
+
+    this.hubConnection.start()
+      .then(res => {
+        console.log(res);
+      });
   }
 }
 

@@ -6,25 +6,24 @@
                     <div class="card-header card-header-danger">
                         <div class="row">
                             <div class="col col-md-2">
-                                <h2 class="card-title" style="float: left;">User management</h2>
+                                <h2 class="card-title" style="float: left;">{{ 'User management' | translate }}</h2>
                             </div>
                             <div class="col col-md-1">
                                 <button (click)="navigateCreateUser()" class="ml-3 mr-3 user-button" mat-stroked-button
-                                    color="primary">Create User</button>
+                                    color="primary">{{ 'Create User' | translate }}</button>
                             </div>
                             <div class="col col-md-1">
                                 <button (click)="printEvent()" class="ml-3 mr-3 user-button" mat-stroked-button
-                                    color="primary">Export
-                                    Pdf</button>
+                                    color="primary">{{ 'Export Pdf' | translate }}</button>
                             </div>
                             <div class="col col-md-1">
                                 <button (click)="basicCollapse.toggle()" class="ml-3 mr-3 user-button"
                                     aria-expanded="false" aria-controls="adminCollapse" mat-stroked-button
-                                    color="primary">Filter</button>
+                                    color="primary">{{ 'Filter' | translate }}</button>
                             </div>
                             <div class="col col-md-1">
                                 <button (click)="confirmDelete(null)" class="ml-3 mr-3 user-button" aria-expanded="false"
-                                    aria-controls="adminCollapse" mat-stroked-button color="warn">Delete All</button>
+                                    aria-controls="adminCollapse" mat-stroked-button color="warn">{{ 'Delete All' | translate }}</button>
                             </div>
                         </div>
 
@@ -34,31 +33,31 @@
                             <div class="row">
                                 <div class="col col-md-3">
                                     <mat-form-field class="user-form-field" appearance="fill">
-                                        <mat-label>UserName</mat-label>
+                                        <mat-label>{{ 'UserName' | translate }}</mat-label>
                                         <input matInput type="text" [(ngModel)]="userName">
                                     </mat-form-field>
                                 </div>
                                 <div class="col col-md-3">
                                     <mat-form-field class="user-form-field" appearance="fill">
-                                        <mat-label>Name</mat-label>
+                                        <mat-label>{{ 'Name' | translate }}</mat-label>
                                         <input matInput type="text" [(ngModel)]="name">
                                     </mat-form-field>
                                 </div>
                                 <div class="col col-md-3">
                                     <mat-form-field class="user-form-field" appearance="fill">
-                                        <mat-label>Address</mat-label>
+                                        <mat-label>{{ 'Address' | translate }}</mat-label>
                                         <input matInput type="text" [(ngModel)]="address">
                                     </mat-form-field>
                                 </div>
                                 <div class="col col-md-3">
                                     <mat-form-field class="user-form-field" appearance="fill">
-                                        <mat-label>Date Create</mat-label>
+                                        <mat-label>{{ 'Create Date' | translate }}</mat-label>
                                         <input matInput type="date" [(ngModel)]="dateCreate">
                                     </mat-form-field>
                                 </div>
                                 <div class="col col-md-3">
                                     <mat-form-field class="user-form-field" appearance="fill">
-                                        <mat-label>Sort by</mat-label>
+                                        <mat-label>{{ "Sort by" | translate }}</mat-label>
                                         <mat-select [(ngModel)]="sortBy">
                                             <mat-option *ngFor="let s of sortByList" [value]="s.value">
                                                 {{ s.display }}
@@ -68,7 +67,7 @@
                                 </div>
                                 <div class="col col-md-3">
                                     <button mat-raised-button style="height: 52px; width: 100px;" color="primary"
-                                        (click)="applyFilter()">Apply</button>
+                                        (click)="applyFilter()">{{ 'Apply' | translate }}</button>
                                 </div>
                             </div>
                         </div>
@@ -76,25 +75,25 @@
                             <table class="table">
                                 <thead class=" text-primary">
                                     <th>
-                                        Order
+                                        {{ 'Order' | translate }}
                                     </th>
                                     <th>
-                                        UserName
+                                        {{ 'User Name' | translate }}
                                     </th>
                                     <th>
-                                        Name
+                                        {{ 'Name' | translate }}
                                     </th>
                                     <th>
-                                        Address
+                                        {{ 'Address' | translate }}
                                     </th>
                                     <th>
-                                        Date Create
+                                        {{ 'Create Date' | translate }}
                                     </th>
                                     <th>
-                                        Status
+                                        {{ "Status" | translate }}
                                     </th>
                                     <th style="width: 10%;">
-                                        Action
+                                        {{ 'Action' | translate }}
                                     </th>
                                 </thead>
                                 <tbody>
@@ -115,17 +114,17 @@
                                             {{ user.createDate | date }}
                                         </td>
                                         <td [ngClass]="handlerStatus(user.status)">
-                                            {{ user.status ? "Activated" : "Disabled" }}
+                                            {{ user.status ? "Activated" : "Disabled" | translate }}
                                         </td>
                                         <td>
                                             <div class="row text-center">
                                                 <div class="col col-lg-6">
                                                     <button class="ml-auto mr-auto" mat-stroked-button color="primary"
-                                                        (click)="navigateUpdatePage(user.userName)">Update</button>
+                                                        (click)="navigateUpdatePage(user.userName)">{{ 'Update' | translate }}</button>
                                                 </div>
                                                 <div class="col col-lg-6">
                                                     <button class="ml-auto mr-auto" mat-stroked-button color="accent"
-                                                        (click)="confirmDelete(user.userName)">Delete</button>
+                                                        (click)="confirmDelete(user.userName)">{{ "Delete" | translate }}</button>
                                                 </div>
                                             </div>
                                         </td>
@@ -145,13 +144,13 @@
         </div>
         <!-- Chart -->
         <div id="print-section">
-            <h2 class="col-12">Statistics</h2>
+            <h2 class="col-12">{{ 'Statistics' | translate }}</h2>
             <div class="row">
                 <!-- Bar Chart -->
                 <div class="col-lg-6">
                     <div class="card card-chart">
                         <div class="card-header">
-                            <h4 class="card-title">New Account / Year</h4>
+                            <h4 class="card-title">{{ 'New Account / Year' | translate }}</h4>
                         </div>
                         <div class="card-body">
                             <div class="chart-area">
@@ -170,7 +169,7 @@
                 <div class="col-lg-6">
                     <div class="card card-chart">
                         <div class="card-header">
-                            <h4 class="card-title">Type Account</h4>
+                            <h4 class="card-title">{{ 'Type Account' | translate }}</h4>
                         </div>
                         <div class="card-body">
                             <div class="chart-area">

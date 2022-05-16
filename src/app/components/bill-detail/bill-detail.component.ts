@@ -15,5 +15,4 @@ export class BillDetailComponent implements OnInit {
   ngOnInit(): void {
     this.dataSourse = JSON.parse(this.data);
   }
-
 }

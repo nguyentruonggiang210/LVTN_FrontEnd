@@ -4,37 +4,29 @@
             <div class="col-md-9">
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h1 class="card-title">User Information</h1>
+                        <h1 class="card-title">{{ 'User Information' | translate }}</h1>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Name:</label>
+                                <label>{{ 'Name' | translate }}:</label>
                                 <p>{{ dataSource?.name }}</p>
                             </div>
                             <div class="col-md-6">
-                                <label>Email:</label>
+                                <label>{{ 'Email' | translate }}:</label>
                                 <p>{{ dataSource?.email }}</p>
                             </div>
                             <div class="col-md-6">
-                                <label>Age:</label>
+                                <label>{{ 'Age' | translate }}:</label>
                                 <p>{{ dataSource?.age }}</p>
                             </div>
                             <div class="col-md-6">
-                                <label>Address:</label>
+                                <label>{{ 'Address' | translate}}:</label>
                                 <p>{{ dataSource?.address }}</p>
                             </div>
                             <div class="col-md-6">
-                                <label>Gender:</label>
-                                <p>{{ this.displayGender() }}</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col col-md-12">
-                                <label>Description:</label>
-                                <div style="font-size: 20px; line-height: 25px;"
-                                    [innerHtml]="dataSource?.description | safe: 'html'">
-                                </div>
+                                <label>{{ 'Gender' | translate }}:</label>
+                                <p>{{ this.displayGender() | translate }}</p>
                             </div>
                         </div>
                     </div>
@@ -46,6 +38,20 @@
                         <a href="javascript:void(0)">
                             <img class="img" [src]="handlerDisplayImage()" style="width: 80%;max-height: 400px;" />
                         </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <label>{{ 'Description' | translate }}:</label>
+                    </div>
+                    <div class="card-body">
+                        <div style="font-size: 20px; line-height: 25px;"
+                            [innerHtml]="dataSource?.description | safe: 'html'">
+                        </div>
                     </div>
                 </div>
             </div>
