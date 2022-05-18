@@ -176,5 +176,10 @@
     "Price Reduce": "Price Reduce",
     "Create Date Gain": "Create Date Gain",
     "Create Date Reduce": "Create Date Reduce",
-    "Tags": "Tags"
+    "Tags": "Tags",
+    "Previous": "Previous",
+    "Next": "Next",
+    "Last": "Last",
+    "First": "First",
+    "Sort By": "Sort By"
 }

@@ -1,5 +1,5 @@
 <div class="normal-component">
-    <h1 class="text-center mt-2">{{ 'CategoryTitle' | translate }}</h1>
+    <h1 class="text-center mt-4">{{ 'CategoryTitle' | translate }}</h1>
     <app-filter (emitFilterCategory)="addItem($event)" style="width: 95vw;"></app-filter>
     <app-content [dataSource]="dataSource"></app-content>
 </div>

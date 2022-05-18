@@ -177,5 +177,10 @@
     "Price Reduce": "Giá giảm",
     "Create Date Gain": "Ngày tạo tăng",
     "Create Date Reduce": "Ngày tạo giảm",
-    "Tags": "Thẻ"
+    "Tags": "Thẻ",
+    "Previous": "Trước",
+    "Next": "Sau",
+    "Last": "Cuối",
+    "First": "Đầu",
+    "Sort By": "Sắp xếp theo"
 }
