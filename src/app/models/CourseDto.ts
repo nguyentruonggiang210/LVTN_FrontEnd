@@ -1,4 +1,5 @@
 import { ProductPromotionDto } from "./ProductPromotionDto"
+import { RoomDetailDto } from "./RoomDetailDto"
 
 export interface CourseDto {
     courseId: number,
@@ -16,5 +17,6 @@ export interface CourseDto {
     isOutOfStock?: boolean,
     courseVideo: string,
     teacherAvatar: string,
-    coursePromotions: ProductPromotionDto[]
+    coursePromotions: ProductPromotionDto[],
+    roomDetails: RoomDetailDto[]
 }

@@ -1,10 +1,20 @@
 <div class="container-fluid w-75">
     <div class="row">
         <div class="col col-lg-8 m-0">
-            <video id="my_video_1" class="video-js vjs-default-skin" style="width: 100%;" controls preload="none"
+            <!-- <video id="my_video_1" class="video-js vjs-default-skin" style="width: 100%;" controls preload="none"
                 data-setup='{ "aspectRatio":"640:267", "playbackRates": [1, 1.5, 2] }'>
                 <source [src]="dataSource?.courseVideo" type='video/mp4' />
-            </video>
+            </video> -->
+            <iframe style="width:100%; height:100%;" src="https://www.youtube.com/embed/6E-JTXpyGAg"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+            <div class="row p-3">
+                <div *ngFor="let room of dataSource?.roomDetails" class="col col-md-4 border text-center"
+                    style="height: 30px; align-items:center; vertical-align: center; line-height: 25px; color: #0275d8;">
+                    {{ room?.startTime | date: "dd-MM-yy hh:mm:ss" }} - {{ room?.endTime | date: "dd-MM-yy hh:mm:ss" }}
+                </div>
+            </div>
         </div>
         <div class="col col-lg-4 p-4 bg-dark text-light m-0">
             <div class="row">
@@ -24,11 +34,14 @@
             </div>
             <div class="text-center left-0 mt-5">
                 <button type="button" class="btn btn-outline-primary mt-2 mb-2 w-100"
-                    (click)="addToCart(dataSource?.courseId.toString(), dataSource?.name, dataSource?.price ,2)">{{ 'Add to card' | translate }}</button>
-                <button (click)="openFormDialog()" class="btn btn-outline-primary mt-2 mb-2 w-100">{{ 'Fill Form' | translate }}</button>
+                    (click)="addToCart(dataSource?.courseId.toString(), dataSource?.name, dataSource?.price ,2)">{{ 'Add
+                    to card' | translate }}</button>
+                <button (click)="openFormDialog()" class="btn btn-outline-primary mt-2 mb-2 w-100">{{ 'Fill Form' |
+                    translate }}</button>
                 <button *ngIf="dataSource?.isOutOfStock || !isPromotionRemain" type="button" disabled
                     class="btn btn-outline-warning mt-2 mb-2 w-100">{{ 'Out of stock' | translate }}</button>
-                <ngx-paypal *ngIf="token != null && !dataSource?.isOutOfStock && isPromotionRemain && orderDetail != null"
+                <ngx-paypal
+                    *ngIf="token != null && !dataSource?.isOutOfStock && isPromotionRemain && orderDetail != null"
                     [config]="payPalConfig"></ngx-paypal>
             </div>
         </div>
@@ -49,7 +62,8 @@
         <h1 class="mt-4">{{ 'Description' | translate }}</h1>
         <div class="row mb-3">
             <div class="col col-md-9">
-                <div (click)="trainerDetail(dataSource?.teacherUserName)" style="font-size: 20px; width: fit-content; border-radius: 8px;"
+                <div (click)="trainerDetail(dataSource?.teacherUserName)"
+                    style="font-size: 20px; width: fit-content; border-radius: 8px;"
                     class="bg-light p-3 text-center my-avatar-btn">
                     <img alt="avatar" style="border-radius: 15px; display: inline-block;" width="30" height="30"
                         src="{{ dataSource?.teacherAvatar || defaultAvatar }}" />
@@ -65,15 +79,17 @@
         <h1 class="mt-2">{{ commentDto?.length }} {{ 'Comments' | translate }}</h1>
         <hr>
         <div class="p-4 text-center">
-            <button (click)="openLoginDialog()" *ngIf="token == null; else elseBlock" class="btn btn-primary w-75 m-auto"
-                style="height: 50px; font-size: 22px; font-weight: 450;">{{'SIGN IN TO REPLY' | translate }}</button>
+            <button (click)="openLoginDialog()" *ngIf="token == null; else elseBlock"
+                class="btn btn-primary w-75 m-auto" style="height: 50px; font-size: 22px; font-weight: 450;">{{'SIGN IN
+                TO REPLY' | translate }}</button>
             <ng-template #elseBlock>
                 <div class="comment-input mt-2 text-right">
                     <div class="input-group">
                         <textarea [(ngModel)]="commentContent" class="form-control" rows="5" style="height: 100px;"
                             aria-label="With textarea" placeholder="Enter something ...."></textarea>
                     </div>
-                    <button (click)="sendComment()" mat-raised-button color="primary" class="mt-2">{{ 'Comment' | translate }}</button>
+                    <button (click)="sendComment()" mat-raised-button color="primary" class="mt-2">{{ 'Comment' |
+                        translate }}</button>
                 </div>
             </ng-template>
         </div>

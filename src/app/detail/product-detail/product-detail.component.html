@@ -1,7 +1,7 @@
 <div class="container-fluid w-75">
     <h1 class="text-center mt-4">{{ 'Product Infomation' | translate }}</h1>
-    <div class="row mt-2">
-        <div class="col col-md-6 m-0">
+    <div class="row mt-2" style="border-radius:10px">
+        <div class="col col-md-6 m-0 bg-light">
             <lib-ngx-image-zoom [thumbImage]="imageSource" [fullImage]="fullImageSource" [magnification]="1"
                 [zoomMode]="'hover'" [enableScrollZoom]="true"></lib-ngx-image-zoom>
             <p-carousel [value]="productSlider" styleClass="custom-carousel" [numVisible]="6" [numScroll]="1"
