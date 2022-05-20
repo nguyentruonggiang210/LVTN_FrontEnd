@@ -93,7 +93,6 @@ export class MeetingRoomComponent implements OnInit {
       this.handleStreaming();
       this.commonService.distroySpinner();
       await this.onConnectHandler(this.authService.getUserId(), this.roomId);
-      console.log(x.body);
     });
   }
 

@@ -1,11 +1,11 @@
 <div class="container-fluid w-75">
     <div class="row">
         <div class="col col-lg-8 m-0">
-            <!-- <video id="my_video_1" class="video-js vjs-default-skin" style="width: 100%;" controls preload="none"
-                data-setup='{ "aspectRatio":"640:267", "playbackRates": [1, 1.5, 2] }'>
-                <source [src]="dataSource?.courseVideo" type='video/mp4' />
-            </video> -->
-            <iframe style="width:100%; height:100%;" src="https://www.youtube.com/embed/6E-JTXpyGAg"
+            <video *ngIf="videoData" autoplay muted id="my_video_1" class="video-js vjs-default-skin" style="width: 100%;" controls
+                preload="none" data-setup='{ "aspectRatio":"640:267", "playbackRates": [1, 1.5, 2] }'>
+                <source src="{{videoData}}" type='video/mp4' />
+            </video>
+            <!-- <iframe style="width:100%; height:100%;" src="https://www.youtube.com/embed/6E-JTXpyGAg"
                 title="YouTube video player" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen></iframe>
@@ -14,7 +14,7 @@
                     style="height: 30px; align-items:center; vertical-align: center; line-height: 25px; color: #0275d8;">
                     {{ room?.startTime | date: "dd-MM-yy hh:mm:ss" }} - {{ room?.endTime | date: "dd-MM-yy hh:mm:ss" }}
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="col col-lg-4 p-4 bg-dark text-light m-0">
             <div class="row">

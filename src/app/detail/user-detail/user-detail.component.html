@@ -168,9 +168,8 @@
                                 <p><a [href]="'course/room/' + schedule?.meetingRoomId">{{ 'Course Name' | translate }}
                                         : {{ schedule?.courseName }} - {{ 'Room Code' | translate }}: {{
                                         schedule?.meetingRoomId }}</a></p>
-                                <p>{{ 'Start Time' | translate }}: {{ schedule?.startTime | datetime: 'dd-MM-yyyy
-                                    hh:mm:ss' }}</p>
-                                <p>{{ 'End Time' | translate }}: {{ schedule?.endTime | datetime: 'dd-MM-yyyy hh:mm:ss'
+                                <p>{{ 'Start Time' | translate }}: {{ schedule?.startTime | date: 'dd-MM-yyyy hh:mm:ss' }}</p>
+                                <p>{{ 'End Time' | translate }}: {{ schedule?.endTime | date: 'dd-MM-yyyy hh:mm:ss'
                                     }}</p>
                             </li>
                         </ul>

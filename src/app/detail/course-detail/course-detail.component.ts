@@ -43,6 +43,7 @@ export class CourseDetailComponent implements OnInit {
   token: string = null;
   defaultAvatar: string = "assets/img/default-avatar.png";
   dataSource: CourseDto = null;
+  videoData: any;
   originPrice: number;
   courseId: number;
   commentDto: CommentDto[];
@@ -90,7 +91,7 @@ export class CourseDetailComponent implements OnInit {
           this.commonService.distroySpinner();
 
           this.dataSource = x.body;
-
+          this.videoData = x.body?.courseVideo;
           this.originPrice = x.body.price;
           if (x.body.coursePromotions != null && x.body.coursePromotions.length > 0) {
             let productPromotionDto: ProductPromotionDto = {
@@ -211,7 +212,7 @@ export class CourseDetailComponent implements OnInit {
         }
       });
   }
-  
+
   openFormDialog() {
     const dialogRef = this.dialog.open(OrderFormDialogComponent, {
       width: '50%',
@@ -220,7 +221,7 @@ export class CourseDetailComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.orderDetail = result;      
+      this.orderDetail = result;
     });
   }
 

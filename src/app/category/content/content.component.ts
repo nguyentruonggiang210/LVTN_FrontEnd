@@ -45,7 +45,6 @@ export class ContentComponent implements OnInit {
   }
 
   addToCart(id: string, image: string, price: number, name: string, cartType: CartType) {
-    debugger
     let model: CartDto = {
       id: Number(id),
       name: name,
@@ -113,7 +112,6 @@ export class ContentComponent implements OnInit {
   }
 
   lastPage() {
-    debugger
     let value = parseInt(((this.dataSource?.count / pageSize)).toString());
     value += this.dataSource?.count <= pageSize ? 0 : 1;
 

@@ -9,7 +9,7 @@
                             <img [src]="d.image == '' ? defaultImage : d.image" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <h5 class="card-title pl-3">{{ d.name || '-' }}</h5>
-                                <button mat-button (click)="navigateToDetail(d.id)">DETAIL</button>
+                                <button mat-button (click)="navigateToDetail(d.id)">{{ 'DETAIL' | translate }}</button>
                             </div>
                         </div>
 

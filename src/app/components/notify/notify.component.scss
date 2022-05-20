@@ -3,3 +3,9 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.no-wrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

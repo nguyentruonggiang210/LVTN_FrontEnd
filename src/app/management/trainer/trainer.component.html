@@ -1,6 +1,6 @@
 <div class="main-content">
     <div class="container-fluid">
-        <div class="row" id="hiden-component">
+        <div class="row" id="hiden-component" class="hiden-component">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-danger">
@@ -35,41 +35,41 @@
                             <div class="row">
                                 <div class="col col-md-3">
                                     <mat-form-field class="user-form-field" appearance="fill">
-                                        <mat-label>Course Name</mat-label>
+                                        <mat-label>{{ 'Course Name' | translate }}</mat-label>
                                         <input matInput type="text" [(ngModel)]="courseName">
                                     </mat-form-field>
                                 </div>
                                 <div class="col col-md-3">
                                     <mat-form-field class="user-form-field" appearance="fill">
-                                        <mat-label>Trainer Name</mat-label>
+                                        <mat-label>{{ 'Trainer Name' | translate }}</mat-label>
                                         <input matInput type="text" [(ngModel)]="trainerName">
                                     </mat-form-field>
                                 </div>
                                 <div class="col col-md-3">
                                     <mat-form-field class="user-form-field" appearance="fill">
-                                        <mat-label>Start Date</mat-label>
+                                        <mat-label>{{ 'Start Date' | translate }}</mat-label>
                                         <input matInput type="date" [(ngModel)]="startDate">
                                     </mat-form-field>
                                 </div>
                                 <div class="col col-md-3">
                                     <mat-form-field class="user-form-field" appearance="fill">
-                                        <mat-label>End Date</mat-label>
+                                        <mat-label>{{ 'End Date' | translate }}</mat-label>
                                         <input matInput type="date" [(ngModel)]="endDate">
                                     </mat-form-field>
                                 </div>
                                 <div class="col col-md-3">
                                     <mat-form-field class="user-form-field" appearance="fill">
-                                        <mat-label>Sort by</mat-label>
+                                        <mat-label>{{ 'Sort by' | translate }}</mat-label>
                                         <mat-select [(ngModel)]="sortBy">
                                             <mat-option *ngFor="let s of sortByList" [value]="s.value">
-                                                {{ s.display }}
+                                                {{ s.display | translate }}
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
                                 <div class="col col-md-3">
                                     <button mat-raised-button style="height: 52px; width: 100px;" color="primary"
-                                        (click)="applyFilter()">Apply</button>
+                                        (click)="applyFilter()">{{ 'Apply' | translate }}</button>
                                 </div>
                             </div>
                         </div>
@@ -110,10 +110,10 @@
                                             {{ course.trainerName }}
                                         </td>
                                         <td>
-                                            {{ course?.startDate || '-' }}
+                                            {{ course?.startDate | date: 'dd-MM-yyyy' }}
                                         </td>
                                         <td>
-                                            {{ course?.endDate || '-' }}
+                                            {{ course?.endDate | date: 'dd-MM-yyyy' }}
                                         </td>
                                         <td [ngClass]="handlerStatus(course.status)">
                                             {{ course.status ? "Activated" : "Disabled" }}
@@ -145,7 +145,7 @@
             </div>
         </div>
          <!-- Bill -->
-         <div class="row">
+         <div class="row ml-1 mr-1">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-danger">

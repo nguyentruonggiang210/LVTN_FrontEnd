@@ -152,10 +152,13 @@ export class TrainerComponent implements OnInit {
 
   printEvent() {
     document.getElementById("hiden-component").style.display = "none";
+    document.getElementById("my-footer").style.display = "none";
 
     window.print();
 
     document.getElementById("hiden-component").style.display = "block";
+    document.getElementById("my-footer").style.display = "block";
+
   }
 
   navigateUpdatePage(userName) {
@@ -203,9 +206,7 @@ export class TrainerComponent implements OnInit {
     filter = this.odataService.removeFilter(filter);
 
     filter += this.sortByQuery();
-
-    // console.log(filter);
-
+    
     this.courseManagementService.getAllCourse(filter)
       .subscribe(x => {
         if (x) {
